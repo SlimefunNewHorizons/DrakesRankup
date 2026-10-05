@@ -26,7 +26,7 @@ jobs:
       - name: Clone DrakesCraft Maven Repo Dependencies
         run: |
           mkdir -p ~/.m2/repository
-          git clone --depth 1 https://github.com/DrakesCraft-Labs/maven-repo.git /tmp/drakes-maven-repo || true
+          git clone --depth 1 https://github.com/SlimefunNewHorizons/maven-repo.git /tmp/drakes-maven-repo || true
           if [ -d /tmp/drakes-maven-repo/com ]; then
             cp -rn /tmp/drakes-maven-repo/com ~/.m2/repository/ || true
           fi
