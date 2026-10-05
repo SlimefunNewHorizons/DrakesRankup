@@ -147,11 +147,26 @@ public class RankManager {
                     if (bolsa > 0) {
                         bolsas.put(uuid, bolsa);
                     }
+                    boolean seriousPunch = playersConfig.getBoolean(uuidStr + ".serious-punch", true);
+                    boolean santoryu = playersConfig.getBoolean(uuidStr + ".santoryu", true);
+                    boolean devilFruit = playersConfig.getBoolean(uuidStr + ".devil-fruit", true);
+                    boolean sonicLeap = playersConfig.getBoolean(uuidStr + ".sonic-leap", true);
+                    boolean cursedEnergy = playersConfig.getBoolean(uuidStr + ".cursed-energy", true);
+                    boolean dancingBlades = playersConfig.getBoolean(uuidStr + ".dancing-blades", false);
+                    boolean magnetVortex = playersConfig.getBoolean(uuidStr + ".magnet-vortex", false);
+
                     PlayerSettings loaded = new PlayerSettings(particles, push, abilities);
                     loaded.setParticleLevel(particleLevel);
                     loaded.setKiFlightEnabled(kiFlight);
                     loaded.setActiveTransformation(activeTrans);
                     loaded.setRebirthCount(rebirths);
+                    loaded.setSeriousPunchEnabled(seriousPunch);
+                    loaded.setSantoryuEnabled(santoryu);
+                    loaded.setDevilFruitEnabled(devilFruit);
+                    loaded.setSonicLeapEnabled(sonicLeap);
+                    loaded.setCursedEnergyEnabled(cursedEnergy);
+                    loaded.setDancingBladesEnabled(dancingBlades);
+                    loaded.setMagnetVortexEnabled(magnetVortex);
                     playerSettings.put(uuid, loaded);
                     if (expiry > 0) {
                         maintenanceExpiries.put(uuid, expiry);
@@ -178,6 +193,13 @@ public class RankManager {
             playersConfig.set(path + ".ki-flight", s.isKiFlightEnabled());
             playersConfig.set(path + ".active-transformation", s.getActiveTransformation());
             playersConfig.set(path + ".rebirths", s.getRebirthCount());
+            playersConfig.set(path + ".serious-punch", s.isSeriousPunchEnabled());
+            playersConfig.set(path + ".santoryu", s.isSantoryuEnabled());
+            playersConfig.set(path + ".devil-fruit", s.isDevilFruitEnabled());
+            playersConfig.set(path + ".sonic-leap", s.isSonicLeapEnabled());
+            playersConfig.set(path + ".cursed-energy", s.isCursedEnergyEnabled());
+            playersConfig.set(path + ".dancing-blades", s.isDancingBladesEnabled());
+            playersConfig.set(path + ".magnet-vortex", s.isMagnetVortexEnabled());
             Long expiry = maintenanceExpiries.get(entry.getKey());
             if (expiry != null && expiry > 0) {
                 playersConfig.set(path + ".maintenance-expiry", expiry);
@@ -278,7 +300,7 @@ public class RankManager {
         player.playSound(loc, Sound.ENTITY_ENDER_DRAGON_GROWL, 0.7f, 1.5f);
         try {
             loc.getWorld().spawnParticle(org.bukkit.Particle.TOTEM_OF_UNDYING, loc.clone().add(0, 1.0, 0), 80, 0.8, 1.0, 0.8, 0.2);
-            loc.getWorld().spawnParticle(org.bukkit.Particle.FLASH, loc.clone().add(0, 1.5, 0), 2);
+            loc.getWorld().spawnParticle(org.bukkit.Particle.FLASH, loc.clone().add(0, 1.5, 0), 2, 0.0, 0.0, 0.0, 0.0, org.bukkit.Color.WHITE);
         } catch (Exception ignored) {}
 
         Bukkit.broadcast(net.kyori.adventure.text.Component.text(ChatColor.translateAlternateColorCodes('&',

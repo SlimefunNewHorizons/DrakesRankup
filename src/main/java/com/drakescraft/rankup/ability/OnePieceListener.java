@@ -28,6 +28,12 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.entity.ItemDisplay;
+import org.bukkit.entity.Display;
+import org.bukkit.util.Transformation;
+import org.joml.Vector3f;
+import org.joml.Quaternionf;
 
 import java.util.*;
 
@@ -44,6 +50,17 @@ public class OnePieceListener implements Listener {
 
     // Cooldown de Zoro Flying Slash (Santoryu)
     private final Map<UUID, Long> santoryuCooldown = new HashMap<>();
+    private final Map<UUID, Long> sanzenCooldown = new HashMap<>();
+
+    private void applyAbilityDamage(LivingEntity target, double damage, Player player) {
+        if (target == null || player == null || target.isDead()) return;
+        try {
+            target.setMetadata("DRAKES_ABILITY_DAMAGE", new FixedMetadataValue(plugin, true));
+            target.damage(damage, player);
+        } finally {
+            target.removeMetadata("DRAKES_ABILITY_DAMAGE", plugin);
+        }
+    }
 
     // Estados Activos de Transformaciones (UUID -> timestamp expiración)
     private final Map<UUID, Long> activeGearSecond = new HashMap<>();
@@ -129,14 +146,14 @@ public class OnePieceListener implements Listener {
 
     // ==========================================
     // ESTILO TRES ESPADAS DE ZORO (SANTORYU)
-    // Sin choques: solo se ejecuta si está activamente equipado o es habilidad de rango principal
+    // - Espada Voladora 3D con ItemDisplay y corte de viento
+    // - Técnica Secreta Sanzen Sekai con Shift + Clic Derecho
     // ==========================================
     @EventHandler(priority = EventPriority.HIGH)
     public void onSantoryuInteract(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         Player player = event.getPlayer();
         if (!plugin.isWorldAllowed(player.getWorld())) return;
-        if (player.isSneaking()) return; // Shift + Clic reservado para técnicas de agachado
 
         ItemStack item = player.getInventory().getItemInMainHand();
         if (item.getType() == Material.AIR || !item.getType().name().endsWith("_SWORD")) return;
@@ -144,23 +161,82 @@ public class OnePieceListener implements Listener {
         UUID uuid = player.getUniqueId();
         Rank rank = plugin.getRankManager().getPlayerRank(uuid);
         PlayerSettings settings = plugin.getRankManager().getPlayerSettings(uuid);
-        String equipped = settings.getActiveTransformation();
+        if (!settings.isAbilitiesEnabled() || !settings.isSantoryuEnabled()) return;
 
+        String equipped = settings.getActiveTransformation();
         boolean isEquipped = "SANTORYU".equalsIgnoreCase(equipped);
         boolean isCurrentRankPrimary = (rank != null && rank.getAbilityType() == AbilityType.SANTORYU_ZORO && (equipped == null || equipped.isEmpty()));
-        if (!isEquipped && !isCurrentRankPrimary) return;
+        int tier = (rank != null) ? rank.getTier() : 0;
+        if (!isEquipped && !isCurrentRankPrimary && tier < 24) return;
 
         long now = System.currentTimeMillis();
-        long ready = santoryuCooldown.getOrDefault(uuid, 0L);
-        if (now < ready) {
-            long rem = Math.max(1, (ready - now) / 1000L);
-            player.sendActionBar(Component.text("§c⏳ Corte del Dragón en recarga: §e" + rem + "s"));
+        int rebirths = plugin.getRankManager().getRebirthCount(uuid);
+        double cdr = 1.0 - Math.min(0.5, rebirths * 0.01);
+
+        // ==========================================
+        // 1. TÉCNICA SECRETA: SANTORYU OGI - SANZEN SEKAI (TRES MIL MUNDOS)
+        // Shift + Clic Derecho con Espada
+        // ==========================================
+        if (player.isSneaking()) {
+            long readySanzen = sanzenCooldown.getOrDefault(uuid, 0L);
+            if (now < readySanzen) {
+                long rem = Math.max(1, (readySanzen - now) / 1000L);
+                player.sendActionBar(Component.text("§c⏳ Sanzen Sekai en recarga: §e" + rem + "s"));
+                return;
+            }
+            sanzenCooldown.put(uuid, now + (long)(14000L * cdr));
+
+            Location start = player.getLocation();
+            Vector dir = player.getEyeLocation().getDirection().normalize();
+
+            // Impulso sónico hacia adelante
+            player.setVelocity(dir.clone().multiply(2.4).setY(0.25));
+            player.getWorld().playSound(start, Sound.ITEM_TRIDENT_RIPTIDE_2, 1.2f, 1.5f);
+            player.getWorld().playSound(start, Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 0.7f);
+
+            Set<LivingEntity> sliced = new HashSet<>();
+            for (double d = 1.0; d <= 14.0; d += 0.8) {
+                Location stepLoc = start.clone().add(dir.clone().multiply(d)).add(0, 0.8, 0);
+                if (!stepLoc.getBlock().isPassable()) break;
+
+                try {
+                    stepLoc.getWorld().spawnParticle(Particle.SWEEP_ATTACK, stepLoc, 2, 0.2, 0.2, 0.2, 0);
+                    stepLoc.getWorld().spawnParticle(Particle.DUST, stepLoc, 4, 0.3, 0.3, 0.3, 0, new Particle.DustOptions(Color.fromRGB(40, 230, 80), 1.5f));
+                    stepLoc.getWorld().spawnParticle(Particle.CRIT, stepLoc, 2, 0.1, 0.1, 0.1, 0.05);
+                } catch (Exception ignored) {}
+
+                for (LivingEntity target : stepLoc.getWorld().getNearbyLivingEntities(stepLoc, 1.6)) {
+                    if (target.equals(player) || sliced.contains(target)) continue;
+                    sliced.add(target);
+
+                    try {
+                        if (target instanceof Player targetP && (targetP.isBlocking() || targetP.getInventory().getItemInMainHand().getType() == Material.SHIELD || targetP.getInventory().getItemInOffHand().getType() == Material.SHIELD)) {
+                            targetP.setCooldown(Material.SHIELD, 120);
+                            targetP.playSound(targetP.getLocation(), Sound.ITEM_SHIELD_BREAK, 1.5f, 0.8f);
+                        }
+                        double slashDmg = 28.0 * (1.0 + rebirths * 0.04);
+                        applyAbilityDamage(target, slashDmg, player);
+                        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 60, 2));
+                    } catch (Exception ignored) {}
+                }
+            }
+
+            player.sendTitle("§2§lSANTORYU OGI", "§a¡Tres Mil Mundos (Sanzen Sekai)!", 5, 25, 10);
+            player.sendActionBar(Component.text("§2⚔ ¡SANTORYU OGI: SANZEN SEKAI! §a" + sliced.size() + " enemigos tajados."));
             return;
         }
 
-        int rebirths = plugin.getRankManager().getRebirthCount(uuid);
-        double cdr = 1.0 - Math.min(0.5, rebirths * 0.01);
-        santoryuCooldown.put(uuid, now + (long)(8000L * cdr));
+        // ==========================================
+        // 2. CORTE DEL DRAGÓN VOLADOR (FLYING SWORD 3D CON ITEM DISPLAY)
+        // Clic Derecho normal con Espada
+        // ==========================================
+        long ready = santoryuCooldown.getOrDefault(uuid, 0L);
+        if (now < ready) {
+            long rem = Math.max(1, (ready - now) / 1000L);
+            player.sendActionBar(Component.text("§c⏳ Espada Voladora en recarga: §e" + rem + "s"));
+            return;
+        }
+        santoryuCooldown.put(uuid, now + (long)(6000L * cdr));
 
         Location eye = player.getEyeLocation();
         Vector dir = eye.getDirection().normalize();
@@ -171,33 +247,90 @@ public class OnePieceListener implements Listener {
             player.getWorld().playSound(eye, Sound.ENTITY_PLAYER_ATTACK_CRIT, 0.9f, 0.8f);
         } catch (Exception ignored) {}
 
-        // Arco de viento volador
+        // Generar la entidad ItemDisplay de Espada Voladora 3D
+        Location spawnLoc = eye.clone().add(dir.clone().multiply(1.2));
+        ItemDisplay swordDisplay = spawnLoc.getWorld().spawn(spawnLoc, ItemDisplay.class, display -> {
+            ItemStack displayStack = item.clone();
+            displayStack.setAmount(1);
+            display.setItemStack(displayStack);
+            display.setBillboard(Display.Billboard.CENTER);
+            display.setTransformation(new Transformation(
+                    new Vector3f(0f, 0f, 0f),
+                    new Quaternionf().rotateAxis((float) Math.toRadians(90), 1f, 0f, 0f),
+                    new Vector3f(1.5f, 1.5f, 1.5f),
+                    new Quaternionf()
+            ));
+            display.setInterpolationDuration(1);
+            display.setTeleportDuration(1);
+        });
+
         Set<LivingEntity> hitList = new HashSet<>();
-        for (double d = 1.2; d <= 12.0; d += 0.6) {
-            Location pt = eye.clone().add(dir.clone().multiply(d));
-            if (!pt.getBlock().isPassable()) break;
+        new BukkitRunnable() {
+            Location curr = spawnLoc.clone();
+            int ticks = 0;
+            float rotationAngle = 0f;
 
-            try {
-                pt.getWorld().spawnParticle(Particle.SWEEP_ATTACK, pt, 2, 0.1, 0.1, 0.1, 0);
-                pt.getWorld().spawnParticle(Particle.CRIT, pt, 3, 0.1, 0.1, 0.1, 0.05);
-                pt.getWorld().spawnParticle(Particle.DUST, pt, 4, 0.25, 0.5, 0.25, 0, new Particle.DustOptions(Color.fromRGB(60, 200, 90), 1.3f));
-            } catch (Exception ignored) {}
+            @Override
+            public void run() {
+                ticks++;
+                if (!swordDisplay.isValid() || ticks > 22) {
+                    finish();
+                    cancel();
+                    return;
+                }
 
-            for (LivingEntity entity : pt.getWorld().getNearbyLivingEntities(pt, 1.3)) {
-                if (entity.equals(player)) continue;
-                if (!hitList.contains(entity)) {
+                curr.add(dir.clone().multiply(1.25));
+
+                if (!curr.getBlock().isPassable()) {
+                    finish();
+                    cancel();
+                    return;
+                }
+
+                rotationAngle += 45f;
+                swordDisplay.teleport(curr);
+                swordDisplay.setTransformation(new Transformation(
+                        new Vector3f(0f, 0f, 0f),
+                        new Quaternionf().rotateAxis((float) Math.toRadians(rotationAngle), 0f, 0f, 1f),
+                        new Vector3f(1.5f, 1.5f, 1.5f),
+                        new Quaternionf()
+                ));
+
+                try {
+                    curr.getWorld().spawnParticle(Particle.SWEEP_ATTACK, curr, 1, 0.1, 0.1, 0.1, 0);
+                    curr.getWorld().spawnParticle(Particle.DUST, curr, 4, 0.15, 0.15, 0.15, 0, new Particle.DustOptions(Color.fromRGB(50, 240, 90), 1.4f));
+                    curr.getWorld().spawnParticle(Particle.CRIT, curr, 2, 0.1, 0.1, 0.1, 0.05);
+                } catch (Exception ignored) {}
+
+                for (LivingEntity entity : curr.getWorld().getNearbyLivingEntities(curr, 1.5)) {
+                    if (entity.equals(player) || hitList.contains(entity)) continue;
                     hitList.add(entity);
+
                     try {
-                        double dmg = 12.0 * (1.0 + rebirths * 0.03);
-                        entity.damage(dmg, player);
-                        Vector knock = dir.clone().multiply(0.85).setY(0.28);
+                        if (entity instanceof Player targetP && (targetP.isBlocking() || targetP.getInventory().getItemInMainHand().getType() == Material.SHIELD || targetP.getInventory().getItemInOffHand().getType() == Material.SHIELD)) {
+                            targetP.setCooldown(Material.SHIELD, 80);
+                            targetP.playSound(targetP.getLocation(), Sound.ITEM_SHIELD_BREAK, 1.5f, 0.9f);
+                        }
+                        double dmg = 18.0 * (1.0 + rebirths * 0.035);
+                        applyAbilityDamage(entity, dmg, player);
+                        Vector knock = dir.clone().multiply(0.90).setY(0.30);
                         entity.setVelocity(knock);
+                        entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 1.2f);
                     } catch (Exception ignored) {}
                 }
             }
-        }
 
-        player.sendActionBar(Component.text("§2⚔ ¡ESTILO TRES ESPADAS: CORTE DEL DRAGÓN VOLADOR! §7(Recarga: 8s)"));
+            private void finish() {
+                try {
+                    curr.getWorld().spawnParticle(Particle.EXPLOSION, curr, 1);
+                    curr.getWorld().spawnParticle(Particle.SWEEP_ATTACK, curr, 3, 0.3, 0.3, 0.3, 0);
+                    curr.getWorld().playSound(curr, Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1.0f, 1.4f);
+                    swordDisplay.remove();
+                } catch (Exception ignored) {}
+            }
+        }.runTaskTimer(plugin, 1L, 1L);
+
+        player.sendActionBar(Component.text("§2⚔ ¡ESTILO TRES ESPADAS: ESPADA VOLADORA 3D! §7(Recarga: 6s)"));
     }
 
     public void revertTransformations(Player player) {
@@ -232,6 +365,7 @@ public class OnePieceListener implements Listener {
         Rank rank = plugin.getRankManager().getPlayerRank(uuid);
         int tier = (rank != null) ? rank.getTier() : 0;
         PlayerSettings settings = plugin.getRankManager().getPlayerSettings(uuid);
+        if (!settings.isAbilitiesEnabled() || !settings.isDevilFruitEnabled()) return;
         String equipped = settings.getActiveTransformation();
 
         boolean hasGear4 = "GEAR_4".equalsIgnoreCase(equipped) || "GOMU_GOMU".equalsIgnoreCase(equipped) || tier >= 40;
@@ -314,7 +448,7 @@ public class OnePieceListener implements Listener {
 
         Location loc = player.getLocation();
         try {
-            loc.getWorld().spawnParticle(Particle.FLASH, loc.clone().add(0, 1, 0), 3);
+            loc.getWorld().spawnParticle(Particle.FLASH, loc.clone().add(0, 1, 0), 3, 0.0, 0.0, 0.0, 0.0, Color.WHITE);
             loc.getWorld().spawnParticle(Particle.CLOUD, loc.clone().add(0, 1, 0), 80, 0.8, 1.2, 0.8, 0.05);
             loc.getWorld().spawnParticle(Particle.WAX_OFF, loc.clone().add(0, 1, 0), 40, 0.8, 1.0, 0.8, 0.1);
             loc.getWorld().spawnParticle(Particle.END_ROD, loc.clone().add(0, 1, 0), 30, 0.5, 0.8, 0.5, 0.05);
@@ -442,7 +576,7 @@ public class OnePieceListener implements Listener {
 
             for (Entity e : player.getNearbyEntities(6.0, 3.5, 6.0)) {
                 if (e instanceof LivingEntity target && e != player) {
-                    target.damage(baseDamage, player);
+                    applyAbilityDamage(target, baseDamage, player);
                     Vector knock = target.getLocation().toVector().subtract(loc.toVector()).normalize().multiply(1.5).setY(0.5);
                     target.setVelocity(knock);
                 }
@@ -461,6 +595,8 @@ public class OnePieceListener implements Listener {
         Player player = event.getPlayer();
         if (!plugin.isWorldAllowed(player.getWorld())) return;
         UUID uuid = player.getUniqueId();
+        PlayerSettings settings = plugin.getRankManager().getPlayerSettings(uuid);
+        if (!settings.isAbilitiesEnabled() || !settings.isDevilFruitEnabled()) return;
         long now = System.currentTimeMillis();
 
         // 1. GEAR 5: KAMINARI (Lanzamiento de Rayo) & BAJRANG GUN (Puño Colosal)
@@ -486,7 +622,7 @@ public class OnePieceListener implements Listener {
                     player.sendTitle("§f§lBAJRANG GUN", "§e¡Puño Colosal de la Liberación!", 2, 35, 10);
                     for (Entity e : player.getNearbyEntities(10.0, 5.0, 10.0)) {
                         if (e instanceof LivingEntity target && e != player) {
-                            target.damage(28.0, player);
+                            applyAbilityDamage(target, 28.0, player);
                             target.setVelocity(dir.clone().multiply(2.2).setY(0.8));
                         }
                     }
@@ -507,10 +643,10 @@ public class OnePieceListener implements Listener {
                         Location p = player.getEyeLocation().add(dir.clone().multiply(d));
                         if (!p.getBlock().isPassable()) break;
                         p.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, p, 5, 0.2, 0.2, 0.2, 0.08);
-                        p.getWorld().spawnParticle(Particle.FLASH, p, 1, 0, 0, 0, 0);
+                        p.getWorld().spawnParticle(Particle.FLASH, p, 1, 0, 0, 0, 0, Color.WHITE);
                         for (LivingEntity target : p.getWorld().getNearbyLivingEntities(p, 1.5)) {
                             if (target != player) {
-                                target.damage(16.0, player);
+                                applyAbilityDamage(target, 16.0, player);
                                 target.getWorld().strikeLightningEffect(target.getLocation());
                             }
                         }
@@ -546,7 +682,7 @@ public class OnePieceListener implements Listener {
                     for (Entity e : player.getNearbyEntities(12.0, 6.0, 12.0)) {
                         if (e instanceof LivingEntity vic && e != player) {
                             vic.setFireTicks(160);
-                            vic.damage(24.0, player);
+                            applyAbilityDamage(vic, 24.0, player);
                         }
                     }
                     if (plugin.getProtectionGate() != null) {
@@ -637,7 +773,7 @@ public class OnePieceListener implements Listener {
 
                     player.teleport(dest);
                     dest.getWorld().playSound(dest, Sound.ENTITY_FIREWORK_ROCKET_BLAST, 1.0f, 1.5f);
-                    dest.getWorld().spawnParticle(Particle.FLASH, dest.clone().add(0, 1, 0), 2);
+                    dest.getWorld().spawnParticle(Particle.FLASH, dest.clone().add(0, 1, 0), 2, 0.0, 0.0, 0.0, 0.0, Color.WHITE);
                     player.sendActionBar(Component.text("§e✨ ¡YATA NO KAGAMI! Teletransporte fotónico de luz."));
                 }
             }
@@ -663,7 +799,7 @@ public class OnePieceListener implements Listener {
 
                 for (Entity e : player.getNearbyEntities(12.0, 5.0, 12.0)) {
                     if (e instanceof LivingEntity target && e != player) {
-                        target.damage(22.0, player);
+                        applyAbilityDamage(target, 22.0, player);
                         target.setVelocity(new Vector(0, 1.2, 0).add(dir.clone().multiply(1.4)));
                     }
                 }
@@ -713,7 +849,7 @@ public class OnePieceListener implements Listener {
         try {
             loc.getWorld().strikeLightningEffect(loc);
             loc.getWorld().spawnParticle(Particle.SONIC_BOOM, loc.clone().add(0, 1.2, 0), 2);
-            loc.getWorld().spawnParticle(Particle.FLASH, loc.clone().add(0, 1.0, 0), 2);
+            loc.getWorld().spawnParticle(Particle.FLASH, loc.clone().add(0, 1.0, 0), 2, 0.0, 0.0, 0.0, 0.0, Color.WHITE);
             loc.getWorld().spawnParticle(Particle.DUST, loc.clone().add(0, 1.0, 0), 80, 4.0, 1.0, 4.0, 0, new Particle.DustOptions(Color.fromRGB(150, 10, 10), 1.6f));
             loc.getWorld().playSound(loc, Sound.ENTITY_WARDEN_SONIC_BOOM, 1.0f, 0.7f);
             loc.getWorld().playSound(loc, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1.0f, 0.6f);
@@ -725,7 +861,7 @@ public class OnePieceListener implements Listener {
                 knocked++;
                 if (target instanceof Monster) {
                     if (target.getHealth() <= 30.0) {
-                        target.damage(999.0, player); // Desmayo/muerte instantánea para débiles
+                        applyAbilityDamage(target, 999.0, player); // Desmayo/muerte instantánea para débiles
                     } else {
                         target.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 140, 3));
                         target.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 140, 2));
