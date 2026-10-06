@@ -2,6 +2,7 @@ package com.drakescraft.rankup.command;
 
 import com.drakescraft.rankup.DrakesRankupPlugin;
 import com.drakescraft.rankup.gui.RankupMenu;
+import com.drakescraft.rankup.gui.AbilityConfigMenu;
 import com.drakescraft.rankup.model.PlayerSettings;
 import com.drakescraft.rankup.model.Rank;
 import org.bukkit.Bukkit;
@@ -35,9 +36,16 @@ public class RankupCommand implements CommandExecutor, TabCompleter {
             }
         }
 
-        if (label.equalsIgnoreCase("ranks") || label.equalsIgnoreCase("rangos")) {
+        if (label.equalsIgnoreCase("ranks") || label.equalsIgnoreCase("rangos") || label.equalsIgnoreCase("subirrango") || label.equalsIgnoreCase("rank") || label.equalsIgnoreCase("subir")) {
             if (sender instanceof Player player) {
                 new RankupMenu(plugin, player, 0).open();
+                return true;
+            }
+        }
+
+        if (label.equalsIgnoreCase("habilidades") || label.equalsIgnoreCase("skills") || label.equalsIgnoreCase("abilities")) {
+            if (sender instanceof Player player) {
+                new AbilityConfigMenu(plugin, player).open();
                 return true;
             }
         }
@@ -52,6 +60,15 @@ public class RankupCommand implements CommandExecutor, TabCompleter {
         }
 
         String sub = args[0].toLowerCase();
+
+        if (sub.equals("habilidades") || sub.equals("skills") || sub.equals("abilities") || sub.equals("config") || sub.equals("overlay")) {
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage("§cSolo jugadores pueden abrir la configuracion de habilidades.");
+                return true;
+            }
+            new AbilityConfigMenu(plugin, player).open();
+            return true;
+        }
 
         if (sub.equals("magnet") || sub.equals("iman")) {
             if (!(sender instanceof Player player)) {
@@ -225,6 +242,46 @@ public class RankupCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
 
+            if (feature.startsWith("saitama") || feature.startsWith("punch") || feature.startsWith("golpe")) {
+                boolean newState = !s.isSeriousPunchEnabled();
+                s.setSeriousPunchEnabled(newState);
+                plugin.getRankManager().savePlayerData();
+                player.sendMessage("§7Golpe Serio de Saitama: " + (newState ? "§aActivado" : "§cDesactivado"));
+                return true;
+            }
+
+            if (feature.startsWith("zoro") || feature.startsWith("santoryu") || feature.startsWith("espada")) {
+                boolean newState = !s.isSantoryuEnabled();
+                s.setSantoryuEnabled(newState);
+                plugin.getRankManager().savePlayerData();
+                player.sendMessage("§7Estilo Tres Espadas de Zoro: " + (newState ? "§aActivado" : "§cDesactivado"));
+                return true;
+            }
+
+            if (feature.startsWith("fruta") || feature.startsWith("fruit") || feature.startsWith("haki")) {
+                boolean newState = !s.isDevilFruitEnabled();
+                s.setDevilFruitEnabled(newState);
+                plugin.getRankManager().savePlayerData();
+                player.sendMessage("§7Frutas del Diablo y Haki: " + (newState ? "§aActivado" : "§cDesactivado"));
+                return true;
+            }
+
+            if (feature.startsWith("salto") || feature.startsWith("leap") || feature.startsWith("impulso")) {
+                boolean newState = !s.isSonicLeapEnabled();
+                s.setSonicLeapEnabled(newState);
+                plugin.getRankManager().savePlayerData();
+                player.sendMessage("§7Super Impulso Sónico (100 Bloques): " + (newState ? "§aActivado" : "§cDesactivado"));
+                return true;
+            }
+
+            if (feature.startsWith("jujutsu") || feature.startsWith("curse") || feature.startsWith("maldic")) {
+                boolean newState = !s.isCursedEnergyEnabled();
+                s.setCursedEnergyEnabled(newState);
+                plugin.getRankManager().savePlayerData();
+                player.sendMessage("§7Energía Maldita Jujutsu: " + (newState ? "§aActivada" : "§cDesactivada"));
+                return true;
+            }
+
             if (feature.startsWith("habil") || feature.equals("abilities")) {
                 boolean newState = !s.isAbilitiesEnabled();
                 s.setAbilitiesEnabled(newState);
@@ -240,7 +297,7 @@ public class RankupCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
 
-            player.sendMessage("§cOpción no válida. Usa: /rankup toggle <empuje | particulas | habilidades | vuelo>");
+            new AbilityConfigMenu(plugin, player).open();
             return true;
         }
 
@@ -441,12 +498,12 @@ public class RankupCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         List<String> list = new ArrayList<>();
         if (args.length == 1) {
-            list.addAll(Arrays.asList("gui", "kit", "max", "bolsa", "maintain", "mantener", "magnet", "blades", "conqueror", "info", "toggle", "admin"));
+            list.addAll(Arrays.asList("gui", "kit", "max", "habilidades", "skills", "bolsa", "maintain", "mantener", "magnet", "blades", "conqueror", "info", "toggle", "admin"));
             if (sender.hasPermission("drakesrankup.staff")) {
                 list.add("test");
             }
         } else if (args.length == 2 && args[0].equalsIgnoreCase("toggle")) {
-            list.addAll(Arrays.asList("empuje", "particulas", "habilidades", "vuelo", "ki"));
+            list.addAll(Arrays.asList("empuje", "particulas", "habilidades", "vuelo", "ki", "saitama", "zoro", "santoryu", "fruta", "salto", "jujutsu"));
         } else if (args.length == 2 && args[0].equalsIgnoreCase("test")) {
             list.addAll(Arrays.asList("reset", "1", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"));
         } else if (args.length == 2 && args[0].equalsIgnoreCase("admin")) {

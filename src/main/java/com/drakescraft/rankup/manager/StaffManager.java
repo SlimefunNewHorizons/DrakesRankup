@@ -3,6 +3,7 @@ package com.drakescraft.rankup.manager;
 import com.drakescraft.rankup.DrakesRankupPlugin;
 import com.drakescraft.rankup.model.Rank;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -108,7 +109,7 @@ public class StaffManager implements Listener {
                 // Deflect or vaporize projectile in slow motion / flash
                 Vector reversed = proj.getVelocity().multiply(-0.8);
                 proj.setVelocity(reversed);
-                proj.getWorld().spawnParticle(Particle.FLASH, proj.getLocation(), 1);
+                proj.getWorld().spawnParticle(Particle.FLASH, proj.getLocation(), 1, 0.0, 0.0, 0.0, 0.0, Color.WHITE);
             } catch (Exception ignored) {}
         }
 

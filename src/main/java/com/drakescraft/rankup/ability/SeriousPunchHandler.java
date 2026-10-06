@@ -14,6 +14,7 @@ import org.bukkit.damage.DamageType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -67,7 +68,7 @@ public class SeriousPunchHandler implements Listener {
         if (rank == null) return false;
 
         PlayerSettings settings = plugin.getRankManager().getPlayerSettings(player.getUniqueId());
-        if (!settings.isAbilitiesEnabled()) return false;
+        if (!settings.isAbilitiesEnabled() || !settings.isSeriousPunchEnabled()) return false;
 
         // Saitama (Tier 41), Jiren (Tier 91), Tiers 50+, o habilidad SERIOUS_PUNCH
         if (rank.getAbilityType() == AbilityType.SERIOUS_PUNCH) return true;
@@ -102,6 +103,17 @@ public class SeriousPunchHandler implements Listener {
             return;
         }
 
+        // Activacion intencional de Saitama:
+        // Se activa con Puno limpio (mano vacia), agachado (Shift + Golpe), o con transformacion SAITAMA activa.
+        // Si el jugador esta usando espada/hacha de pie, no se dispara para evitar caos involuntario.
+        PlayerSettings settings = plugin.getRankManager().getPlayerSettings(player.getUniqueId());
+        boolean bareHand = player.getInventory().getItemInMainHand().getType().isAir();
+        boolean sneaking = player.isSneaking();
+        boolean saitamaTrans = "SAITAMA".equalsIgnoreCase(settings.getActiveTransformation());
+        if (!bareHand && !sneaking && !saitamaTrans) {
+            return;
+        }
+
         // Reentrancy guard
         if (executingPunches.contains(player.getUniqueId())) return;
 
@@ -122,6 +134,8 @@ public class SeriousPunchHandler implements Listener {
         if (!player.isSneaking()) return;
         if (!hasSeriousPunch(player)) return;
 
+        ItemStack hand = player.getInventory().getItemInMainHand();
+        if (hand.getType().name().endsWith("_SWORD") || hand.getType() == Material.BOW || hand.getType() == Material.CROSSBOW) return;
         if (executingPunches.contains(player.getUniqueId())) return;
 
         long remaining = getCooldownRemainingMs(player);
@@ -181,7 +195,7 @@ public class SeriousPunchHandler implements Listener {
                     }
                     world.spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, center, 8, radius * 0.4, radius * 0.4, radius * 0.4, 0.05);
                     world.spawnParticle(Particle.SWEEP_ATTACK, center, 3, 0.5, 0.5, 0.5, 0);
-                    world.spawnParticle(Particle.FLASH, center, 1);
+                    world.spawnParticle(Particle.FLASH, center, 1, 0.0, 0.0, 0.0, 0.0, Color.WHITE);
                 } catch (Exception ignored) {}
 
                 // Si el actor está en un claim ajeno, no rompe terreno
@@ -242,9 +256,11 @@ public class SeriousPunchHandler implements Listener {
                             }
                         }
 
-                        // 2. Daño Verdadero (Sonic Boom ignora armadura y encantamientos vanilla)
+                        // 2. Daño Verdadero Devastador (Sonic Boom ignora armadura vanilla y penetra sets Infinity)
+                        double maxHp = living.getAttribute(org.bukkit.attribute.Attribute.MAX_HEALTH) != null ?
+                                living.getAttribute(org.bukkit.attribute.Attribute.MAX_HEALTH).getValue() : 20.0;
                         double prevHealth = living.getHealth();
-                        double calculatedDamage = 75.0 + (rebirths * 5.0) + (prevHealth * 0.35);
+                        double calculatedDamage = Math.max(100.0, maxHp * 0.65) + (rebirths * 8.0);
 
                         try {
                             living.setMetadata("DRAKES_ABILITY_DAMAGE", new FixedMetadataValue(plugin, true));
@@ -253,9 +269,10 @@ public class SeriousPunchHandler implements Listener {
                             living.removeMetadata("DRAKES_ABILITY_DAMAGE", plugin);
                         }
 
-                        // 3. Suelo de Daño Verdadero Garantizado (Anti-Resistance / Anti-Infinity god effects)
+                        // 3. Suelo de Daño Verdadero Letal Garantizado (Anti-Infinity & Anti-Resistance)
+                        // Bypasea armadura de Infinity y sets invulnerables destruyendo 50% max HP garantizado
                         double damageDone = prevHealth - living.getHealth();
-                        double minGuaranteedDamage = 40.0 + (rebirths * 3.5); // 20+ corazones mínimos garantizados
+                        double minGuaranteedDamage = Math.max(80.0, maxHp * 0.50) + (rebirths * 5.0);
                         if (damageDone < minGuaranteedDamage && !living.isDead()) {
                             double remainingHp = Math.max(1.0, living.getHealth() - (minGuaranteedDamage - damageDone));
                             living.setHealth(remainingHp);
