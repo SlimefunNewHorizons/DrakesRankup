@@ -18,7 +18,9 @@ public class TransformationGuiListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onInventoryClick(InventoryClickEvent event) {
-        if (!(event.getInventory().getHolder() instanceof TransformationMenu menu)) return;
+        boolean isTrans = event.getInventory().getHolder() instanceof TransformationMenu;
+        boolean isConfig = event.getInventory().getHolder() instanceof AbilityConfigMenu;
+        if (!isTrans && !isConfig) return;
 
         event.setCancelled(true);
 
@@ -37,13 +39,17 @@ public class TransformationGuiListener implements Listener {
         clickDebounce.put(player.getUniqueId(), now);
 
         if (event.getClickedInventory() != null && event.getClickedInventory().equals(event.getView().getTopInventory())) {
-            menu.handleClick(event, player);
+            if (isTrans) {
+                ((TransformationMenu) event.getInventory().getHolder()).handleClick(event, player);
+            } else {
+                ((AbilityConfigMenu) event.getInventory().getHolder()).handleClick(event, player);
+            }
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onInventoryDrag(InventoryDragEvent event) {
-        if (event.getInventory().getHolder() instanceof TransformationMenu) {
+        if (event.getInventory().getHolder() instanceof TransformationMenu || event.getInventory().getHolder() instanceof AbilityConfigMenu) {
             event.setCancelled(true);
         }
     }

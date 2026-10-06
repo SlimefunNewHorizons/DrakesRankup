@@ -48,14 +48,21 @@ public class KineticPushListener implements Listener {
         }
 
         Rank rank = plugin.getRankManager().getPlayerRank(player.getUniqueId());
-        if (rank == null || !rank.isHasKineticPush()) {
-            // El jugador no posee empuje cinético; NO alterar su estado de vuelo
+        PlayerSettings settings = plugin.getRankManager().getPlayerSettings(player.getUniqueId());
+        int tier = (rank != null) ? rank.getTier() : 0;
+        boolean hasTransform = plugin.getDragonBallListener() != null && plugin.getDragonBallListener().isAnyTransformationActive(player.getUniqueId());
+        boolean hasStaff = (player.hasPermission("drakesrankup.staff") || (plugin.getStaffManager() != null && plugin.getStaffManager().isAngel(player.getUniqueId())));
+        if (settings.isKiFlightEnabled() && settings.isSonicLeapEnabled() && (tier >= 31 || hasTransform || hasStaff)) {
+            // Conceder vuelo/doble salto delegado para DragonBallListener
+            player.setAllowFlight(true);
             return;
         }
 
-        PlayerSettings settings = plugin.getRankManager().getPlayerSettings(player.getUniqueId());
+        if (rank == null || !rank.isHasKineticPush()) {
+            return;
+        }
+
         if (!settings.isKineticPushEnabled()) {
-            // Habilidad desactivada en configuración personal; no alterar vuelo
             return;
         }
 
@@ -70,17 +77,25 @@ public class KineticPushListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onToggleFlight(PlayerToggleFlightEvent event) {
+        if (event.isCancelled()) return;
         Player player = event.getPlayer();
         if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) return;
         if (hasFlightBypass(player)) return;
         if (!plugin.isWorldAllowed(player.getWorld())) return;
 
         Rank rank = plugin.getRankManager().getPlayerRank(player.getUniqueId());
-        if (rank == null || !rank.isHasKineticPush()) return;
-
         PlayerSettings settings = plugin.getRankManager().getPlayerSettings(player.getUniqueId());
+        int tier = (rank != null) ? rank.getTier() : 0;
+        boolean hasTransform = plugin.getDragonBallListener() != null && plugin.getDragonBallListener().isAnyTransformationActive(player.getUniqueId());
+        boolean hasStaff = (player.hasPermission("drakesrankup.staff") || (plugin.getStaffManager() != null && plugin.getStaffManager().isAngel(player.getUniqueId())));
+        if (settings.isKiFlightEnabled() && settings.isSonicLeapEnabled() && (tier >= 31 || hasTransform || hasStaff)) {
+            // Dejar que DragonBallListener gestione el Super Impulso Sonico de 100 bloques
+            return;
+        }
+
+        if (rank == null || !rank.isHasKineticPush()) return;
         if (!settings.isKineticPushEnabled()) return;
 
         long now = System.currentTimeMillis();
@@ -123,7 +138,7 @@ public class KineticPushListener implements Listener {
         } catch (Exception ignored) {}
 
         Location loc = player.getLocation();
-        int tier = rank.getTier();
+        tier = rank.getTier();
         try {
             if (tier <= 20) {
                 player.getWorld().spawnParticle(Particle.SMOKE, loc, 25, 0.3, 0.3, 0.3, 0.05);

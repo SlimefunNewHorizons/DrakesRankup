@@ -203,7 +203,7 @@ public class AuraTask extends BukkitRunnable {
                 loc.getWorld().spawnParticle(Particle.FLAME, head, 2, 0.3, 0.3, 0.3, 0.02);
             } else {                          // División X: Dioses Multiversales (91-100)
                 int n = 4 + (tier - 90) / 2;
-                loc.getWorld().spawnParticle(Particle.FLASH, base, 1);
+                loc.getWorld().spawnParticle(Particle.FLASH, base, 1, 0.0, 0.0, 0.0, 0.0, Color.WHITE);
                 loc.getWorld().spawnParticle(Particle.END_ROD, base, n, 0.4, 0.6, 0.4, 0.05);
                 double x1 = 0.50 * Math.cos(angle);
                 double z1 = 0.50 * Math.sin(angle);

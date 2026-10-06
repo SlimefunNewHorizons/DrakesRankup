@@ -322,6 +322,20 @@ public class TransformationMenu implements InventoryHolder {
                 "&eClic para desequipar"
         ));
 
+        // Configuración de Superposición de Habilidades (Slot 48)
+        inv.setItem(48, createItem(Material.COMPARATOR, "&6&l⚙ Configurar Superposición de Habilidades",
+                "&7Ajusta individualmente que tecnicas activar:",
+                "&8▪ &fGolpe Serio de Saitama &8(Tier 41/50+)",
+                "&8▪ &fEstilo Tres Espadas Zoro &8(Tier 24+)",
+                "&8▪ &fFrutas del Diablo & Haki &8(Tier 30+)",
+                "&8▪ &fSuper Impulso Sonico 100b &8(Tier 31+)",
+                "&8▪ &fEnergia Maldita Jujutsu &8(Tier 20+)",
+                "&8▪ &fFilos Danzantes / Aura Kill &8(Tier 70+)",
+                "&8▪ &fVortice Magnetico &8(Tier 60+)",
+                "",
+                "&eClic para abrir menu de superposicion."
+        ));
+
         // Volver al menú de Rangos (Slot 49)
         inv.setItem(49, createItem(Material.ARROW, "&a◀ Volver al Menú de Rangos", "&7Abrir la interfaz principal de /rankup"));
 
@@ -356,6 +370,12 @@ public class TransformationMenu implements InventoryHolder {
         // Back to /rankup (Slot 49)
         if (slot == 49) {
             new RankupMenu(plugin, p, 0).open();
+            return;
+        }
+
+        // Configuración de Habilidades (Slot 48)
+        if (slot == 48) {
+            new AbilityConfigMenu(plugin, p).open();
             return;
         }
 
