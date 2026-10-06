@@ -5,6 +5,7 @@ import com.drakescraft.rankup.model.AbilityType;
 import com.drakescraft.rankup.model.PlayerSettings;
 import com.drakescraft.rankup.model.Rank;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -132,7 +133,7 @@ public class RankAbilityListener implements Listener {
             AbilityType ability = rank.getAbilityType();
             Location hitLoc = event.getEntity().getLocation();
 
-            if (ability == AbilityType.BLACK_FLASH || rank.getTier() >= 20) {
+            if (settings.isCursedEnergyEnabled() && (ability == AbilityType.BLACK_FLASH || rank.getTier() >= 20)) {
                 if (random.nextDouble() < 0.15) {
                     event.setDamage(event.getDamage() * 1.5);
                     try {
@@ -144,7 +145,7 @@ public class RankAbilityListener implements Listener {
                 }
             }
 
-            if (ability == AbilityType.CURSED_FLAME || rank.getTier() >= 43) {
+            if (settings.isCursedEnergyEnabled() && (ability == AbilityType.CURSED_FLAME || rank.getTier() >= 43)) {
                 event.getEntity().setFireTicks(80);
                 try {
                     event.getEntity().getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, hitLoc.clone().add(0, 1.0, 0), 15, 0.2, 0.4, 0.2, 0.05);
@@ -152,7 +153,7 @@ public class RankAbilityListener implements Listener {
             }
 
             // Habilidades Tiers 51 - 100
-            if (ability == AbilityType.DISMANTLE_CLEAVE || rank.getTier() >= 58) {
+            if (settings.isCursedEnergyEnabled() && (ability == AbilityType.DISMANTLE_CLEAVE || rank.getTier() >= 58)) {
                 if (random.nextDouble() < 0.20) {
                     event.setDamage(event.getDamage() * 1.4);
                     try {
@@ -165,12 +166,12 @@ public class RankAbilityListener implements Listener {
                 }
             }
 
-            if (ability == AbilityType.HOLLOW_PURPLE || rank.getTier() >= 59) {
+            if (settings.isCursedEnergyEnabled() && (ability == AbilityType.HOLLOW_PURPLE || rank.getTier() >= 59)) {
                 if (random.nextDouble() < 0.15) {
                     event.setDamage(event.getDamage() * 1.6);
                     try {
                         player.getWorld().spawnParticle(Particle.DRAGON_BREATH, hitLoc.clone().add(0, 1.0, 0), 25, 0.5, 0.5, 0.5, 0.05);
-                        player.getWorld().spawnParticle(Particle.FLASH, hitLoc.clone().add(0, 1.0, 0), 1);
+                        player.getWorld().spawnParticle(Particle.FLASH, hitLoc.clone().add(0, 1.0, 0), 1, 0.0, 0.0, 0.0, 0.0, Color.WHITE);
                         player.getWorld().playSound(hitLoc, Sound.ENTITY_WARDEN_SONIC_BOOM, 0.8f, 1.6f);
                     } catch (Exception ignored) {}
                     if (plugin.getProtectionGate() != null) {
@@ -255,7 +256,7 @@ public class RankAbilityListener implements Listener {
                         monster.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 80, 2));
                         monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 80, 2));
                         try {
-                            player.getWorld().spawnParticle(Particle.FLASH, monster.getLocation().add(0, 1.0, 0), 1);
+                            player.getWorld().spawnParticle(Particle.FLASH, monster.getLocation().add(0, 1.0, 0), 1, 0.0, 0.0, 0.0, 0.0, Color.WHITE);
                             player.getWorld().playSound(monster.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 0.5f, 2.0f);
                         } catch (Exception ignored) {}
                     }

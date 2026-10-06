@@ -27,6 +27,19 @@ public class PlayerSettings {
      */
     private int rebirthCount = 0;
 
+    // ==========================================
+    // CONFIGURACIÓN DE SUPERPOSICIÓN DE HABILIDADES
+    // Permite al jugador activar/desactivar individualmente cada técnica de combate
+    // evitando que todo se active a la vez o interfiera con el combate normal.
+    // ==========================================
+    private boolean seriousPunchEnabled = true;    // Golpe Serio de Saitama (Tier 41 / 50+)
+    private boolean santoryuEnabled = true;       // Estilo Tres Espadas de Zoro (Tier 24+)
+    private boolean devilFruitEnabled = true;     // Habilidades activas de Frutas del Diablo (Tier 30+)
+    private boolean sonicLeapEnabled = true;      // Super Impulso Sónico de 100 bloques (Doble Salto)
+    private boolean cursedEnergyEnabled = true;   // Destello Negro & Desmantelar (Jujutsu Tiers 20+)
+    private boolean dancingBladesEnabled = false; // Filos Danzantes / Aura Kill (Tier 70+)
+    private boolean magnetVortexEnabled = false;  // Vórtice Magnético (Tier 60+)
+
     public PlayerSettings(boolean particlesEnabled, boolean kineticPushEnabled, boolean abilitiesEnabled) {
         this.particlesEnabled = particlesEnabled;
         this.kineticPushEnabled = kineticPushEnabled;
@@ -34,5 +47,12 @@ public class PlayerSettings {
         this.activeTransformation = null;
         this.kiFlightEnabled = true;
         this.rebirthCount = 0;
+        this.seriousPunchEnabled = true;
+        this.santoryuEnabled = true;
+        this.devilFruitEnabled = true;
+        this.sonicLeapEnabled = true;
+        this.cursedEnergyEnabled = true;
+        this.dancingBladesEnabled = false;
+        this.magnetVortexEnabled = false;
     }
 }
