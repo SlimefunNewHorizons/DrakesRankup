@@ -5,6 +5,7 @@ import com.drakescraft.rankup.gui.TransformationMenu;
 import com.drakescraft.rankup.model.AbilityType;
 import com.drakescraft.rankup.model.PlayerSettings;
 import com.drakescraft.rankup.model.Rank;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -279,5 +280,29 @@ class DrakesRankupTest {
 
         assertDoesNotThrow(() -> plugin.getDragonBallListener().onBillsHakai(hakai));
         assertDoesNotThrow(() -> plugin.getDragonBallListener().onZenoErase(zeno));
+    }
+
+    @Test
+    void testProtectionGateChunkSafeguards() {
+        assertNotNull(plugin.getProtectionGate(), "ProtectionGate debe estar inicializado");
+        PlayerMock player = server.addPlayer("ChunkTester");
+        org.bukkit.World world = server.addSimpleWorld("explosion_world");
+        Location loc = new Location(world, 100.0, 64.0, 100.0);
+
+        // En MockBukkit, loadChunk carga el chunk para pruebas
+        world.loadChunk(loc.getBlockX() >> 4, loc.getBlockZ() >> 4);
+
+        // Verificación de llamadas seguras sin lanzar excepciones
+        assertDoesNotThrow(() -> {
+            boolean allowed = plugin.getProtectionGate().applyTerrainExplosion(player, loc, 2.0f, false);
+            // Debe responder coherentemente sin lanzar excepciones de chunk ni NPE
+            assertNotNull(allowed);
+        });
+
+        // Test con ubicación nula
+        assertFalse(plugin.getProtectionGate().applyTerrainExplosion(player, null, 2.0f, false));
+        assertFalse(plugin.getProtectionGate().allowTerrainDamage(player, null, 2.0));
+        assertFalse(plugin.getProtectionGate().canDestroyBlock(player, null));
+        assertTrue(plugin.getProtectionGate().isProtected(null));
     }
 }
