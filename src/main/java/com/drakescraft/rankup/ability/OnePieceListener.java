@@ -441,7 +441,7 @@ public class OnePieceListener implements Listener {
             double baseDamage = (12.0 + fallDist * 0.9) * (1.0 + rebirths * 0.03);
 
             for (Entity e : player.getNearbyEntities(6.0, 3.5, 6.0)) {
-                if (e instanceof LivingEntity target && e != player) {
+                if (e instanceof LivingEntity target && e != player && target.isValid() && target.getLocation().isChunkLoaded()) {
                     target.damage(baseDamage, player);
                     Vector knock = target.getLocation().toVector().subtract(loc.toVector()).normalize().multiply(1.5).setY(0.5);
                     target.setVelocity(knock);
@@ -485,7 +485,7 @@ public class OnePieceListener implements Listener {
 
                     player.sendTitle("§f§lBAJRANG GUN", "§e¡Puño Colosal de la Liberación!", 2, 35, 10);
                     for (Entity e : player.getNearbyEntities(10.0, 5.0, 10.0)) {
-                        if (e instanceof LivingEntity target && e != player) {
+                        if (e instanceof LivingEntity target && e != player && target.isValid() && target.getLocation().isChunkLoaded()) {
                             target.damage(28.0, player);
                             target.setVelocity(dir.clone().multiply(2.2).setY(0.8));
                         }
@@ -508,8 +508,9 @@ public class OnePieceListener implements Listener {
                         if (!p.getBlock().isPassable()) break;
                         p.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, p, 5, 0.2, 0.2, 0.2, 0.08);
                         p.getWorld().spawnParticle(Particle.FLASH, p, 1, 0, 0, 0, 0);
+                        if (!p.getWorld().isChunkLoaded(p.getBlockX() >> 4, p.getBlockZ() >> 4)) break;
                         for (LivingEntity target : p.getWorld().getNearbyLivingEntities(p, 1.5)) {
-                            if (target != player) {
+                            if (target != player && target.isValid() && target.getLocation().isChunkLoaded()) {
                                 target.damage(16.0, player);
                                 target.getWorld().strikeLightningEffect(target.getLocation());
                             }
@@ -544,7 +545,7 @@ public class OnePieceListener implements Listener {
 
                     player.sendTitle("§6§lDAI ENKAI: ENTEI", "§c¡Sol abrasador desatado!", 5, 35, 10);
                     for (Entity e : player.getNearbyEntities(12.0, 6.0, 12.0)) {
-                        if (e instanceof LivingEntity vic && e != player) {
+                        if (e instanceof LivingEntity vic && e != player && vic.isValid() && vic.getLocation().isChunkLoaded()) {
                             vic.setFireTicks(160);
                             vic.damage(24.0, player);
                         }
@@ -562,8 +563,9 @@ public class OnePieceListener implements Listener {
                         if (!p.getBlock().isPassable()) break;
                         p.getWorld().spawnParticle(Particle.FLAME, p, 15, 0.4, 0.4, 0.4, 0.05);
                         p.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, p, 2, 0.2, 0.2, 0.2, 0.02);
+                        if (!p.getWorld().isChunkLoaded(p.getBlockX() >> 4, p.getBlockZ() >> 4)) break;
                         for (LivingEntity vic : p.getWorld().getNearbyLivingEntities(p, 1.6)) {
-                            if (vic != player) {
+                            if (vic != player && vic.isValid() && vic.getLocation().isChunkLoaded()) {
                                 vic.setFireTicks(100);
                                 vic.damage(14.0, player);
                             }
@@ -662,7 +664,7 @@ public class OnePieceListener implements Listener {
                 } catch (Exception ignored) {}
 
                 for (Entity e : player.getNearbyEntities(12.0, 5.0, 12.0)) {
-                    if (e instanceof LivingEntity target && e != player) {
+                    if (e instanceof LivingEntity target && e != player && target.isValid() && target.getLocation().isChunkLoaded()) {
                         target.damage(22.0, player);
                         target.setVelocity(new Vector(0, 1.2, 0).add(dir.clone().multiply(1.4)));
                     }
@@ -721,7 +723,7 @@ public class OnePieceListener implements Listener {
 
         int knocked = 0;
         for (Entity e : player.getNearbyEntities(16.0, 6.0, 16.0)) {
-            if (e instanceof LivingEntity target && e != player) {
+            if (e instanceof LivingEntity target && e != player && target.isValid() && target.getLocation().isChunkLoaded()) {
                 knocked++;
                 if (target instanceof Monster) {
                     if (target.getHealth() <= 30.0) {
@@ -819,8 +821,9 @@ public class OnePieceListener implements Listener {
         Vector dir = eye.getDirection().normalize();
         for (double d = 1.0; d <= range; d += 0.5) {
             Location p = eye.clone().add(dir.clone().multiply(d));
+            if (!p.getWorld().isChunkLoaded(p.getBlockX() >> 4, p.getBlockZ() >> 4)) break;
             for (Entity e : player.getWorld().getNearbyEntities(p, 1.2, 1.2, 1.2)) {
-                if (e != player && e instanceof LivingEntity) return e;
+                if (e != player && e instanceof LivingEntity && e.isValid() && e.getLocation().isChunkLoaded()) return e;
             }
         }
         return null;

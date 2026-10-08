@@ -109,7 +109,7 @@ public class SpecialAbilitiesListener implements Listener {
         int attractedCount = 0;
         double radius = 200.0;
         for (Entity e : player.getNearbyEntities(radius, radius, radius)) {
-            if (e instanceof Item item && item.isValid() && !item.isDead()) {
+            if (e instanceof Item item && item.isValid() && !item.isDead() && item.getLocation().isChunkLoaded()) {
                 Vector dir = pLoc.toVector().subtract(item.getLocation().toVector());
                 double dist = dir.length();
                 if (dist > 0.8) {

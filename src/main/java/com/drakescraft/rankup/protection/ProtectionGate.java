@@ -2,6 +2,9 @@ package com.drakescraft.rankup.protection;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -34,9 +37,20 @@ public final class ProtectionGate {
      */
     public boolean allowTerrainDamage(Player actor, Location center, double radius) {
         if (center == null || center.getWorld() == null) return false;
-        
+        World world = center.getWorld();
+        int centerChunkX = center.getBlockX() >> 4;
+        int centerChunkZ = center.getBlockZ() >> 4;
+        if (!world.isChunkLoaded(centerChunkX, centerChunkZ)) {
+            return false;
+        }
+
         // Muestrear centro y perímetro
         for (Location sample : samples(center, radius)) {
+            int sChunkX = sample.getBlockX() >> 4;
+            int sChunkZ = sample.getBlockZ() >> 4;
+            if (!world.isChunkLoaded(sChunkX, sChunkZ)) {
+                return false; // Perímetro alcanza chunks no residentes: anular preventivamente
+            }
             if (isProtected(sample, actor)) {
                 if (actor != null && actor.isOnline()) {
                     actor.sendMessage(ChatColor.translateAlternateColorCodes('&',
@@ -51,16 +65,48 @@ public final class ProtectionGate {
     /**
      * Ejecuta una detonación controlada: si la zona es virgen / desprotegida, destruye bloques;
      * si está protegida o hay duda, la explosión no rompe ningún bloque (breakBlocks = false).
+     * Incorpora blindaje estricto de chunks para evitar cargas síncronas y watchdogs.
      */
     public boolean applyTerrainExplosion(Player actor, Location loc, float power, boolean setFire) {
         if (loc == null || loc.getWorld() == null) return false;
+        World world = loc.getWorld();
+        int chunkX = loc.getBlockX() >> 4;
+        int chunkZ = loc.getBlockZ() >> 4;
+        if (!world.isChunkLoaded(chunkX, chunkZ)) {
+            return false;
+        }
+
+        // Blindaje contra cargas síncronas de chunks: verificar que todos los chunks en el radio de explosión estén cargados
+        int radiusChunks = (int) Math.ceil((power * 1.5) / 16.0);
+        for (int cx = chunkX - radiusChunks; cx <= chunkX + radiusChunks; cx++) {
+            for (int cz = chunkZ - radiusChunks; cz <= chunkZ + radiusChunks; cz++) {
+                if (!world.isChunkLoaded(cx, cz)) {
+                    // Si algún chunk adyacente dentro del radio no está residente,
+                    // omitir la detonación física/terreno para evitar cadenas síncronas de carga
+                    // (LevelledMobs EntityDeathListener, etc.) y reproducir efectos audiovisuales seguros.
+                    playSafeExplosionVisuals(loc, power);
+                    return false;
+                }
+            }
+        }
+
         boolean allowed = allowTerrainDamage(actor, loc, power);
         if (allowed) {
-            loc.getWorld().createExplosion(actor, loc, power, setFire, true);
+            world.createExplosion(actor, loc, power, setFire, true);
         } else {
-            loc.getWorld().createExplosion(actor, loc, power, false, false);
+            world.createExplosion(actor, loc, power, false, false);
         }
         return allowed;
+    }
+
+    private void playSafeExplosionVisuals(Location loc, float power) {
+        try {
+            World world = loc.getWorld();
+            if (world != null) {
+                world.spawnParticle(Particle.EXPLOSION_EMITTER, loc, 1);
+                world.playSound(loc, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f);
+            }
+        } catch (Throwable ignored) {}
     }
 
     private List<Location> samples(Location center, double radius) {
@@ -76,6 +122,10 @@ public final class ProtectionGate {
     }
 
     public boolean isProtected(Location location, Player actor) {
+        if (location == null || location.getWorld() == null) return true;
+        if (!location.getWorld().isChunkLoaded(location.getBlockX() >> 4, location.getBlockZ() >> 4)) {
+            return true; // Fail-closed seguro: si el chunk no está cargado, proteger sin forzar carga síncrona
+        }
         try {
             // 1. Verificación en ProtectionStones
             if (protectionStoneLookup != null) {
@@ -133,6 +183,7 @@ public final class ProtectionGate {
 
     public boolean canDestroyBlock(Player actor, org.bukkit.block.Block block) {
         if (block == null || block.getWorld() == null) return false;
+        if (!block.getWorld().isChunkLoaded(block.getX() >> 4, block.getZ() >> 4)) return false;
         org.bukkit.Material type = block.getType();
         if (type.isAir()) return false;
 

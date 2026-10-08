@@ -238,6 +238,7 @@ public class RankAbilityListener implements Listener {
             if (ability == AbilityType.HAKI_CONQUEROR || rank.getTier() >= 30) {
                 Location loc = player.getLocation();
                 for (Entity nearby : player.getNearbyEntities(6.0, 3.0, 6.0)) {
+                    if (!nearby.isValid() || !nearby.getLocation().isChunkLoaded()) continue;
                     if (nearby instanceof Monster monster) {
                         monster.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 80, 1));
                         monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 80, 1));
