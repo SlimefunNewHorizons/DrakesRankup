@@ -46,6 +46,12 @@ public class DrakesRankupExpansion extends PlaceholderExpansion {
         Rank nextRank = plugin.getRankManager().getNextRank(player.getUniqueId());
 
         switch (params.toLowerCase()) {
+            case "skill_boost": {
+                var skills = plugin.getSkillBoostService();
+                var online = player.getPlayer();
+                if (skills == null || online == null) return "+0%";
+                return "+" + skills.percentFor(online) + "%";
+            }
             case "jobs_boost": {
                 var jobs = plugin.getJobsBoostService();
                 var online = player.getPlayer();

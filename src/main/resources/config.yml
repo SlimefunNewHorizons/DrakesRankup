@@ -104,3 +104,11 @@ jobs-boost:
   include-vip: true          # multiplica por DrakesVipApi.getJobsMoneyMultiplier
   boost-points: false        # tambien los puntos de Jobs (false = solo dinero)
   cap: 3.0                   # tope del multiplicador total
+
+# Bono de XP de skills de AuraSkills por rango y renacimientos (permiso auraskills.multiplier.<N>).
+# Se suma al booster de skills de VIP++. Tier 100 = +30% con estos valores.
+skills-boost:
+  enabled: true
+  percent-per-tier: 0.3        # +0.3% de XP por tier
+  percent-per-rebirth: 0.5     # +0.5% por renacimiento
+  cap-percent: 60              # tope del bono de Rankup

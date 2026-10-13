@@ -31,9 +31,12 @@ public class AuraRenderTask extends BukkitRunnable {
     private static final int STRAND_TRAIL = 4;
     private static final double TRAIL_STEP = 0.07;
     private static final int PULSE_INTERVAL_RUNS = 30;
+    /** El halo recibe una orden de giro cada 10 ejecuciones (medio segundo). */
+    private static final int HALO_SYNC_RUNS = 10;
 
     private final DrakesRankupPlugin plugin;
     private long runs;
+    private final AuraHalo halo = new AuraHalo();
 
     public AuraRenderTask(DrakesRankupPlugin plugin) {
         this.plugin = plugin;
@@ -48,11 +51,16 @@ public class AuraRenderTask extends BukkitRunnable {
             }
             PlayerSettings settings = plugin.getRankManager().getPlayerSettings(player.getUniqueId());
             if (!settings.isParticlesEnabled() || settings.getParticleLevel() <= 0) {
+                halo.remove(player);
                 continue;
             }
             AuraStyle style = selectStyle(plugin, player);
             if (style == null) {
+                halo.remove(player);
                 continue;
+            }
+            if (settings.getParticleLevel() >= 2 && runs % HALO_SYNC_RUNS == 0) {
+                halo.sync(player, style);
             }
             try {
                 draw(player.getLocation(), style, settings.getParticleLevel());
@@ -60,6 +68,16 @@ public class AuraRenderTask extends BukkitRunnable {
                 // Una particula rechazada no debe tumbar la tarea del resto de jugadores.
             }
         }
+    }
+
+    /** Quita todos los halos (cierre del plugin). */
+    public void shutdown() {
+        halo.removeAll();
+    }
+
+    /** Quita el halo de un jugador que sale o cambia de mundo. */
+    public void clear(Player player) {
+        halo.remove(player);
     }
 
     /** Aura que corresponde al jugador ahora mismo, o null si no tiene ninguna de este sistema. */

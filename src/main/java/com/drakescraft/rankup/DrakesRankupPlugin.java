@@ -42,8 +42,11 @@ public class DrakesRankupPlugin extends JavaPlugin {
     private Economy economy;
     @Getter
     private KineticPushListener kineticPushListener;
+    private com.drakescraft.rankup.fx.AuraRenderTask auraRenderTask;
     @Getter
     private com.drakescraft.rankup.jobs.JobsBoostService jobsBoostService;
+    @Getter
+    private com.drakescraft.rankup.skills.SkillBoostService skillBoostService;
     @Getter
     private DragonBallListener dragonBallListener;
     @Getter
@@ -106,6 +109,8 @@ public class DrakesRankupPlugin extends JavaPlugin {
         seriousPunchHandler = new SeriousPunchHandler(this);
         jobsBoostService = new com.drakescraft.rankup.jobs.JobsBoostService(this);
         jobsBoostService.register();
+        skillBoostService = new com.drakescraft.rankup.skills.SkillBoostService(this);
+        skillBoostService.register();
         Bukkit.getPluginManager().registerEvents(seriousPunchHandler, this);
 
 
@@ -123,7 +128,17 @@ public class DrakesRankupPlugin extends JavaPlugin {
         // Start aura particle task every second (20 ticks)
         auraTask = new AuraTask(this);
         auraTask.runTaskTimerAsynchronously(this, 20L, 20L);
-        new com.drakescraft.rankup.fx.AuraRenderTask(this).runTaskTimer(this, 40L, 2L);
+        com.drakescraft.rankup.fx.AuraHalo.sweepOrphans();
+        auraRenderTask = new com.drakescraft.rankup.fx.AuraRenderTask(this);
+        auraRenderTask.runTaskTimer(this, 40L, 2L);
+        Bukkit.getPluginManager().registerEvents(new org.bukkit.event.Listener() {
+            @org.bukkit.event.EventHandler
+            public void onQuit(org.bukkit.event.player.PlayerQuitEvent e) { auraRenderTask.clear(e.getPlayer()); }
+            @org.bukkit.event.EventHandler
+            public void onDeath(org.bukkit.event.entity.PlayerDeathEvent e) { auraRenderTask.clear(e.getEntity()); }
+            @org.bukkit.event.EventHandler
+            public void onWorld(org.bukkit.event.player.PlayerChangedWorldEvent e) { auraRenderTask.clear(e.getPlayer()); }
+        }, this);
 
         // Start periodic rank decay check task
         if (getConfig().getBoolean("settings.maintenance.enabled", true)) {
@@ -145,6 +160,10 @@ public class DrakesRankupPlugin extends JavaPlugin {
     public void onDisable() {
         if (auraTask != null) {
             auraTask.cancel();
+        }
+        if (auraRenderTask != null) {
+            auraRenderTask.cancel();
+            auraRenderTask.shutdown();
         }
         if (rankDecayTask != null) {
             rankDecayTask.cancel();
