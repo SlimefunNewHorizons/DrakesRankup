@@ -108,7 +108,7 @@ public class StaffManager implements Listener {
                 // Deflect or vaporize projectile in slow motion / flash
                 Vector reversed = proj.getVelocity().multiply(-0.8);
                 proj.setVelocity(reversed);
-                proj.getWorld().spawnParticle(Particle.FLASH, proj.getLocation(), 1);
+                proj.getWorld().spawnParticle(Particle.FLASH, proj.getLocation(), 1, 0, 0, 0, 0, org.bukkit.Color.WHITE);
             } catch (Exception ignored) {}
         }
 

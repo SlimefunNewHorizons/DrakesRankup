@@ -181,7 +181,7 @@ public class SeriousPunchHandler implements Listener {
                     }
                     world.spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, center, 8, radius * 0.4, radius * 0.4, radius * 0.4, 0.05);
                     world.spawnParticle(Particle.SWEEP_ATTACK, center, 3, 0.5, 0.5, 0.5, 0);
-                    world.spawnParticle(Particle.FLASH, center, 1);
+                    world.spawnParticle(Particle.FLASH, center, 1, 0, 0, 0, 0, org.bukkit.Color.WHITE);
                 } catch (Exception ignored) {}
 
                 // Si el actor está en un claim ajeno, no rompe terreno

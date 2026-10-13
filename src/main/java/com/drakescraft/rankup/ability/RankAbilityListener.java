@@ -71,7 +71,7 @@ public class RankAbilityListener implements Listener {
                     event.setCancelled(true);
                     try {
                         Location loc = player.getLocation();
-                        player.getWorld().spawnParticle(Particle.DRAGON_BREATH, loc.add(0, 1.0, 0), 15, 0.3, 0.5, 0.3, 0.02);
+                        player.getWorld().spawnParticle(Particle.DRAGON_BREATH, loc.add(0, 1.0, 0), 15, 0.3, 0.5, 0.3, 0.02, 1.0F);
                         player.playSound(loc, Sound.BLOCK_AMETHYST_BLOCK_CHIME, 1.0f, 1.5f);
                         player.sendActionBar(Component.text("§b⚡ ¡ILUSIÓN KYOKA SUIGETSU! §7Ataque enemigo desviado."));
                     } catch (Exception ignored) {}
@@ -169,8 +169,8 @@ public class RankAbilityListener implements Listener {
                 if (random.nextDouble() < 0.15) {
                     event.setDamage(event.getDamage() * 1.6);
                     try {
-                        player.getWorld().spawnParticle(Particle.DRAGON_BREATH, hitLoc.clone().add(0, 1.0, 0), 25, 0.5, 0.5, 0.5, 0.05);
-                        player.getWorld().spawnParticle(Particle.FLASH, hitLoc.clone().add(0, 1.0, 0), 1);
+                        player.getWorld().spawnParticle(Particle.DRAGON_BREATH, hitLoc.clone().add(0, 1.0, 0), 25, 0.5, 0.5, 0.5, 0.05, 1.0F);
+                        player.getWorld().spawnParticle(Particle.FLASH, hitLoc.clone().add(0, 1.0, 0), 1, 0, 0, 0, 0, org.bukkit.Color.WHITE);
                         player.getWorld().playSound(hitLoc, Sound.ENTITY_WARDEN_SONIC_BOOM, 0.8f, 1.6f);
                     } catch (Exception ignored) {}
                     if (plugin.getProtectionGate() != null) {
@@ -191,7 +191,10 @@ public class RankAbilityListener implements Listener {
                             } finally {
                                 target.removeMetadata("DRAKES_ABILITY_DAMAGE", plugin);
                             }
-                            target.setVelocity(target.getLocation().toVector().subtract(hitLoc.toVector()).normalize().multiply(1.3).setY(0.5));
+                            org.bukkit.util.Vector knock = target.getLocation().toVector().subtract(hitLoc.toVector());
+                            // normalize() de un vector nulo da NaN y setVelocity lo rechaza ("x not finite").
+                            knock = knock.lengthSquared() < 1.0E-6 ? new org.bukkit.util.Vector(0, 0, 0) : knock.normalize().multiply(1.3);
+                            target.setVelocity(knock.setY(0.5));
                         }
                     }
                     try {
@@ -256,7 +259,7 @@ public class RankAbilityListener implements Listener {
                         monster.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 80, 2));
                         monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 80, 2));
                         try {
-                            player.getWorld().spawnParticle(Particle.FLASH, monster.getLocation().add(0, 1.0, 0), 1);
+                            player.getWorld().spawnParticle(Particle.FLASH, monster.getLocation().add(0, 1.0, 0), 1, 0, 0, 0, 0, org.bukkit.Color.WHITE);
                             player.getWorld().playSound(monster.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 0.5f, 2.0f);
                         } catch (Exception ignored) {}
                     }

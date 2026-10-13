@@ -320,7 +320,7 @@ public class DragonBallListener implements Listener {
                     chargingTasks.remove(uuid);
                     cancel();
                     try {
-                        w.spawnParticle(Particle.FLASH, floatLoc.clone().add(0, 0.5, 0), 2);
+                        w.spawnParticle(Particle.FLASH, floatLoc.clone().add(0, 0.5, 0), 2, 0, 0, 0, 0, org.bukkit.Color.WHITE);
                         w.spawnParticle(Particle.SONIC_BOOM, floatLoc.clone().add(0, 0.5, 0), 1);
                         w.playSound(floatLoc, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1.0f, 1.8f);
                     } catch (Exception ignored) {}
@@ -609,7 +609,7 @@ public class DragonBallListener implements Listener {
                     damaged.add(entity);
                     try {
                         entity.damage(14.0, player); // 7 hearts piercing damage
-                        entity.getWorld().spawnParticle(Particle.FLASH, entity.getLocation().add(0, 1.0, 0), 1);
+                        entity.getWorld().spawnParticle(Particle.FLASH, entity.getLocation().add(0, 1.0, 0), 1, 0, 0, 0, 0, org.bukkit.Color.WHITE);
                     } catch (Exception ignored) {}
                 }
             }
@@ -669,7 +669,7 @@ public class DragonBallListener implements Listener {
 
             try {
                 point.getWorld().spawnParticle(Particle.WITCH, point, 3, 0.08, 0.08, 0.08, 0.02);
-                point.getWorld().spawnParticle(Particle.DRAGON_BREATH, point, 2, 0.05, 0.05, 0.05, 0.01);
+                point.getWorld().spawnParticle(Particle.DRAGON_BREATH, point, 2, 0.05, 0.05, 0.05, 0.01, 1.0F);
                 point.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, point, 1, 0.02, 0.02, 0.02, 0.01);
             } catch (Exception ignored) {}
 
@@ -680,7 +680,7 @@ public class DragonBallListener implements Listener {
                     try {
                         Location eLoc = entity.getLocation().add(0, 1.0, 0);
                         eLoc.getWorld().spawnParticle(Particle.ASH, eLoc, 35, 0.3, 0.5, 0.3, 0.1);
-                        eLoc.getWorld().spawnParticle(Particle.FLASH, eLoc, 1);
+                        eLoc.getWorld().spawnParticle(Particle.FLASH, eLoc, 1, 0, 0, 0, 0, org.bukkit.Color.WHITE);
                         eLoc.getWorld().playSound(eLoc, Sound.ENTITY_GENERIC_EXTINGUISH_FIRE, 1.0f, 0.7f);
 
                         if (entity instanceof Player victim) {
@@ -741,7 +741,7 @@ public class DragonBallListener implements Listener {
             center.getWorld().playSound(center, Sound.BLOCK_BEACON_DEACTIVATE, 1.0f, 1.9f);
             center.getWorld().playSound(center, Sound.ITEM_TOTEM_USE, 0.8f, 1.5f);
             center.getWorld().playSound(center, Sound.ENTITY_GENERIC_EXPLODE, 0.5f, 0.5f);
-            center.getWorld().spawnParticle(Particle.FLASH, center.clone().add(0, 1.0, 0), 3);
+            center.getWorld().spawnParticle(Particle.FLASH, center.clone().add(0, 1.0, 0), 3, 0, 0, 0, 0, org.bukkit.Color.WHITE);
             center.getWorld().spawnParticle(Particle.END_ROD, center.clone().add(0, 1.0, 0), 80, 2.0, 1.0, 2.0, 0.1);
         } catch (Exception ignored) {}
 
@@ -836,7 +836,7 @@ public class DragonBallListener implements Listener {
             loc.getWorld().spawnParticle(Particle.SONIC_BOOM, loc, 2);
             loc.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, loc, 1);
             loc.getWorld().spawnParticle(Particle.FIREWORK, loc, 35, 0.4, 0.4, 0.4, 0.15);
-            loc.getWorld().spawnParticle(Particle.FLASH, loc, 1);
+            loc.getWorld().spawnParticle(Particle.FLASH, loc, 1, 0, 0, 0, 0, org.bukkit.Color.WHITE);
             loc.getWorld().playSound(loc, Sound.ENTITY_WARDEN_SONIC_BOOM, 1.0f, 1.4f);
             loc.getWorld().playSound(loc, Sound.ITEM_TRIDENT_RIPTIDE_3, 1.2f, 1.0f);
             loc.getWorld().playSound(loc, Sound.ENTITY_GENERIC_EXPLODE, 0.8f, 1.8f);
@@ -1092,7 +1092,7 @@ public class DragonBallListener implements Listener {
 
                 try {
                     Location loc = event.getEntity().getLocation().add(0, 1.0, 0);
-                    attacker.getWorld().spawnParticle(Particle.DRAGON_BREATH, loc, 15, 0.2, 0.3, 0.2, 0.05);
+                    attacker.getWorld().spawnParticle(Particle.DRAGON_BREATH, loc, 15, 0.2, 0.3, 0.2, 0.05, 1.0F);
                     attacker.getWorld().spawnParticle(Particle.CRIT, loc, 10, 0.2, 0.2, 0.2, 0.1);
                     attacker.playSound(loc, Sound.ENTITY_PLAYER_ATTACK_CRIT, 0.9f, 1.6f);
                 } catch (Exception ignored) {}
@@ -1127,7 +1127,7 @@ public class DragonBallListener implements Listener {
         Particle.DustOptions d1 = new Particle.DustOptions(c1, 1.4f);
         Particle.DustOptions d2 = new Particle.DustOptions(c2, 1.1f);
         try {
-            w.spawnParticle(Particle.FLASH, loc.clone().add(0, 1, 0), 1);
+            w.spawnParticle(Particle.FLASH, loc.clone().add(0, 1, 0), 1, 0, 0, 0, 0, org.bukkit.Color.WHITE);
             w.spawnParticle(Particle.EXPLOSION_EMITTER, loc.clone().add(0, 1, 0), 1);
             for (double dy = 0; dy < 5.5; dy += 0.25) {
                 w.spawnParticle(accent, loc.clone().add(0, dy, 0), 1, 0.08, 0, 0.08, 0.01);
@@ -1166,7 +1166,7 @@ public class DragonBallListener implements Listener {
                         if (t % 3 == 0) w.playSound(loc, Sound.BLOCK_BEACON_AMBIENT, 0.7f, 0.6f + t * 0.04f);
                     } else if (t == 10) {
                         // FASE 2 - despertar: flash, pilar de luz y onda de choque
-                        w.spawnParticle(Particle.FLASH, loc.clone().add(0, 1, 0), 2);
+                        w.spawnParticle(Particle.FLASH, loc.clone().add(0, 1, 0), 2, 0, 0, 0, 0, org.bukkit.Color.WHITE);
                         w.spawnParticle(Particle.EXPLOSION_EMITTER, loc.clone().add(0, 1, 0), 1);
                         for (double dy = 0; dy < 6.5; dy += 0.22)
                             w.spawnParticle(Particle.END_ROD, loc.clone().add(0, dy, 0), 2, 0.09, 0, 0.09, 0.0);

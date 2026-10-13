@@ -84,7 +84,7 @@ public class AuraTask extends BukkitRunnable {
                         continue;
                     } else if (plugin.getDragonBallListener().isUltraEgoActive(player.getUniqueId())) {
                         loc.getWorld().spawnParticle(Particle.WITCH, loc.clone().add(0, 0.8, 0), 5, 0.3, 0.5, 0.3, 0.05);
-                        loc.getWorld().spawnParticle(Particle.DRAGON_BREATH, loc.clone().add(0, 0.2, 0), 3, 0.2, 0.1, 0.2, 0.03);
+                        loc.getWorld().spawnParticle(Particle.DRAGON_BREATH, loc.clone().add(0, 0.2, 0), 3, 0.2, 0.1, 0.2, 0.03, 1.0F);
                         continue;
                     } else if (plugin.getDragonBallListener().isGohanBeastActive(player.getUniqueId())) {
                         loc.getWorld().spawnParticle(Particle.CRIMSON_SPORE, loc.clone().add(0, 0.8, 0), 5, 0.25, 0.4, 0.25, 0.05);
@@ -188,7 +188,7 @@ public class AuraTask extends BukkitRunnable {
             } else if (tier <= 60) {          // División VI: Maldiciones Supremas
                 int n = 2 + (tier - 50) / 3;
                 loc.getWorld().spawnParticle(Particle.SQUID_INK, base, n, 0.3, 0.3, 0.3, 0.02);
-                loc.getWorld().spawnParticle(Particle.DRAGON_BREATH, head, 1, 0.2, 0.3, 0.2, 0.02);
+                loc.getWorld().spawnParticle(Particle.DRAGON_BREATH, head, 1, 0.2, 0.3, 0.2, 0.02, 1.0F);
             } else if (tier <= 70) {          // División VII: Shinigami Reiatsu
                 int n = 2 + (tier - 60) / 3;
                 loc.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, base, n, 0.3, 0.3, 0.3, 0.03);
@@ -203,7 +203,7 @@ public class AuraTask extends BukkitRunnable {
                 loc.getWorld().spawnParticle(Particle.FLAME, head, 2, 0.3, 0.3, 0.3, 0.02);
             } else {                          // División X: Dioses Multiversales (91-100)
                 int n = 4 + (tier - 90) / 2;
-                loc.getWorld().spawnParticle(Particle.FLASH, base, 1);
+                loc.getWorld().spawnParticle(Particle.FLASH, base, 1, 0, 0, 0, 0, org.bukkit.Color.WHITE);
                 loc.getWorld().spawnParticle(Particle.END_ROD, base, n, 0.4, 0.6, 0.4, 0.05);
                 double x1 = 0.50 * Math.cos(angle);
                 double z1 = 0.50 * Math.sin(angle);

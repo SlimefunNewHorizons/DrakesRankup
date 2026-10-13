@@ -278,7 +278,7 @@ public class RankManager {
         player.playSound(loc, Sound.ENTITY_ENDER_DRAGON_GROWL, 0.7f, 1.5f);
         try {
             loc.getWorld().spawnParticle(org.bukkit.Particle.TOTEM_OF_UNDYING, loc.clone().add(0, 1.0, 0), 80, 0.8, 1.0, 0.8, 0.2);
-            loc.getWorld().spawnParticle(org.bukkit.Particle.FLASH, loc.clone().add(0, 1.5, 0), 2);
+            loc.getWorld().spawnParticle(org.bukkit.Particle.FLASH, loc.clone().add(0, 1.5, 0), 2, 0, 0, 0, 0, org.bukkit.Color.WHITE);
         } catch (Exception ignored) {}
 
         Bukkit.broadcast(net.kyori.adventure.text.Component.text(ChatColor.translateAlternateColorCodes('&',

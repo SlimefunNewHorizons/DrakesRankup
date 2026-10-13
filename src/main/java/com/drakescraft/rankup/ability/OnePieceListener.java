@@ -314,7 +314,7 @@ public class OnePieceListener implements Listener {
 
         Location loc = player.getLocation();
         try {
-            loc.getWorld().spawnParticle(Particle.FLASH, loc.clone().add(0, 1, 0), 3);
+            loc.getWorld().spawnParticle(Particle.FLASH, loc.clone().add(0, 1, 0), 3, 0, 0, 0, 0, org.bukkit.Color.WHITE);
             loc.getWorld().spawnParticle(Particle.CLOUD, loc.clone().add(0, 1, 0), 80, 0.8, 1.2, 0.8, 0.05);
             loc.getWorld().spawnParticle(Particle.WAX_OFF, loc.clone().add(0, 1, 0), 40, 0.8, 1.0, 0.8, 0.1);
             loc.getWorld().spawnParticle(Particle.END_ROD, loc.clone().add(0, 1, 0), 30, 0.5, 0.8, 0.5, 0.05);
@@ -507,7 +507,7 @@ public class OnePieceListener implements Listener {
                         Location p = player.getEyeLocation().add(dir.clone().multiply(d));
                         if (!p.getBlock().isPassable()) break;
                         p.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, p, 5, 0.2, 0.2, 0.2, 0.08);
-                        p.getWorld().spawnParticle(Particle.FLASH, p, 1, 0, 0, 0, 0);
+                        p.getWorld().spawnParticle(Particle.FLASH, p, 1, 0, 0, 0, 0, org.bukkit.Color.WHITE);
                         if (!p.getWorld().isChunkLoaded(p.getBlockX() >> 4, p.getBlockZ() >> 4)) break;
                         for (LivingEntity target : p.getWorld().getNearbyLivingEntities(p, 1.5)) {
                             if (target != player && target.isValid() && target.getLocation().isChunkLoaded()) {
@@ -639,7 +639,7 @@ public class OnePieceListener implements Listener {
 
                     player.teleport(dest);
                     dest.getWorld().playSound(dest, Sound.ENTITY_FIREWORK_ROCKET_BLAST, 1.0f, 1.5f);
-                    dest.getWorld().spawnParticle(Particle.FLASH, dest.clone().add(0, 1, 0), 2);
+                    dest.getWorld().spawnParticle(Particle.FLASH, dest.clone().add(0, 1, 0), 2, 0, 0, 0, 0, org.bukkit.Color.WHITE);
                     player.sendActionBar(Component.text("§e✨ ¡YATA NO KAGAMI! Teletransporte fotónico de luz."));
                 }
             }
@@ -715,7 +715,7 @@ public class OnePieceListener implements Listener {
         try {
             loc.getWorld().strikeLightningEffect(loc);
             loc.getWorld().spawnParticle(Particle.SONIC_BOOM, loc.clone().add(0, 1.2, 0), 2);
-            loc.getWorld().spawnParticle(Particle.FLASH, loc.clone().add(0, 1.0, 0), 2);
+            loc.getWorld().spawnParticle(Particle.FLASH, loc.clone().add(0, 1.0, 0), 2, 0, 0, 0, 0, org.bukkit.Color.WHITE);
             loc.getWorld().spawnParticle(Particle.DUST, loc.clone().add(0, 1.0, 0), 80, 4.0, 1.0, 4.0, 0, new Particle.DustOptions(Color.fromRGB(150, 10, 10), 1.6f));
             loc.getWorld().playSound(loc, Sound.ENTITY_WARDEN_SONIC_BOOM, 1.0f, 0.7f);
             loc.getWorld().playSound(loc, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1.0f, 0.6f);
