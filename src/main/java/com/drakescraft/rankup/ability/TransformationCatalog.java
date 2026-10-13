@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * Orden fijo de las transformaciones y tecnicas equipables, con el tier que las desbloquea.
- * Lo usa el selector rapido (Shift + F) para rotar entre las que el jugador ya tiene; el menu
+ * Lo usa el selector rapido (F con las manos vacias) para rotar entre las que el jugador ya tiene; el menu
  * {@code /transformaciones} muestra las mismas claves.
  */
 public final class TransformationCatalog {

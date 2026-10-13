@@ -7,7 +7,7 @@ import com.drakescraft.rankup.model.Rank;
 import org.bukkit.entity.Player;
 
 /**
- * Puerta unica de las tecnicas que se disparan con Shift + clic o Shift + F.
+ * Puerta unica de las tecnicas que se disparan con Shift + clic.
  *
  * Antes cada listener decidia por su cuenta con umbrales {@code tier >= N}; al nivel 100 se
  * cumplian todos a la vez y un solo gesto lanzaba varias tecnicas (por ejemplo el Gear 4 se

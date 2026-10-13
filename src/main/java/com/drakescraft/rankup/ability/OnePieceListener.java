@@ -682,14 +682,19 @@ public class OnePieceListener implements Listener {
     // 3. HAKI DEL CONQUISTADOR (HAOSHOKU HAKI: SHIFT + F)
     // ==========================================
     /**
-     * Shift + F: rota la transformacion o tecnica equipada entre las que el jugador ya desbloqueo
-     * (la misma lista de /transformaciones). Antes lanzaba el Haki del Rey a cualquier tier 30+.
+     * F con las dos manos vacias (sin agacharse): rota la transformacion o tecnica equipada entre
+     * las que el jugador ya desbloqueo (la misma lista de /transformaciones).
+     *
+     * Shift + F ya lo usan los dioses de VIP++, Arcana y los items de Chagui, asi que aqui se pide
+     * no agacharse y tener ambas manos vacias: en vanilla ese gesto no hace nada y no pisa a nadie.
      */
     @EventHandler(priority = EventPriority.HIGH)
     public void onTransformationCycle(PlayerSwapHandItemsEvent event) {
         Player player = event.getPlayer();
-        if (!player.isSneaking()) return;
+        if (player.isSneaking()) return;
         if (!plugin.isWorldAllowed(player.getWorld())) return;
+        if (event.getMainHandItem().getType() != Material.AIR
+                || event.getOffHandItem().getType() != Material.AIR) return;
 
         UUID uuid = player.getUniqueId();
         PlayerSettings settings = plugin.getRankManager().getPlayerSettings(uuid);
@@ -716,7 +721,7 @@ public class OnePieceListener implements Listener {
             player.sendActionBar(Component.text("§7Transformación: §fninguna §8(habilidad base del rango)"));
         } else {
             player.sendActionBar(Component.text("§6Transformación equipada: §e" + next
-                    + " §8| §7Shift+F para cambiar, /transformaciones para el menú"));
+                    + " §8| §7F con las manos vacías para cambiar, /transformaciones para el menú"));
             if ("GEAR_FIVE".equalsIgnoreCase(next)) {
                 activateGear5(player);
             }
