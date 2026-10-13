@@ -314,6 +314,40 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 31 ? (settings.isKiFlightEnabled() ? "&a✔ HABILITADO &7(Clic para alternar)" : "&c✖ DESHABILITADO &7(Clic para activar)") : "&cBloqueado por rango."
         ));
 
+        // Tecnicas de Shift + clic: ahora solo dispara la equipada.
+        inv.setItem(32, buildTransformationItem(
+                tier >= 30, "HAKI_CONQUEROR".equalsIgnoreCase(active), Material.GOLDEN_HELMET,
+                "&6&lHaki del Rey", 30,
+                Arrays.asList(
+                        "&8▪ &eTipo: &fOnda de voluntad que aturde a los débiles",
+                        "&8▪ &bActivación: &fShift + clic derecho con la mano vacía."
+                )
+        ));
+        inv.setItem(33, buildTransformationItem(
+                tier >= 41, "SERIOUS_PUNCH".equalsIgnoreCase(active), Material.IRON_BLOCK,
+                "&e&lGolpe Serio", 41,
+                Arrays.asList(
+                        "&8▪ &eTipo: &fPuñetazo que arrasa el terreno",
+                        "&8▪ &bActivación: &fShift + clic izquierdo."
+                )
+        ));
+        inv.setItem(34, buildTransformationItem(
+                tier >= 47, "HAKAI".equalsIgnoreCase(active), Material.DRAGON_HEAD,
+                "&5&lHakai del Dios de la Destrucción", 47,
+                Arrays.asList(
+                        "&8▪ &eTipo: &fDestrucción de la materia",
+                        "&8▪ &bActivación: &fShift + clic izquierdo, o derecho con la mano vacía."
+                )
+        ));
+        inv.setItem(37, buildTransformationItem(
+                tier >= 50, "ZENO_ERASE".equalsIgnoreCase(active), Material.TOTEM_OF_UNDYING,
+                "&f&lBorrado de Zeno-Sama", 50,
+                Arrays.asList(
+                        "&8▪ &eTipo: &fAniquilación divina",
+                        "&8▪ &bActivación: &fShift + clic derecho."
+                )
+        ));
+
         // Desequipar (Slot 40)
         inv.setItem(40, createItem(Material.BARRIER, "&c&lDesequipar Transformación Activa",
                 "&7Quita la transformación seleccionada y regresa",
@@ -423,6 +457,10 @@ public class TransformationMenu implements InventoryHolder {
         else if (slot == 28) { newTrans = "GOMU_GOMU"; reqTier = 30; }
         else if (slot == 29) { newTrans = "SANTORYU"; reqTier = 24; }
         else if (slot == 30) { newTrans = "KAIOKEN"; reqTier = 92; }
+        else if (slot == 32) { newTrans = "HAKI_CONQUEROR"; reqTier = 30; }
+        else if (slot == 33) { newTrans = "SERIOUS_PUNCH"; reqTier = 41; }
+        else if (slot == 34) { newTrans = "HAKAI"; reqTier = 47; }
+        else if (slot == 37) { newTrans = "ZENO_ERASE"; reqTier = 50; }
 
         if (newTrans != null) {
             if (tier < reqTier) {

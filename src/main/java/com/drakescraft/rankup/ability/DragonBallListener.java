@@ -642,7 +642,7 @@ public class DragonBallListener implements Listener {
 
         boolean hasHakai = (tier >= 47 || (rank != null && (rank.getAbilityType() == AbilityType.HAKAI_AURA
                 || rank.getAbilityType() == AbilityType.ULTRA_EGO)) || isUltraEgoActive(uuid));
-        if (!hasHakai) return;
+        if (!hasHakai || !TechniqueGate.permits(plugin, player, TechniqueGate.HAKAI)) return;
 
         long now = System.currentTimeMillis();
         long ready = hakaiCooldown.getOrDefault(uuid, 0L);
@@ -723,7 +723,8 @@ public class DragonBallListener implements Listener {
                 && hand.getItemMeta().getDisplayName().contains("Zeno-Sama");
         boolean isKami = (tier >= 50 || (rank != null && rank.getAbilityType() == AbilityType.KAMI_DIVINE));
 
-        if (!isKami && !hasTotem) return;
+        // El totem de Zeno-Sama siempre funciona; el poder de rango solo si es la tecnica equipada.
+        if (!hasTotem && !(isKami && TechniqueGate.permits(plugin, player, TechniqueGate.ZENO_ERASE))) return;
 
         long now = System.currentTimeMillis();
         long ready = zenoEraseCooldown.getOrDefault(uuid, 0L);

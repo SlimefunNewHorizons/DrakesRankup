@@ -135,6 +135,7 @@ public class SpecialAbilitiesListener implements Listener {
         if (!settings.isAbilitiesEnabled()) return;
 
         if (rank.getAbilityType() != AbilityType.MAGNETIC_ATTRACTOR && rank.getTier() < 60) return;
+        if (!TechniqueGate.permits(plugin, player, TechniqueGate.MAGNET)) return;
 
         ItemStack hand = player.getInventory().getItemInMainHand();
         if (hand.getType() != Material.AIR) return;

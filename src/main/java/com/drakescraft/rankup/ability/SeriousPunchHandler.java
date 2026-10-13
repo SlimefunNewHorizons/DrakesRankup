@@ -121,6 +121,7 @@ public class SeriousPunchHandler implements Listener {
         Player player = event.getPlayer();
         if (!player.isSneaking()) return;
         if (!hasSeriousPunch(player)) return;
+        if (!TechniqueGate.permits(plugin, player, TechniqueGate.SERIOUS_PUNCH)) return;
 
         if (executingPunches.contains(player.getUniqueId())) return;
 

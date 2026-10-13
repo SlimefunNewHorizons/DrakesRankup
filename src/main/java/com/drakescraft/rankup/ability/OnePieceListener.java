@@ -7,6 +7,7 @@ import com.drakescraft.rankup.model.Rank;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -234,7 +235,9 @@ public class OnePieceListener implements Listener {
         PlayerSettings settings = plugin.getRankManager().getPlayerSettings(uuid);
         String equipped = settings.getActiveTransformation();
 
-        boolean hasGear4 = "GEAR_4".equalsIgnoreCase(equipped) || "GOMU_GOMU".equalsIgnoreCase(equipped) || tier >= 40;
+        // Solo con Gear 4 / Gomu Gomu equipado (o como habilidad principal del rango): ya no se
+        // activa por tener tier alto al querer usar otra tecnica con Shift + clic.
+        boolean hasGear4 = tier >= 30 && TechniqueGate.permits(plugin, player, TechniqueGate.GOMU);
         if (!hasGear4 || isGear4Active(uuid)) return;
 
         long now = System.currentTimeMillis();
@@ -678,20 +681,62 @@ public class OnePieceListener implements Listener {
     // ==========================================
     // 3. HAKI DEL CONQUISTADOR (HAOSHOKU HAKI: SHIFT + F)
     // ==========================================
+    /**
+     * Shift + F: rota la transformacion o tecnica equipada entre las que el jugador ya desbloqueo
+     * (la misma lista de /transformaciones). Antes lanzaba el Haki del Rey a cualquier tier 30+.
+     */
     @EventHandler(priority = EventPriority.HIGH)
-    public void onConquerorHakiTrigger(PlayerSwapHandItemsEvent event) {
+    public void onTransformationCycle(PlayerSwapHandItemsEvent event) {
         Player player = event.getPlayer();
         if (!player.isSneaking()) return;
         if (!plugin.isWorldAllowed(player.getWorld())) return;
 
+        UUID uuid = player.getUniqueId();
+        PlayerSettings settings = plugin.getRankManager().getPlayerSettings(uuid);
+        if (!settings.isAbilitiesEnabled()) return;
+        Rank rank = plugin.getRankManager().getPlayerRank(uuid);
+        int tier = (rank != null) ? rank.getTier() : 0;
+        if (TransformationCatalog.unlocked(tier).isEmpty()) return;
+
+        event.setCancelled(true);
+        String next = TransformationCatalog.next(settings.getActiveTransformation(), tier);
+        revertTransformations(player);
+        if (plugin.getDragonBallListener() != null) {
+            plugin.getDragonBallListener().revertTransformations(player);
+        }
+        settings.setActiveTransformation(next);
+        plugin.getRankManager().savePlayerData();
+        if (next == null) {
+            player.setFlySpeed(0.10f);
+            if (!plugin.hasExternalFlight(player) && player.getGameMode() != GameMode.CREATIVE
+                    && player.getGameMode() != GameMode.SPECTATOR) {
+                player.setFlying(false);
+                player.setAllowFlight(false);
+            }
+            player.sendActionBar(Component.text("§7Transformación: §fninguna §8(habilidad base del rango)"));
+        } else {
+            player.sendActionBar(Component.text("§6Transformación equipada: §e" + next
+                    + " §8| §7Shift+F para cambiar, /transformaciones para el menú"));
+            if ("GEAR_FIVE".equalsIgnoreCase(next)) {
+                activateGear5(player);
+            }
+        }
+        player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_NETHERITE, 0.8f, 1.3f);
+    }
+
+    /** Shift + clic derecho con la mano vacia: Haki del Rey si esta equipado (o es la habilidad del rango). */
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onConquerorHakiInteract(PlayerInteractEvent event) {
+        if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        Player player = event.getPlayer();
+        if (!player.isSneaking()) return;
+        if (!plugin.isWorldAllowed(player.getWorld())) return;
+        if (player.getInventory().getItemInMainHand().getType() != Material.AIR) return;
+
         Rank rank = plugin.getRankManager().getPlayerRank(player.getUniqueId());
         int tier = (rank != null) ? rank.getTier() : 0;
-        PlayerSettings settings = plugin.getRankManager().getPlayerSettings(player.getUniqueId());
-        String equipped = settings.getActiveTransformation();
-
-        boolean hasConqueror = tier >= 30 || "HAKI".equalsIgnoreCase(equipped) || "GEAR_FIVE".equalsIgnoreCase(equipped)
-                || (rank != null && rank.getAbilityType() == AbilityType.HAKI_CONQUEROR);
-        if (!hasConqueror) return;
+        if (tier < 30) return;
+        if (!TechniqueGate.permits(plugin, player, TechniqueGate.CONQUEROR)) return;
 
         event.setCancelled(true);
         triggerConquerorHaki(player);
