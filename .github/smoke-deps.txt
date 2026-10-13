@@ -1,0 +1,2 @@
+# Dependencias opcionales que DrakesRankup espera encontrar al arrancar (smoke test de la org)
+modrinth:luckperms
