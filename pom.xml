@@ -13,18 +13,19 @@
     <description>Sistema Oficial de 50 Rangos Anime/Shonen, Sumidero de Economía y GUI Interactiva para DrakesCraft</description>
 
     <properties>
-        <java.version>21</java.version>
+        <java.version>25</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
 
-        <paper.version>1.21.11-R0.1-SNAPSHOT</paper.version>
+        <paper.version>26.2.build.133-stable</paper.version>
         <vault.version>1.7.1</vault.version>
         <luckperms.version>5.4</luckperms.version>
         <papi.version>2.11.6</papi.version>
         <lombok.version>1.18.46</lombok.version>
         <junit.version>6.1.2</junit.version>
+        <mockbukkit.version>4.116.1</mockbukkit.version>
         <surefire.version>3.5.6</surefire.version>
     </properties>
 
@@ -83,7 +84,7 @@
         <dependency>
             <groupId>org.mockbukkit.mockbukkit</groupId>
             <artifactId>mockbukkit-v26.2</artifactId>
-            <version>4.116.1</version>
+            <version>${mockbukkit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
