@@ -123,6 +123,7 @@ public class DrakesRankupPlugin extends JavaPlugin {
         // Start aura particle task every second (20 ticks)
         auraTask = new AuraTask(this);
         auraTask.runTaskTimerAsynchronously(this, 20L, 20L);
+        new com.drakescraft.rankup.fx.AuraRenderTask(this).runTaskTimer(this, 40L, 2L);
 
         // Start periodic rank decay check task
         if (getConfig().getBoolean("settings.maintenance.enabled", true)) {

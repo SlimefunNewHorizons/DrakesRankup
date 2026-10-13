@@ -72,40 +72,9 @@ public class AuraTask extends BukkitRunnable {
                     }
                 }
 
-                // Active Dragon Ball & Anime Transformation Auras
-                if (plugin.getDragonBallListener() != null) {
-                    if (plugin.getDragonBallListener().isKaiokenActive(player.getUniqueId())) {
-                        loc.getWorld().spawnParticle(Particle.DUST, loc.clone().add(0, 0.8, 0), 6, 0.35, 0.5, 0.35, 0, new Particle.DustOptions(Color.fromRGB(255, 20, 30), 1.4f));
-                        loc.getWorld().spawnParticle(Particle.FLAME, loc.clone().add(0, 0.3, 0), 4, 0.2, 0.3, 0.2, 0.03);
-                        continue;
-                    } else if (plugin.getDragonBallListener().isMuiActive(player.getUniqueId())) {
-                        loc.getWorld().spawnParticle(Particle.END_ROD, loc.clone().add(0, 1.0, 0), 4, 0.3, 0.5, 0.3, 0.05);
-                        loc.getWorld().spawnParticle(Particle.FIREWORK, loc.clone().add(0, 0.2, 0), 3, 0.2, 0.1, 0.2, 0.02);
-                        continue;
-                    } else if (plugin.getDragonBallListener().isUltraEgoActive(player.getUniqueId())) {
-                        loc.getWorld().spawnParticle(Particle.WITCH, loc.clone().add(0, 0.8, 0), 5, 0.3, 0.5, 0.3, 0.05);
-                        loc.getWorld().spawnParticle(Particle.DRAGON_BREATH, loc.clone().add(0, 0.2, 0), 3, 0.2, 0.1, 0.2, 0.03, 1.0F);
-                        continue;
-                    } else if (plugin.getDragonBallListener().isGohanBeastActive(player.getUniqueId())) {
-                        loc.getWorld().spawnParticle(Particle.CRIMSON_SPORE, loc.clone().add(0, 0.8, 0), 5, 0.25, 0.4, 0.25, 0.05);
-                        loc.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, loc.clone().add(0, 1.1, 0), 3, 0.3, 0.4, 0.3, 0.05);
-                        continue;
-                    } else if (plugin.getDragonBallListener().isBrolyActive(player.getUniqueId())) {
-                        loc.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, loc.clone().add(0, 0.5, 0), 6, 0.35, 0.5, 0.35, 0.02);
-                        continue;
-                    } else if (plugin.getDragonBallListener().isSSJBlueActive(player.getUniqueId())) {
-                        loc.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, loc.clone().add(0, 0.3, 0), 4, 0.25, 0.4, 0.25, 0.03);
-                        loc.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, loc.clone().add(0, 0.9, 0), 3, 0.3, 0.4, 0.3, 0.08);
-                        continue;
-                    } else if (plugin.getDragonBallListener().isSSJGodActive(player.getUniqueId())) {
-                        loc.getWorld().spawnParticle(Particle.FLAME, loc.clone().add(0, 0.4, 0), 5, 0.25, 0.4, 0.25, 0.03);
-                        continue;
-                    } else if (plugin.getDragonBallListener().isSSJ2Active(player.getUniqueId())) {
-                        loc.getWorld().spawnParticle(Particle.DUST, loc.clone().add(0, 0.8, 0), 6, 0.35, 0.5, 0.35, 0, new Particle.DustOptions(Color.fromRGB(255, 230, 20), 1.5f));
-                        loc.getWorld().spawnParticle(Particle.FLAME, loc.clone().add(0, 0.4, 0), 4, 0.25, 0.4, 0.25, 0.03);
-                        loc.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, loc.clone().add(0, 0.9, 0), 5, 0.35, 0.5, 0.35, 0.08);
-                        continue;
-                    }
+                // Dragon Ball y aura divina (tiers 91+): las dibuja AuraRenderTask, aqui solo se cede el turno.
+                if (com.drakescraft.rankup.fx.AuraRenderTask.selectStyle(plugin, player) != null) {
+                    continue;
                 }
 
                 // One Piece: Gear 5, Gear 4, Gear 3 y Frutas del Diablo
@@ -201,17 +170,8 @@ public class AuraTask extends BukkitRunnable {
                 int n = 3 + (tier - 80) / 2;
                 loc.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, base, n, 0.4, 0.5, 0.4, 0.05);
                 loc.getWorld().spawnParticle(Particle.FLAME, head, 2, 0.3, 0.3, 0.3, 0.02);
-            } else {                          // División X: Dioses Multiversales (91-100)
-                int n = 4 + (tier - 90) / 2;
-                loc.getWorld().spawnParticle(Particle.FLASH, base, 1, 0, 0, 0, 0, org.bukkit.Color.WHITE);
-                loc.getWorld().spawnParticle(Particle.END_ROD, base, n, 0.4, 0.6, 0.4, 0.05);
-                double x1 = 0.50 * Math.cos(angle);
-                double z1 = 0.50 * Math.sin(angle);
-                double x2 = 0.50 * Math.cos(angle + Math.PI);
-                double z2 = 0.50 * Math.sin(angle + Math.PI);
-                loc.getWorld().spawnParticle(Particle.TOTEM_OF_UNDYING, loc.clone().add(x1, 2.25, z1), 1, 0, 0, 0, 0);
-                loc.getWorld().spawnParticle(Particle.FIREWORK, loc.clone().add(x2, 2.25, z2), 1, 0, 0, 0, 0);
             }
+                                  // División X (91-100): la dibuja AuraRenderTask sin parpadeos.
         } catch (Exception ignored) {}
     }
 }
