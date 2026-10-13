@@ -43,6 +43,8 @@ public class DrakesRankupPlugin extends JavaPlugin {
     @Getter
     private KineticPushListener kineticPushListener;
     @Getter
+    private com.drakescraft.rankup.jobs.JobsBoostService jobsBoostService;
+    @Getter
     private DragonBallListener dragonBallListener;
     @Getter
     private OnePieceListener onePieceListener;
@@ -102,6 +104,8 @@ public class DrakesRankupPlugin extends JavaPlugin {
         onePieceListener = new OnePieceListener(this);
         specialAbilitiesListener = new SpecialAbilitiesListener(this);
         seriousPunchHandler = new SeriousPunchHandler(this);
+        jobsBoostService = new com.drakescraft.rankup.jobs.JobsBoostService(this);
+        jobsBoostService.register();
         Bukkit.getPluginManager().registerEvents(seriousPunchHandler, this);
 
 

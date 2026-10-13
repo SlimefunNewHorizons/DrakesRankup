@@ -94,3 +94,13 @@ messages:
   success: "&a¡Has ascendido con éxito a &b{rank}&a! Se han descontado &e${cost}&a de tu cuenta."
   no-permission: "&cNo tienes permisos para ejecutar este comando."
   reload-success: "&aConfiguración y rangos recargados correctamente."
+
+# Bono de dinero de Jobs (Jobs Reborn): multiplica lo que pagan los trabajos segun el rango,
+# los renacimientos y el VIP++ (bono de banda + booster de dinero). Tier 100 = +50% con estos valores.
+jobs-boost:
+  enabled: true
+  money-per-tier: 0.005      # +0.5% por tier
+  money-per-rebirth: 0.01    # +1% por renacimiento
+  include-vip: true          # multiplica por DrakesVipApi.getJobsMoneyMultiplier
+  boost-points: false        # tambien los puntos de Jobs (false = solo dinero)
+  cap: 3.0                   # tope del multiplicador total
