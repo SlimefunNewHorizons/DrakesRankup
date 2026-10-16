@@ -146,11 +146,11 @@ class DrakesRankupTest {
         assertDoesNotThrow(menu::open);
         assertNotNull(player.getOpenInventory().getTopInventory());
 
-        // Slot 45: Núcleo de Estabilidad
+        // Slot 45: Rank Stability Core
         org.bukkit.inventory.ItemStack slot45 = player.getOpenInventory().getTopInventory().getItem(45);
         assertNotNull(slot45);
         assertTrue(slot45.hasItemMeta());
-        assertTrue(slot45.getItemMeta().getDisplayName().contains("Núcleo de Estabilidad") || slot45.getItemMeta().getDisplayName().contains("Rango"));
+        assertTrue(slot45.getItemMeta().getDisplayName().contains("Rank Stability Core") || slot45.getItemMeta().getDisplayName().contains("Permanent Rank"));
 
         // Slot 47: Menú de Transformaciones
         org.bukkit.inventory.ItemStack slot47 = player.getOpenInventory().getTopInventory().getItem(47);
