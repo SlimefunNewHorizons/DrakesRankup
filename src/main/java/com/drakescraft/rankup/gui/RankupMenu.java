@@ -27,16 +27,16 @@ public class RankupMenu implements InventoryHolder {
     public static final DecimalFormat MONEY_FORMAT = new DecimalFormat("#,###,###,###.##");
 
     private static final String[] DIVISION_NAMES = {
-            "División I: Ciencia & Nen",
-            "División II: Shinobi & Hechicería",
-            "División III: Ruta Pirata & Segadores",
-            "División IV: Guerreros Z & Monarca",
-            "División V: Trascendencia Suprema",
-            "División VI: Maldiciones Supremas",
-            "División VII: Shinigami Reiatsu",
-            "División VIII: Monarcas & Demonios",
-            "División IX: Leyendas Cósmicas",
-            "División X: Dioses Multiversales"
+            "Division I: Science & Nen",
+            "Division II: Shinobi & Sorcery",
+            "Division III: Pirate Path & Reapers",
+            "Division IV: Z Warriors & Monarch",
+            "Division V: Supreme Transcendence",
+            "Division VI: Supreme Curses",
+            "Division VII: Shinigami Reiatsu",
+            "Division VIII: Monarchs & Demons",
+            "Division IX: Cosmic Legends",
+            "Division X: Multiversal Gods"
     };
 
     public RankupMenu(DrakesRankupPlugin plugin, Player player, int page) {
@@ -69,16 +69,16 @@ public class RankupMenu implements InventoryHolder {
             Material tabMat = current ? Material.GOLD_BLOCK : Material.IRON_BARS;
             String prefix = current ? "&6&l▶ " : "&7";
             inv.setItem(tabSlots[i], createItem(tabMat, prefix + DIVISION_NAMES[d],
-                    "&7Niveles: &f" + ((d * 10) + 1) + " al " + ((d * 10) + 10),
-                    current ? "&aPestaña activa" : "&eClic para ver esta división"
+                    "&7Tiers: &f" + ((d * 10) + 1) + " to " + ((d * 10) + 10),
+                    current ? "&aActive tab" : "&eClick to view this division"
             ));
         }
 
         // Fast cluster switch buttons (Slots 3 and 5)
         if (page < 5) {
-            inv.setItem(5, createItem(Material.COMPASS, "&e&lDivisiones VI - X ▶", "&7Clic para explorar las divisiones del Tier 51 al 100"));
+            inv.setItem(5, createItem(Material.COMPASS, "&e&lDivisions VI - X ▶", "&7Click to explore Tiers 51 to 100"));
         } else {
-            inv.setItem(3, createItem(Material.COMPASS, "&e&l◀ Divisiones I - V", "&7Clic para volver a las divisiones del Tier 1 al 50"));
+            inv.setItem(3, createItem(Material.COMPASS, "&e&l◀ Divisions I - V", "&7Click to return to Tiers 1 to 50"));
         }
 
         // Player Info (Slot 4)
@@ -90,27 +90,27 @@ public class RankupMenu implements InventoryHolder {
         PlayerSettings settings = plugin.getRankManager().getPlayerSettings(player.getUniqueId());
 
         inv.setItem(4, createItem(Material.PLAYER_HEAD, "&e&l" + player.getName(),
-                "&7Rango actual: " + (currentRank != null ? currentRank.getDisplayName() : "&7Ninguno"),
-                "&7Nivel / Tier: &6" + currentTier + "/100",
-                "&7Rebirth: &e" + settings.getRebirthCount() + "/50 &7(+" + (settings.getRebirthCount() * 3) + "% daño)", 
-                "&7Monedero: &a$" + MONEY_FORMAT.format(monedero),
-                "&7Bolsa de ascenso: &6$" + MONEY_FORMAT.format(bolsa) + " &8(/rankup bolsa)",
-                "&7Habilidad: " + (currentRank != null && currentRank.getAbilityType() != null ? "&b" + currentRank.getAbilityType().getName() : "&7Ninguna"),
-                "&7Empuje Cinético: " + (currentRank != null && currentRank.isHasKineticPush() ? "&aDesbloqueado" : "&cBloqueado"),
+                "&7Current rank: " + (currentRank != null ? currentRank.getDisplayName() : "&7None"),
+                "&7Tier: &6" + currentTier + "/100",
+                "&7Rebirth: &e" + settings.getRebirthCount() + "/50 &7(+" + (settings.getRebirthCount() * 3) + "% damage)",
+                "&7Wallet: &a$" + MONEY_FORMAT.format(monedero),
+                "&7Rankup fund: &6$" + MONEY_FORMAT.format(bolsa) + " &8(/rankup bolsa)",
+                "&7Ability: " + (currentRank != null && currentRank.getAbilityType() != null ? "&b" + currentRank.getAbilityType().getName() : "&7None"),
+                "&7Kinetic Push: " + (currentRank != null && currentRank.isHasKineticPush() ? "&aUnlocked" : "&cLocked"),
                 "",
-                "&8Ajustes personales:",
-                "&7Empujes: " + (settings.isKineticPushEnabled() ? "&aACTIVO" : "&cDESACTIVADO"),
-                "&7Partículas: " + (settings.isParticlesEnabled() ? "&aACTIVO" : "&cDESACTIVADO"),
-                "&7Habilidades: " + (settings.isAbilitiesEnabled() ? "&aACTIVO" : "&cDESACTIVADO")
+                "&8Personal settings:",
+                "&7Pushes: " + (settings.isKineticPushEnabled() ? "&aON" : "&cOFF"),
+                "&7Particles: " + (settings.isParticlesEnabled() ? "&aON" : "&cOFF"),
+                "&7Abilities: " + (settings.isAbilitiesEnabled() ? "&aON" : "&cOFF")
         ));
 
         // Settings Toggle Button (Slot 8)
-        inv.setItem(8, createItem(Material.REPEATER, "&b&lAjustes Rápidos",
-                "&7Clic para alternar tus efectos:",
-                "&8▪ &7Empujes: " + (settings.isKineticPushEnabled() ? "&aActivado" : "&cDesactivado"),
-                "&8▪ &7Partículas: " + (settings.isParticlesEnabled() ? "&aActivado" : "&cDesactivado"),
+        inv.setItem(8, createItem(Material.REPEATER, "&b&lQuick Settings",
+                "&7Click to toggle your effects:",
+                "&8▪ &7Pushes: " + (settings.isKineticPushEnabled() ? "&aEnabled" : "&cDisabled"),
+                "&8▪ &7Particles: " + (settings.isParticlesEnabled() ? "&aEnabled" : "&cDisabled"),
                 "",
-                "&eClic para alternar Empuje Cinético"
+                "&eClick to toggle Kinetic Push"
         ));
 
         // Center 10 Ranks for Current Division
@@ -127,37 +127,37 @@ public class RankupMenu implements InventoryHolder {
             String statusTitle;
             List<String> lore = new ArrayList<>();
             lore.add("&8" + r.getDivision());
-            lore.add("&7Costo: &6$" + MONEY_FORMAT.format(r.getCost()));
-            lore.add("&7Tipo: " + (r.isPermanent() ? "&aPermanente (Ancla)" : "&eTemporal (14 días)"));
+            lore.add("&7Cost: &6$" + MONEY_FORMAT.format(r.getCost()));
+            lore.add("&7Type: " + (r.isPermanent() ? "&aPermanent (Anchor)" : "&eTemporary (14 days)"));
             lore.add("");
-            lore.add("&e&nVentajas y Beneficios:&r");
+            lore.add("&e&nPerks and Benefits:&r");
             for (String perk : r.getPerks()) {
                 lore.add(" &8▪ &f" + ChatColor.translateAlternateColorCodes('&', perk));
             }
             if (r.getAbilityType() != null && !r.getAbilityType().name().equals("NONE")) {
-                lore.add(" &8▪ &bHabilidad: " + r.getAbilityType().getName());
+                lore.add(" &8▪ &bAbility: " + r.getAbilityType().getName());
             }
             if (r.isHasKineticPush()) {
-                lore.add(" &8▪ &aEmpuje Cinético: Potencia x" + r.getPushMultiplier() + " (CD: " + r.getPushCooldownSeconds() + "s)");
+                lore.add(" &8▪ &aKinetic Push: Power x" + r.getPushMultiplier() + " (CD: " + r.getPushCooldownSeconds() + "s)");
             }
             lore.add("");
 
             if (currentTier >= t) {
-                statusTitle = "&a✔ " + r.getDisplayName() + " &8(&aDesbloqueado&8)";
-                lore.add("&aYa dominas este rango.");
+                statusTitle = "&a✔ " + r.getDisplayName() + " &8(&aUnlocked&8)";
+                lore.add("&aYou have already mastered this rank.");
                 inv.setItem(targetSlot, createItem(Material.LIME_DYE, statusTitle, lore));
             } else if (t == currentTier + 1) {
-                statusTitle = "&e⚡ " + r.getDisplayName() + " &8(&e¡Disponible!&8)";
+                statusTitle = "&e⚡ " + r.getDisplayName() + " &8(&eAvailable!&8)";
                 boolean canAfford = balance >= r.getCost();
                 if (canAfford) {
-                    lore.add("&a▶ ¡Tienes suficiente dinero! Haz clic para ascender.");
+                    lore.add("&a▶ You have enough money! Click to rank up.");
                 } else {
-                    lore.add("&c✖ Te faltan &e$" + MONEY_FORMAT.format(r.getCost() - balance) + " &cpara ascender.");
+                    lore.add("&c✖ You need &e$" + MONEY_FORMAT.format(r.getCost() - balance) + " &cmore to rank up.");
                 }
                 inv.setItem(targetSlot, createItem(r.getIcon(), statusTitle, lore));
             } else {
-                statusTitle = "&c🔒 " + r.getDisplayName() + " &8(&cBloqueado&8)";
-                lore.add("&cDebes desbloquear los rangos anteriores primero.");
+                statusTitle = "&c🔒 " + r.getDisplayName() + " &8(&cLocked&8)";
+                lore.add("&cYou must unlock earlier ranks first.");
                 inv.setItem(targetSlot, createItem(Material.RED_STAINED_GLASS_PANE, statusTitle, lore));
             }
         }
@@ -165,17 +165,17 @@ public class RankupMenu implements InventoryHolder {
         // Bottom Controls
         // Slot 45: Núcleo de Estabilidad de Rango (Mantención)
         if (currentRank == null || currentTier == 0) {
-            inv.setItem(45, createItem(Material.RESPAWN_ANCHOR, "&8🏺 Núcleo de Estabilidad",
-                    "&7No posees ningún rango activo.",
-                    "&7Asciende al Tier 1 para iniciar tu camino."));
+            inv.setItem(45, createItem(Material.RESPAWN_ANCHOR, "&8🏺 Stability Core",
+                    "&7You do not have an active rank.",
+                    "&7Reach Tier 1 to begin your journey."));
         } else if (currentRank.isPermanent()) {
-            inv.setItem(45, createItem(Material.BEACON, "&a&l🏺 Rango Permanente",
-                    "&7Tu rango: " + currentRank.getDisplayName(),
+            inv.setItem(45, createItem(Material.BEACON, "&a&l🏺 Permanent Rank",
+                    "&7Your rank: " + currentRank.getDisplayName(),
                     "&8" + currentRank.getDivision(),
                     "",
-                    "&a✔ ¡RANGO ETERNO (ANCLA)!",
-                    "&7Este rango actúa como un ancla sagrada.",
-                    "&7No requiere tributo ni sufre desgaste."));
+                    "&a✔ ETERNAL RANK (ANCHOR)!",
+                    "&7This rank acts as a sacred anchor.",
+                    "&7It requires no tribute and never decays."));
         } else {
             long remainingMs = plugin.getRankManager().getRemainingMaintenanceMs(player.getUniqueId());
             long days = remainingMs / 86400000L;
@@ -189,15 +189,15 @@ public class RankupMenu implements InventoryHolder {
             if (days >= 3) {
                 mIcon = Material.RESPAWN_ANCHOR;
                 statusColor = "&a";
-                statusText = "ÓPTIMO";
+                statusText = "OPTIMAL";
             } else if (days >= 1) {
                 mIcon = Material.CRYING_OBSIDIAN;
                 statusColor = "&e";
-                statusText = "INESTABLE";
+                statusText = "UNSTABLE";
             } else {
                 mIcon = Material.REDSTONE_BLOCK;
                 statusColor = "&c";
-                statusText = "CRÍTICO";
+                statusText = "CRITICAL";
             }
 
             int filledBars = (int) Math.max(0, Math.min(10, (days * 10) / 14));
@@ -211,52 +211,52 @@ public class RankupMenu implements InventoryHolder {
             }
             bar.append("&8]");
 
-            inv.setItem(45, createItem(mIcon, "&6&l🏺 Núcleo de Estabilidad de Rango",
-                    "&7Rango: " + currentRank.getDisplayName() + " &8(Temporal)",
-                    "&7Estabilidad: " + statusColor + statusText + " " + bar.toString(),
-                    "&7Tiempo restante: " + statusColor + days + "d " + hours + "h",
+            inv.setItem(45, createItem(mIcon, "&6&l🏺 Rank Stability Core",
+                    "&7Rank: " + currentRank.getDisplayName() + " &8(Temporary)",
+                    "&7Stability: " + statusColor + statusText + " " + bar.toString(),
+                    "&7Time remaining: " + statusColor + days + "d " + hours + "h",
                     "",
-                    "&7Costo de mantención: &6$" + MONEY_FORMAT.format(mCost) + " &7(+14 días)",
+                    "&7Maintenance cost: &6$" + MONEY_FORMAT.format(mCost) + " &7(+14 days)",
                     "",
-                    affordM ? "&a▶ Clic para alimentar el Núcleo y renovar" : "&c✖ Fondos insuficientes para renovar"));
+                    affordM ? "&a▶ Click to feed the Core and renew" : "&c✖ Insufficient funds to renew"));
         }
 
         // Help & Info Button (Slot 46)
-        inv.setItem(46, createItem(Material.BOOK, "&e&lInformación de Rankup",
-                "&7100 Rangos Anime Shonen",
-                "&7Economía 100% in-game (Dragmas)",
-                "&7Totalmente compatible con VIP Dioses",
+        inv.setItem(46, createItem(Material.BOOK, "&e&lRankup Information",
+                "&7100 Shonen Anime Ranks",
+                "&7100% in-game economy (Dragmas)",
+                "&7Fully compatible with God VIPs",
                 "",
-                "&fComandos útiles: &6/rankup&f, &6/rankup max, &6/rankup mantener"
+                "&fUseful commands: &6/rankup&f, &6/rankup max, &6/rankup mantener"
         ));
 
         // Transformation Menu Button (Slot 47)
-        inv.setItem(47, createItem(Material.DRAGON_BREATH, "&d&l⚡ Menú de Transformaciones",
-                "&7Accede al selector de transformaciones anime,",
-                "&7habilidades, vuelo de Ki y técnicas especiales.",
+        inv.setItem(47, createItem(Material.DRAGON_BREATH, "&d&l⚡ Transformations Menu",
+                "&7Open the anime transformations selector,",
+                "&7abilities, Ki Flight, and special techniques.",
                 "",
-                "&eClic para abrir /transform"
+                "&eClick to open /transform"
         ));
 
         if (page > 0) {
-            inv.setItem(48, createItem(Material.ARROW, "&a◀ División Anterior", "&7Ir a " + DIVISION_NAMES[page - 1]));
+            inv.setItem(48, createItem(Material.ARROW, "&a◀ Previous Division", "&7Go to " + DIVISION_NAMES[page - 1]));
         }
 
         Rank next = plugin.getRankManager().getNextRank(player.getUniqueId());
         if (next != null) {
             boolean afford = balance >= next.getCost();
-            inv.setItem(49, createItem(Material.NETHER_STAR, "&6&lASCENDER AL SIGUIENTE RANGO",
-                    "&7Siguiente: " + next.getDisplayName(),
-                    "&7Precio: &6$" + MONEY_FORMAT.format(next.getCost()),
+            inv.setItem(49, createItem(Material.NETHER_STAR, "&6&lRANK UP TO THE NEXT RANK",
+                    "&7Next: " + next.getDisplayName(),
+                    "&7Price: &6$" + MONEY_FORMAT.format(next.getCost()),
                     "",
-                    afford ? "&a✔ Haz clic para pagar y subir ahora" : "&c✖ No tienes fondos suficientes"
+                    afford ? "&a✔ Click to pay and rank up now" : "&c✖ You do not have enough funds"
             ));
         } else {
-            inv.setItem(49, createItem(Material.BEACON, "&6&l¡RANGO MAXIMO ALCANZADO!", "&aHas completado los 100 rangos anime de DrakesCraft. Usa /rebirth para renacer."));
+            inv.setItem(49, createItem(Material.BEACON, "&6&lMAXIMUM RANK REACHED!", "&aYou completed all 100 DrakesCraft anime ranks. Use /rebirth to begin again."));
         }
 
         if (page < 9) {
-            inv.setItem(50, createItem(Material.ARROW, "&aDivisión Siguiente ▶", "&7Ir a " + DIVISION_NAMES[page + 1]));
+            inv.setItem(50, createItem(Material.ARROW, "&aNext Division ▶", "&7Go to " + DIVISION_NAMES[page + 1]));
         }
 
         // Rankup Kit Button (Slot 51)
@@ -266,23 +266,23 @@ public class RankupMenu implements InventoryHolder {
         long h = remMs / (1000 * 60 * 60);
         long m = (remMs % (1000 * 60 * 60)) / (1000 * 60);
 
-        inv.setItem(51, createItem(Material.CHEST_MINECART, "&6&l🎁 Reclamar Kit de Rankup",
-                "&7Obtén el kit diario de tu división actual con",
-                "&7armaduras, armas con encantamientos custom y",
-                "&7Semillas del Ermitaño curativas.",
+        inv.setItem(51, createItem(Material.CHEST_MINECART, "&6&l🎁 Claim Rankup Kit",
+                "&7Get your current division's daily kit with",
+                "&7armor, custom-enchanted weapons, and",
+                "&7healing Senzu Beans.",
                 "",
-                div == 0 ? "&c✖ Requiere tener al menos Rango Tier 1" :
-                        (canClaimKit ? "&a✔ ¡DISPONIBLE! Haz clic para reclamar" : "&c⏳ Disponible en &e" + h + "h " + m + "m"),
+                div == 0 ? "&c✖ Requires at least Tier 1" :
+                        (canClaimKit ? "&a✔ AVAILABLE! Click to claim" : "&c⏳ Available in &e" + h + "h " + m + "m"),
                 "",
-                "&eClic para ejecutar /rankup kit"
+                "&eClick to run /rankup kit"
         ));
 
         // Max Rankup Button (Slot 52)
-        inv.setItem(52, createItem(Material.EMERALD, "&a&lSUBIR AL MAXIMO POSIBLE",
-                "&7Calcula tu saldo bancario y asciende",
-                "&7todos los niveles continuos posibles.",
+        inv.setItem(52, createItem(Material.EMERALD, "&a&lRANK UP AS FAR AS POSSIBLE",
+                "&7Calculate your bank balance and advance",
+                "&7through every possible consecutive tier.",
                 "",
-                "&eClic para ejecutar /rankup max"
+                "&eClick to run /rankup max"
         ));
 
         player.openInventory(inv);
@@ -319,7 +319,7 @@ public class RankupMenu implements InventoryHolder {
             PlayerSettings s = plugin.getRankManager().getPlayerSettings(p.getUniqueId());
             s.setKineticPushEnabled(!s.isKineticPushEnabled());
             plugin.getRankManager().savePlayerData();
-            p.sendMessage("§b[Rankup] §7Empuje cinético: " + (s.isKineticPushEnabled() ? "§aActivado" : "§cDesactivado"));
+            p.sendMessage("§b[Rankup] §7Kinetic Push: " + (s.isKineticPushEnabled() ? "§aEnabled" : "§cDisabled"));
             new RankupMenu(plugin, p, page).open();
             return;
         }
@@ -328,11 +328,11 @@ public class RankupMenu implements InventoryHolder {
         if (slot == 45) {
             Rank rank = plugin.getRankManager().getPlayerRank(p.getUniqueId());
             if (rank == null || rank.getTier() == 0) {
-                p.sendMessage("§cNo tienes un rango activo que requiera mantención.");
+                p.sendMessage("§cYou do not have an active rank that requires maintenance.");
                 return;
             }
             if (rank.isPermanent()) {
-                p.sendMessage("§aTu rango actual (" + rank.getDisplayName() + "§a) es permanente y no requiere mantención.");
+                p.sendMessage("§aYour current rank (" + rank.getDisplayName() + "§a) is permanent and requires no maintenance.");
                 return;
             }
             boolean ok = plugin.getRankManager().processMaintenance(p);
