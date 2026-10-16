@@ -7,15 +7,15 @@ description: Sistema oficial de 50 Rangos Anime/Shonen, Transformaciones Saiyaji
 softdepend: [Vault, LuckPerms, PlaceholderAPI]
 commands:
   rankup:
-    description: Abre la interfaz de Rankup, asciende de rango o gestiona pruebas.
+    description: Opens the Rankup menu, ranks up, or manages trials.
     aliases: [ranks, rangos, subirrango]
   angel:
-    description: Modo Staff de Deidad Angelical (Invulnerabilidad y Ultra Instinto Infinito).
+    description: Angelic staff mode (invulnerability and Infinite Ultra Instinct).
     aliases: [zenosama, zeno, daishinkan]
     permission: drakesrankup.staff
   transform:
-    description: Abre la interfaz interactiva para escoger transformaciones y poderes anime.
+    description: Opens the interactive menu for anime transformations and powers.
     aliases: [transformaciones, ki, poderes, transformacion]
   rebirth:
-    description: Sistema de Renacimiento Supremo (Rebirth) hasta un máximo de 50 niveles.
+    description: Supreme Rebirth system with up to 50 levels.
     aliases: [renacer, renacimiento, rebirths]
