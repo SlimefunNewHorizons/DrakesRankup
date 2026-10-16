@@ -73,7 +73,7 @@ public class RankAbilityListener implements Listener {
                         Location loc = player.getLocation();
                         player.getWorld().spawnParticle(Particle.DRAGON_BREATH, loc.add(0, 1.0, 0), 15, 0.3, 0.5, 0.3, 0.02);
                         player.playSound(loc, Sound.BLOCK_AMETHYST_BLOCK_CHIME, 1.0f, 1.5f);
-                        player.sendActionBar(Component.text("§b⚡ ¡ILUSIÓN KYOKA SUIGETSU! §7Ataque enemigo desviado."));
+                        player.sendActionBar(Component.text("§b⚡ KYOKA SUIGETSU ILLUSION! §7Enemy attack deflected."));
                     } catch (Exception ignored) {}
                     return;
                 }

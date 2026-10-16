@@ -150,7 +150,7 @@ public class DragonBallListener implements Listener {
             BukkitTask task = chargingTasks.remove(uuid);
             if (task != null) {
                 task.cancel();
-                player.sendActionBar(Component.text("§7Concentración de Ki interrumpida."));
+                player.sendActionBar(Component.text("§7Ki charging interrupted."));
             }
             return;
         }
@@ -353,8 +353,8 @@ public class DragonBallListener implements Listener {
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 6000, 1));
             player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 6000, 1));
             player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 6000, 0));
-            player.sendTitle("§e§lSUPER SAIYAJIN 2", "§6¡Arcos de bio-electricidad y fuerza colosal!", 5, 50, 10);
-            player.sendActionBar(Component.text("§e⚡ ¡SSJ2 ACTIVO! Arcos de bio-electricidad, Fuerza II & Velocidad II por 5 minutos"));
+            player.sendTitle("§e§lSUPER SAIYAJIN 2", "§6Bio-electric arcs and colossal strength!", 5, 50, 10);
+            player.sendActionBar(Component.text("§e⚡ SSJ2 ACTIVE! Bio-electric arcs, Strength II & Speed II for 5 minutes"));
 
             plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
                 activeSSJ2.remove(uuid);
@@ -363,15 +363,15 @@ public class DragonBallListener implements Listener {
                     player.removePotionEffect(PotionEffectType.SPEED);
                     player.removePotionEffect(PotionEffectType.JUMP_BOOST);
                     player.removePotionEffect(PotionEffectType.RESISTANCE);
-                    player.sendMessage("§e[Rankup] El estado de Super Saiyajin 2 ha concluido.");
+                    player.sendMessage("§e[Rankup] Super Saiyajin 2 has ended.");
                 }
             }, 6000L);
 
         } else if (type.equals("MUI")) {
             activeMUI.put(uuid, now + 60000L); // 60 seconds
             playMuiActivationFx(player);
-            player.sendTitle("§f§lDOCTRINA EGOÍSTA", "§bUltra Instinto Dominado activado", 5, 40, 5);
-            player.sendActionBar(Component.text("§f⚡ ¡EVASIÓN TOTAL ACTIVADA POR 60 SEGUNDOS!"));
+            player.sendTitle("§f§lULTRA INSTINCT", "§bMastered Ultra Instinct activated", 5, 40, 5);
+            player.sendActionBar(Component.text("§f⚡ TOTAL EVASION ACTIVE FOR 60 SECONDS!"));
 
             List<Long> history = muiUsageHistory.computeIfAbsent(uuid, k -> new ArrayList<>());
             history.removeIf(t -> now - t > 120_000L);
@@ -470,8 +470,8 @@ public class DragonBallListener implements Listener {
             player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 6000, 1));
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 6000, 0));
             player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 6000, 1));
-            player.sendTitle("§c§lSUPER SAIYAJIN GOD", "§eKi divino de sanación y gracia", 5, 40, 5);
-            player.sendActionBar(Component.text("§c⚡ ¡Regeneración II · Absorción · Velocidad por 35s!"));
+            player.sendTitle("§c§lSUPER SAIYAJIN GOD", "§eDivine ki of healing and grace", 5, 40, 5);
+            player.sendActionBar(Component.text("§c⚡ Regeneration II · Absorption · Speed for 35s!"));
 
             plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
                 activeSSJGod.remove(uuid);
@@ -479,7 +479,7 @@ public class DragonBallListener implements Listener {
                     player.removePotionEffect(PotionEffectType.REGENERATION);
                     player.removePotionEffect(PotionEffectType.SPEED);
                     player.removePotionEffect(PotionEffectType.ABSORPTION);
-                    player.sendMessage("§c[Rankup] El ki divino del Super Saiyajin God se ha disipado.");
+                    player.sendMessage("§c[Rankup] Super Saiyajin God's divine ki has faded.");
                 }
             }, 700L);
         } else if (type.equals("KAIOKEN")) {
@@ -523,7 +523,7 @@ public class DragonBallListener implements Listener {
                     player.removePotionEffect(PotionEffectType.STRENGTH);
                     player.removePotionEffect(PotionEffectType.JUMP_BOOST);
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 100, 0));
-                    player.sendMessage("§c[Rankup] El Kaio-ken concluye: tus fibras musculares descansan.");
+                    player.sendMessage("§c[Rankup] Kaio-ken has ended: your muscles can rest.");
                 }
             }, 700L);
         }
@@ -547,8 +547,8 @@ public class DragonBallListener implements Listener {
         player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 100, 2)); // Level III for 5s
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 50, 0)); // 2.5s
 
-        player.sendTitle("§c§l¡EL CUERPO PASÓ FACTURA!", "§eEl límite divino desgarró tus músculos", 10, 60, 15);
-        player.sendMessage("§c§l¡EL CUERPO HA PASADO FACTURA! §7El desgaste del Ultra Instinto supera el límite de un mortal.");
+        player.sendTitle("§c§lYOUR BODY HAS REACHED ITS LIMIT!", "§eDivine strain tore through your muscles", 10, 60, 15);
+        player.sendMessage("§c§lYOUR BODY HAS REACHED ITS LIMIT! §7Ultra Instinct strain exceeds a mortal's limit.");
     }
 
     // ==========================================
@@ -615,7 +615,7 @@ public class DragonBallListener implements Listener {
             }
         }
 
-        player.sendActionBar(Component.text("§e⚡ ¡ESPADA DE HAZ DE LUZ DE VEGETTO! §7(Perforación colosal)"));
+        player.sendActionBar(Component.text("§e⚡ VEGETTO'S LIGHT-BEAM SWORD! §7(Colossal piercing)"));
     }
 
     // ==========================================
@@ -842,8 +842,8 @@ public class DragonBallListener implements Listener {
             loc.getWorld().playSound(loc, Sound.ENTITY_GENERIC_EXPLODE, 0.8f, 1.8f);
         } catch (Exception ignored) {}
 
-        player.sendTitle("§b§l¡SUPER IMPULSO SÓNICO!", "§ePropulsión aérea a 100 bloques", 5, 25, 10);
-        player.sendActionBar(Component.text(String.format("§b⚡ ¡SUPER IMPULSO SÓNICO! §7(Enfriamiento: §e%.1fs§7)", cdMillis / 1000.0)));
+        player.sendTitle("§b§lSUPER SONIC BOOST!", "§e100-block aerial propulsion", 5, 25, 10);
+        player.sendActionBar(Component.text(String.format("§b⚡ SUPER SONIC BOOST! §7(Cooldown: §e%.1fs§7)", cdMillis / 1000.0)));
 
         // Conceder aprox 10 segundos de vuelo controlado aerodinámico y propulsión sónica
         player.setAllowFlight(true);
@@ -877,7 +877,7 @@ public class DragonBallListener implements Listener {
                         if (!plugin.hasExternalFlight(player) && player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
                             player.setFlying(false);
                             player.setAllowFlight(false);
-                            player.sendMessage("§e[Impulso Sónico] §7Propulsión sónica finalizada. Vuelo normal restaurado.");
+                            player.sendMessage("§e[Sonic Boost] §7Sonic propulsion ended. Normal flight restored.");
                         }
                     }
                 }
@@ -1282,7 +1282,7 @@ public class DragonBallListener implements Listener {
                     if (player.isOnline() && !plugin.hasExternalFlight(player) && player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
                         player.setFlying(false);
                         player.setAllowFlight(false);
-                        player.sendMessage("§e[Vuelo Saiyajin] §7Tu impulso de vuelo por transformación ha expirado (Inmunidad a caídas: 8s).");
+                        player.sendMessage("§e[Saiyajin Flight] §7Your transformation flight boost has expired (Fall immunity: 8s).");
                     }
                 }
             }

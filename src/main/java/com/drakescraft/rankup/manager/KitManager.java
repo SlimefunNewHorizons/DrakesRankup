@@ -416,8 +416,8 @@ public class KitManager {
 
             ItemStack nikaFruit = createCustomItem(Material.GOLDEN_APPLE, "&e&lFruta Hito Hito no Mi: Modelo Nika",
                     Arrays.asList(
-                            "&8▪ &eEl Dios del Sol y los Tambores de la Liberación",
-                            "&7La fruta más ridícula del mundo que concede libertad absoluta."
+                            "&8▪ &eThe Sun God and the Drums of Liberation",
+                            "&7The most ridiculous fruit in the world grants absolute freedom."
                     ));
             list.add(nikaFruit);
 
