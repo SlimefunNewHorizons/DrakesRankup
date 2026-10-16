@@ -158,8 +158,8 @@ public class SeriousPunchHandler implements Listener {
             world.playSound(origin, Sound.ENTITY_WARDEN_SONIC_BOOM, 2.0f, 0.8f);
             world.playSound(origin, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1.8f, 0.7f);
 
-            player.sendTitle("§c§l¡GOLPE SERIO!", "§fPUÑO DE LA MUERTE §8(ᴅᴇᴀᴛʜ ᴘᴜɴᴄʜ)", 5, 40, 10);
-            player.sendActionBar(Component.text("§c💥 ¡GOLPE SERIO! §7Onda de choque supersónica desplegada."));
+            player.sendTitle("§c§lSERIOUS PUNCH!", "§fDEATH PUNCH §8(ᴅᴇᴀᴛʜ ᴘᴜɴᴄʜ)", 5, 40, 10);
+            player.sendActionBar(Component.text("§c💥 SERIOUS PUNCH! §7Supersonic shockwave deployed."));
 
             // Lista de bloques que serán destruidos
             List<BlockState> candidateBlocks = new ArrayList<>();
@@ -276,8 +276,8 @@ public class SeriousPunchHandler implements Listener {
                         } catch (Exception ignored) {}
 
                         if (living instanceof Player targetPlayer) {
-                            targetPlayer.sendTitle("§c§l💥 ¡GOLPE SERIO!", "§fRecibiste la onda de choque de Saitama", 5, 35, 10);
-                            targetPlayer.sendActionBar(Component.text("§c💥 ¡GOLPE SERIO! Onda de choque devastó tus defensas."));
+                            targetPlayer.sendTitle("§c§l💥 SERIOUS PUNCH!", "§fYou were hit by Saitama's shockwave", 5, 35, 10);
+                            targetPlayer.sendActionBar(Component.text("§c💥 SERIOUS PUNCH! Your defenses were shattered."));
                         }
                     }
                 }
@@ -295,7 +295,7 @@ public class SeriousPunchHandler implements Listener {
             // Evaluar Umbral Telúrico (400 bloques)
             if (totalBlocks <= PERMANENT_CRATER_THRESHOLD) {
                 // MODO REGENERACIÓN: Se restaura progresivamente tras 12 segundos
-                player.sendActionBar(Component.text("§e[Saitama] §7Cráter telúrico (" + totalBlocks + " bloques) en fase de regeneración temporal."));
+                player.sendActionBar(Component.text("§e[Saitama] §7Seismic crater (" + totalBlocks + " blocks) regenerating."));
 
                 // Ordenar de abajo hacia arriba para que la montaña se reconstruya con naturalidad
                 candidateBlocks.sort(Comparator.comparingInt(BlockState::getY));
@@ -340,8 +340,8 @@ public class SeriousPunchHandler implements Listener {
             } else {
                 // MODO CRÁTER PERMANENTE
                 world.playSound(origin, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 2.0f, 0.5f);
-                player.sendTitle("§c§l💥 ¡CRÁTER PERMANENTE!", "§e" + totalBlocks + " bloques devastados · Se queda así nomás", 10, 60, 20);
-                Bukkit.broadcast(Component.text("§6[Rankup] §c¡El Golpe Serio de §e" + player.getName() + " §cha alterado permanentemente la geografía! §7(" + totalBlocks + " bloques destruidos)"));
+                player.sendTitle("§c§l💥 PERMANENT CRATER!", "§e" + totalBlocks + " blocks devastated · It will remain", 10, 60, 20);
+                Bukkit.broadcast(Component.text("§6[Rankup] §c" + player.getName() + "'s Serious Punch permanently altered the terrain! §7(" + totalBlocks + " blocks destroyed)"));
             }
         } finally {
             executingPunches.remove(uuid);

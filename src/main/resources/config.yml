@@ -13,8 +13,8 @@ settings:
   # Título en pantalla al subir de rango
   title:
     enabled: true
-    title: "&6&l¡RANGO DESBLOQUEADO!"
-    subtitle: "&eHas ascendido a &b{rank}"
+    title: "&6&lRANK UNLOCKED!"
+    subtitle: "&eYou advanced to &b{rank}"
     fade-in: 10
     stay: 50
     fade-out: 10
@@ -24,9 +24,9 @@ settings:
     enabled: true
     message:
       - "&8&m--------------------------------------------------"
-      - " &e&lDRAKES RANKUP &8✦ &6¡ASCENSO HISTÓRICO!"
-      - " &7El jugador &f{player} &7ha alcanzado el Rango &b{rank}&7."
-      - " &8[&e{division}&8] &8» &aNivel {tier} / 100"
+      - " &e&lDRAKES RANKUP &8✦ &6HISTORIC ASCENT!"
+      - " &7Player &f{player} &7has reached Rank &b{rank}&7."
+      - " &8[&e{division}&8] &8» &aTier {tier} / 100"
       - "&8&m--------------------------------------------------"
 
   # Integración LuckPerms (Cero colisión con Dioses VIP)
@@ -64,7 +64,7 @@ settings:
       - "world_galactifun_titan"
       - "world_galactifun_enceladus"
       - "world_galactifun_io"
-    blocked-message: "&c[DrakesCraft] El sistema de rangos y transformaciones es exclusivo de las modalidades custom (Survival SF, OneBlock y SkyBlock). ¡En Survival Clásico no está disponible!"
+    blocked-message: "&c[DrakesCraft] The rank and transformation system is exclusive to custom modes (Survival SF, OneBlock, and SkyBlock). It is unavailable in Classic Survival."
 
   # Sistema de Mantención y Desgaste (Rank Maintenance & Decay)
   maintenance:
@@ -89,8 +89,8 @@ settings:
 
 messages:
   prefix: "&8[&6Rankup&8] "
-  max-rank: "&a¡Felicidades! Ya has alcanzado el rango máximo (&6Rey de los Piratas / Trascendente Supremo&a)."
-  insufficient-funds: "&cNo tienes suficiente dinero para subir a &b{rank}&c. Te faltan &e${missing}&c."
-  success: "&a¡Has ascendido con éxito a &b{rank}&a! Se han descontado &e${cost}&a de tu cuenta."
-  no-permission: "&cNo tienes permisos para ejecutar este comando."
-  reload-success: "&aConfiguración y rangos recargados correctamente."
+  max-rank: "&aCongratulations! You have reached the maximum rank (&6Pirate King / Supreme Transcendent&a)."
+  insufficient-funds: "&cYou do not have enough money to advance to &b{rank}&c. You need &e${missing}&c more."
+  success: "&aYou advanced to &b{rank}&a! &e${cost}&a has been deducted from your balance."
+  no-permission: "&cYou do not have permission to run this command."
+  reload-success: "&aConfiguration and ranks reloaded successfully."

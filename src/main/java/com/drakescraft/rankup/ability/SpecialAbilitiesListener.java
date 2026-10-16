@@ -91,7 +91,7 @@ public class SpecialAbilitiesListener implements Listener {
         long ready = magnetCooldown.getOrDefault(uuid, 0L);
         if (now < ready) {
             long rem = Math.max(1, (ready - now) / 1000L);
-            player.sendActionBar(Component.text("§c⏳ Imán Magnético en recarga: §e" + rem + "s"));
+            player.sendActionBar(Component.text("§c⏳ Magnetic Vortex cooldown: §e" + rem + "s"));
             return;
         }
 
@@ -101,8 +101,8 @@ public class SpecialAbilitiesListener implements Listener {
 
         Location pLoc = player.getLocation();
 
-        player.sendTitle("§b§lVÓRTICE MAGNÉTICO", "§7Atracción masiva desplegada (200 bloques)", 5, 30, 10);
-        player.sendActionBar(Component.text("§b🧲 ¡VÓRTICE ACTIVO! Absorbiendo todos los ítems del sector."));
+        player.sendTitle("§b§lMAGNETIC VORTEX", "§7Mass attraction deployed (200 blocks)", 5, 30, 10);
+        player.sendActionBar(Component.text("§b🧲 VORTEX ACTIVE! Pulling all nearby item stacks."));
         player.playSound(pLoc, Sound.BLOCK_BEACON_ACTIVATE, 1.2f, 1.6f);
         player.playSound(pLoc, Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 1.2f, 0.8f);
 
@@ -120,7 +120,7 @@ public class SpecialAbilitiesListener implements Listener {
             }
         }
 
-        player.sendMessage("§b[Imán] §fSe atrajeron §e" + attractedCount + " §fgrupos de ítems hacia tu posición.");
+        player.sendMessage("§b[Magnet] §e" + attractedCount + " §fitem stacks pulled to your position.");
     }
 
     @EventHandler(priority = EventPriority.HIGH)
