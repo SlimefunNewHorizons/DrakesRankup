@@ -276,7 +276,7 @@ public class RankAbilityListener implements Listener {
                             player.getWorld().spawnParticle(Particle.FLAME, player.getLocation().add(0, 1.0, 0), 30, 0.4, 0.5, 0.4, 0.1);
                             player.playSound(player.getLocation(), Sound.ENTITY_WITHER_SPAWN, 0.5f, 1.8f);
                         } catch (Exception ignored) {}
-                        player.sendMessage("§c§l¡ZENKAI BOOST ACTIVADO! §eEl poder Saiyajin despierta ante el peligro.");
+                        player.sendMessage("§c§lZENKAI BOOST ACTIVATED! §eSaiyan power awakens in danger.");
                     }
                 }
             }

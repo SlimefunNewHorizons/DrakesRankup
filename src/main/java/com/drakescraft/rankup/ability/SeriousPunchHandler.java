@@ -238,7 +238,7 @@ public class SeriousPunchHandler implements Listener {
                                 targetPlayer.getInventory().getItemInOffHand().getType() == Material.SHIELD) {
                                 targetPlayer.setCooldown(Material.SHIELD, 160); // 8s de desactivación total de escudo
                                 targetPlayer.playSound(targetPlayer.getLocation(), Sound.ITEM_SHIELD_BREAK, 2.0f, 0.8f);
-                                targetPlayer.sendActionBar(Component.text("§c🛡️ ¡ESCUDO DESTROZADO POR EL GOLPE SERIO!"));
+                                targetPlayer.sendActionBar(Component.text("§c🛡️ SHIELD SHATTERED BY SERIOUS PUNCH!"));
                             }
                         }
 

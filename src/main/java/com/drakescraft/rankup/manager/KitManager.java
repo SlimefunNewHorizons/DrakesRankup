@@ -103,7 +103,7 @@ public class KitManager {
             int tier = (rank != null) ? rank.getTier() : 0;
 
             if (tier < 1) {
-                player.sendMessage("§c[Kit Rankup] Debes tener al menos el Rango Tier 1 (Senku) para reclamar un kit de rankup.");
+                player.sendMessage("§c[Rankup Kit] You need at least Tier 1 (Senku) to claim a Rankup kit.");
                 player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
                 return false;
             }
@@ -116,8 +116,8 @@ public class KitManager {
                 long remMs = getRemainingCooldownMs(uuid, division);
                 long hours = remMs / (1000 * 60 * 60);
                 long mins = (remMs % (1000 * 60 * 60)) / (1000 * 60);
-                player.sendMessage("§c[Kit Rankup] Ya has reclamado el kit de tu división hoy.");
-                player.sendMessage("§7Tiempo de recarga restante: §e" + hours + "h " + mins + "m§7.");
+                player.sendMessage("§c[Rankup Kit] You have already claimed your division kit today.");
+                player.sendMessage("§7Cooldown remaining: §e" + hours + "h " + mins + "m§7.");
                 player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
                 return false;
             }
@@ -138,8 +138,8 @@ public class KitManager {
             }
 
             player.playSound(loc, Sound.UI_TOAST_CHALLENGE_COMPLETE, 1.0f, 1.2f);
-            player.sendTitle("§6§l¡KIT DE RANKUP RECLAMADO!", "§eDivisión " + division + " de DrakesCraft", 10, 50, 10);
-            player.sendMessage("§a[Kit Rankup] §f¡Has recibido con éxito el kit de tu §6División " + division + "§f con encantamientos y objetos custom!");
+            player.sendTitle("§6§lRANKUP KIT CLAIMED!", "§eDrakesCraft Division " + division, 10, 50, 10);
+            player.sendMessage("§a[Rankup Kit] §fYou received your §6Division " + division + "§f kit with enchanted custom items!");
             return true;
         } finally {
             activeKitClaims.remove(uuid);

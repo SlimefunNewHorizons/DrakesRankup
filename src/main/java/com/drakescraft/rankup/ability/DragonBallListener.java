@@ -385,7 +385,7 @@ public class DragonBallListener implements Listener {
                     if (willFatigue) {
                         applyMuiFatigue(player);
                     } else {
-                        player.sendMessage("§7[Rankup] El estado de Ultra Instinto ha concluido.");
+                        player.sendMessage("§7[Rankup] Ultra Instinct has ended.");
                     }
                 }
             }, 1200L);
@@ -393,33 +393,33 @@ public class DragonBallListener implements Listener {
         } else if (type.equals("ULTRA_EGO")) {
             activeUltraEgo.put(uuid, now + 300000L); // 5 minutes
             playAwakeningBurst(player, Color.fromRGB(160,60,220), Color.fromRGB(90,20,140), Particle.WITCH, Sound.ENTITY_ELDER_GUARDIAN_CURSE);
-            player.sendTitle("§5§lMEGA INSTINTO (ULTRA EGO)", "§dEl daño recibido aumenta tu poder de destrucción", 5, 40, 5);
-            player.sendActionBar(Component.text("§5⚡ ¡AURA HAKAI ACTIVA POR 5 MINUTOS!"));
+            player.sendTitle("§5§lMEGA INSTINCT (ULTRA EGO)", "§dDamage taken increases your destructive power", 5, 40, 5);
+            player.sendActionBar(Component.text("§5⚡ HAKAI AURA ACTIVE FOR 5 MINUTES!"));
 
             plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
                 activeUltraEgo.remove(uuid);
                 if (player.isOnline()) {
-                    player.sendMessage("§5[Rankup] El Mega Instinto se ha disipado.");
+                    player.sendMessage("§5[Rankup] Mega Instinct has faded.");
                 }
             }, 6000L);
 
         } else if (type.equals("GOHAN_BEAST")) {
             activeGohanBeast.put(uuid, now + 300000L); // 5 minutes
             playAwakeningBurst(player, Color.fromRGB(245,245,255), Color.fromRGB(230,70,160), Particle.ELECTRIC_SPARK, Sound.ENTITY_RAVAGER_ROAR);
-            player.sendTitle("§d§lGOHAN BESTIA (BEAST)", "§f¡Furia desatada! Explosión crítica al máximo", 5, 40, 5);
-            player.sendActionBar(Component.text("§d⚡ ¡EXPLOSIÓN CRÍTICA +75% ACTIVADA POR 5 MINUTOS!"));
+            player.sendTitle("§d§lGOHAN BEAST", "§fUnleashed fury! Maximum critical burst", 5, 40, 5);
+            player.sendActionBar(Component.text("§d⚡ +75% CRITICAL BURST ACTIVE FOR 5 MINUTES!"));
 
             // Negative side effect: severe metabolic hunger burn
             try {
                 player.setFoodLevel(Math.max(2, player.getFoodLevel() - 8));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 200, 1));
             } catch (Exception ignored) {}
-            player.sendMessage("§c[Gohan Beast] §7El esfuerzo bestial ha consumido tu energía vital (Hambre aumentada).");
+            player.sendMessage("§c[Gohan Beast] §7The beastly effort drained your vitality (Hunger increased).");
 
             plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
                 activeGohanBeast.remove(uuid);
                 if (player.isOnline()) {
-                    player.sendMessage("§d[Rankup] La forma Bestia de Gohan ha concluido.");
+                    player.sendMessage("§d[Rankup] Gohan Beast form has ended.");
                 }
             }, 400L);
 
@@ -428,8 +428,8 @@ public class DragonBallListener implements Listener {
             playAwakeningBurst(player, Color.fromRGB(120,230,80), Color.fromRGB(60,150,40), Particle.HAPPY_VILLAGER, Sound.ENTITY_WARDEN_ROAR);
             player.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 6000, 1)); // Fuerza II (berserker equilibrado)
             player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 6000, 1)); // Resistance II
-            player.sendTitle("§a§lBROLY BERSERKER (LSSJ)", "§2Furia destructiva incontrolable", 5, 40, 5);
-            player.sendActionBar(Component.text("§a⚡ ¡FUERZA III & RESISTENCIA II ACTIVAS!"));
+            player.sendTitle("§a§lBROLY BERSERKER (LSSJ)", "§2Uncontrollable destructive fury", 5, 40, 5);
+            player.sendActionBar(Component.text("§a⚡ STRENGTH III & RESISTANCE II ACTIVE!"));
 
             plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
                 activeBroly.remove(uuid);
@@ -440,7 +440,7 @@ public class DragonBallListener implements Listener {
                     player.removePotionEffect(PotionEffectType.RESISTANCE);
                     // Negative side effect: Slowness post-rage
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 120, 0));
-                    player.sendMessage("§c[Broly LSSJ] §7La cólera berserker se disipa: sufres agotamiento muscular (Lentitud).");
+                    player.sendMessage("§c[Broly LSSJ] §7Berserker rage fades: you suffer muscle fatigue (Slowness).");
                 }
             }, 400L);
 
@@ -450,8 +450,8 @@ public class DragonBallListener implements Listener {
             player.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 6000, 1));
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 6000, 1));
             player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 6000, 0)); // Resistencia I: temple divino
-            player.sendTitle("§9§lSUPER SAIYAJIN BLUE", "§bFuerza, velocidad y temple de los dioses", 5, 40, 5);
-            player.sendActionBar(Component.text("§9⚡ ¡Fuerza I · Velocidad II · Resistencia I por 20s!"));
+            player.sendTitle("§9§lSUPER SAIYAN BLUE", "§bStrength, speed and divine resolve", 5, 40, 5);
+            player.sendActionBar(Component.text("§9⚡ Strength I · Speed II · Resistance I for 20s!"));
 
             plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
                 activeSSJBlue.remove(uuid);
@@ -460,7 +460,7 @@ public class DragonBallListener implements Listener {
                     player.removePotionEffect(PotionEffectType.SPEED);
                     player.removePotionEffect(PotionEffectType.RESISTANCE);
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 80, 0)); // coste: ki agotado
-                    player.sendMessage("§9[Rankup] El Super Saiyajin Blue se disipa: ki agotado (Lentitud).");
+                    player.sendMessage("§9[Rankup] Super Saiyan Blue fades: ki exhausted (Slowness).");
                 }
             }, 400L);
 

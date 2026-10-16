@@ -91,7 +91,7 @@ public class CustomKitItemListener implements Listener {
         }
 
         if (target == null) {
-            player.sendActionBar(Component.text("§cNo hay ninguna entidad objetivo en rango (12m)."));
+            player.sendActionBar(Component.text("§cNo target entity is within range (12m)."));
             return;
         }
 
@@ -110,8 +110,8 @@ public class CustomKitItemListener implements Listener {
             tLoc.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, tLoc, 20, 0.5, 0.5, 0.5, 0.1);
         } catch (Exception ignored) {}
 
-        player.sendTitle("§a§l¡RAYO PETRIFICADOR!", "§7Entidad convertida en piedra por 8s", 0, 30, 10);
-        player.sendActionBar(Component.text("§a[Medusa] §f¡Has petrificado a §e" + target.getName() + "§f por 8 segundos!"));
+        player.sendTitle("§a§lPETRIFYING RAY!", "§7Entity turned to stone for 8s", 0, 30, 10);
+        player.sendActionBar(Component.text("§a[Medusa] §fYou petrified §e" + target.getName() + "§f for 8 seconds!"));
         if (target instanceof Player victim) {
             victim.sendTitle("§7§l¡HAS SIDO PETRIFICADO!", "§cInmovilizado por la Medusa de Senku", 5, 40, 15);
             victim.sendMessage("§7[Medusa] §fTu cuerpo se ha endurecido en piedra pura. ¡Usa §eFluido Nital§f para liberarte!");
