@@ -225,7 +225,7 @@ class DrakesRankupTest {
         // Classic world blocked
         assertFalse(plugin.isWorldAllowed(classicWorld), "El mundo 'clasico' debe estar bloqueado");
         assertNotNull(plugin.getWorldBlockedMessage());
-        assertTrue(plugin.getWorldBlockedMessage().contains("exclusivo de las modalidades custom"));
+        assertTrue(plugin.getWorldBlockedMessage().contains("exclusive to custom modes"));
 
         // Player in clasico cannot process rankup or maintenance
         PlayerMock classicPlayer = server.addPlayer("ClassicWarrior");
