@@ -488,8 +488,8 @@ public class DragonBallListener implements Listener {
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 6000, 2));
             player.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 6000, 1));
             player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 6000, 1));
-            player.sendTitle("§c§l¡KAIO-KEN AUMENTADO!", "§4Multiplicador de poder divino x20", 5, 45, 10);
-            player.sendActionBar(Component.text("§c⚡ ¡KAIO-KEN ACTIVO! Velocidad III · Fuerza II · Vuelo libre (35s)"));
+            player.sendTitle("§c§lKAIO-KEN AWAKENED!", "§4Divine power multiplier x20", 5, 45, 10);
+            player.sendActionBar(Component.text("§c⚡ KAIO-KEN ACTIVE! Speed III · Strength II · Free flight (35s)"));
 
             // Drenaje gradual de vitalidad por sobreesfuerzo cardiaco
             new BukkitRunnable() {
@@ -729,7 +729,7 @@ public class DragonBallListener implements Listener {
         long ready = zenoEraseCooldown.getOrDefault(uuid, 0L);
         if (now < ready) {
             long rem = Math.max(1, (ready - now) / 1000L);
-            player.sendActionBar(Component.text("§c⏳ Borrado Universal en enfriamiento: §e" + rem + "s"));
+            player.sendActionBar(Component.text("§c⏳ Universal Erasure cooldown: §e" + rem + "s"));
             return;
         }
 
@@ -806,7 +806,7 @@ public class DragonBallListener implements Listener {
         if (now < ready) {
             long remMs = ready - now;
             double remSec = remMs / 1000.0;
-            player.sendActionBar(Component.text(String.format("§c⏳ Super Impulso en enfriamiento: §e%.1fs", remSec)));
+            player.sendActionBar(Component.text(String.format("§c⏳ Super Boost cooldown: §e%.1fs", remSec)));
             return;
         }
 

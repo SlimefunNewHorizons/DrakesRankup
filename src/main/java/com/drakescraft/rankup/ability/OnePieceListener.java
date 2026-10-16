@@ -272,8 +272,8 @@ public class OnePieceListener implements Listener {
             player.getWorld().playSound(loc, Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.0f, 0.6f);
         } catch (Exception ignored) {}
 
-        player.sendTitle("§4§lGEAR FOURTH: BOUNCEMAN", "§c¡Haki de Armamento colosal + Rebote elástico continuo!", 5, 50, 10);
-        player.sendActionBar(Component.text("§4⚡ ¡GEAR 4 BOUNCEMAN ACTIVO! Rebotes automáticos, Velocidad III y Fuerza II por 4 minutos"));
+        player.sendTitle("§4§lGEAR FOURTH: BOUNCEMAN", "§cColossal Armament Haki + continuous elastic bounce!", 5, 50, 10);
+        player.sendActionBar(Component.text("§4⚡ GEAR 4 BOUNCEMAN ACTIVE! Automatic bounces, Speed III and Strength II for 4 minutes"));
 
         plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
             activeGear4.remove(uuid);

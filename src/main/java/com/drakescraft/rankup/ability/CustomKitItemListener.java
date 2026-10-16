@@ -157,8 +157,8 @@ public class CustomKitItemListener implements Listener {
             loc.getWorld().spawnParticle(Particle.CRIT, loc.clone().add(0, 1.0, 0), 15, 0.3, 0.5, 0.3, 0.1);
         } catch (Exception ignored) {}
 
-        player.sendTitle("§e§l¡DESPETRIFICACIÓN!", "§fCuerpo liberado con Fluido Nital", 0, 30, 10);
-        player.sendMessage("§e[Senku] §f¡La coraza de piedra ha sido quebrada! Movilidad y reflejos restaurados con éxito.");
+        player.sendTitle("§e§lDEPETRIFICATION!", "§fBody freed with Nital Fluid", 0, 30, 10);
+        player.sendMessage("§e[Senku] §fThe stone shell has shattered! Mobility and reflexes restored.");
     }
 
     @EventHandler(priority = EventPriority.HIGH)

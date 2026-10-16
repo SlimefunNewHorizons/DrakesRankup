@@ -92,9 +92,9 @@ public class KineticPushListener implements Listener {
             player.setFlying(false);
             player.setAllowFlight(false);
             try {
-                player.sendActionBar(Component.text("§c⏳ Empuje cinético en enfriamiento: §e" + remaining + "s"));
+                player.sendActionBar(Component.text("§c⏳ Kinetic Push cooldown: §e" + remaining + "s"));
             } catch (Exception ignored) {
-                player.sendMessage("§c⏳ Empuje cinético en enfriamiento: §e" + remaining + "s");
+                player.sendMessage("§c⏳ Kinetic Push cooldown: §e" + remaining + "s");
             }
             return;
         }
