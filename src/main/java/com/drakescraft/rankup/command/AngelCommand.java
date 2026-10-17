@@ -17,12 +17,12 @@ public class AngelCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage("§cSolo jugadores en el servidor pueden usar el modo Ángel.");
+            sender.sendMessage("§cOnly in-game players can use Angel Mode.");
             return true;
         }
 
         if (!player.hasPermission("drakesrankup.staff") && !player.hasPermission("drakesrankup.admin")) {
-            player.sendMessage("§cNo tienes autorización celestial para activar el modo Ángel.");
+            player.sendMessage("§cYou are not authorized to activate Angel Mode.");
             return true;
         }
 

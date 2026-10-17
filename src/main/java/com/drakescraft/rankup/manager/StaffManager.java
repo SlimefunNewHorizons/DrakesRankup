@@ -37,15 +37,15 @@ public class StaffManager implements Listener {
         if (angelPlayers.contains(uuid)) {
             angelPlayers.remove(uuid);
             player.setInvulnerable(false);
-            player.sendMessage("§c✦ [STAFF] Modo Ángel / Zeno-Sama §cDESACTIVADO.");
-            player.sendTitle("§cMODO ÁNGEL OFF", "§7Has regresado al estado mortal", 5, 30, 5);
+            player.sendMessage("§c✦ [STAFF] Angel / Zeno-Sama Mode §cDISABLED.");
+            player.sendTitle("§cANGEL MODE OFF", "§7You have returned to your mortal state", 5, 30, 5);
             return false;
         } else {
             angelPlayers.add(uuid);
             player.setInvulnerable(true);
             player.setAllowFlight(true);
             player.setFlying(true);
-            player.sendMessage("§b✦ [STAFF] Modo Ángel / Zeno-Sama §aACTIVADO§b. Invulnerabilidad total y Ultra Instinto Angelical infinito.");
+            player.sendMessage("§b✦ [STAFF] Angel / Zeno-Sama Mode §aENABLED§b. Total invulnerability and infinite Angelic Ultra Instinct.");
             player.sendTitle("§b✦ MODO ÁNGEL ✦", "§eWhis / Daishinkan · Invulnerable & Evasión 100%", 10, 50, 10);
             try {
                 player.getWorld().spawnParticle(Particle.TOTEM_OF_UNDYING, player.getLocation().add(0, 1.0, 0), 40, 0.5, 0.8, 0.5, 0.2);
@@ -64,8 +64,8 @@ public class StaffManager implements Listener {
         if (rank == null) return false;
 
         plugin.getRankManager().setPlayerTier(uuid, targetTier);
-        player.sendMessage("§a✦ [Staff Test] Has cambiado temporalmente al rango: §eNivel " + targetTier + " §6(" + rank.getDisplayName() + "§6)§a.");
-        player.sendMessage("§7Usa §e/rankup test reset §7para volver a tu nivel original (" + originalTiers.get(uuid) + ").");
+        player.sendMessage("§a✦ [Staff Test] You have temporarily changed to: §eTier " + targetTier + " §6(" + rank.getDisplayName() + "§6)§a.");
+        player.sendMessage("§7Use §e/rankup test reset §7to return to your original tier (" + originalTiers.get(uuid) + ").");
         try {
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1.0f, 1.8f);
             player.getWorld().spawnParticle(Particle.FIREWORK, player.getLocation().add(0, 1.0, 0), 20, 0.3, 0.4, 0.3, 0.05);
@@ -77,13 +77,13 @@ public class StaffManager implements Listener {
         UUID uuid = player.getUniqueId();
         Integer original = originalTiers.remove(uuid);
         if (original == null) {
-            player.sendMessage("§c[Staff Test] No estabas en ningún modo de prueba.");
+            player.sendMessage("§c[Staff Test] You are not currently in test mode.");
             return false;
         }
 
         plugin.getRankManager().setPlayerTier(uuid, original);
         Rank rank = plugin.getRankManager().getRankByTier(original);
-        player.sendMessage("§a✦ [Staff Test] Tu rango original ha sido restaurado: §eNivel " + original + " (" + (rank != null ? rank.getDisplayName() : "Sin Rango") + "§e).");
+        player.sendMessage("§a✦ [Staff Test] Your original rank has been restored: §eTier " + original + " (" + (rank != null ? rank.getDisplayName() : "No Rank") + "§e).");
         return true;
     }
 

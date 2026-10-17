@@ -44,7 +44,7 @@ public class RankupCommand implements CommandExecutor, TabCompleter {
 
         if (args.length == 0) {
             if (!(sender instanceof Player player)) {
-                sender.sendMessage("§cEste comando solo puede ser ejecutado por un jugador.");
+                sender.sendMessage("§cOnly in-game players can run this command.");
                 return true;
             }
             plugin.getRankManager().processRankup(player);
@@ -55,7 +55,7 @@ public class RankupCommand implements CommandExecutor, TabCompleter {
 
         if (sub.equals("magnet") || sub.equals("iman")) {
             if (!(sender instanceof Player player)) {
-                sender.sendMessage("§cSolo jugadores pueden usar el magnetismo.");
+                sender.sendMessage("§cOnly players can use magnetism.");
                 return true;
             }
             if (plugin.getSpecialAbilitiesListener() != null) {
@@ -66,7 +66,7 @@ public class RankupCommand implements CommandExecutor, TabCompleter {
 
         if (sub.equals("blades") || sub.equals("filos") || sub.equals("aurakill")) {
             if (!(sender instanceof Player player)) {
-                sender.sendMessage("§cSolo jugadores pueden usar los filos danzantes.");
+                sender.sendMessage("§cOnly players can use Dancing Blades.");
                 return true;
             }
             if (plugin.getSpecialAbilitiesListener() != null) {
@@ -77,7 +77,7 @@ public class RankupCommand implements CommandExecutor, TabCompleter {
 
         if (sub.equals("conqueror") || sub.equals("haki") || sub.equals("haoshoku")) {
             if (!(sender instanceof Player player)) {
-                sender.sendMessage("§cSolo jugadores pueden liberar Haki del Conquistador.");
+                sender.sendMessage("§cOnly players can unleash Conqueror's Haki.");
                 return true;
             }
             if (plugin.getOnePieceListener() != null) {
@@ -88,17 +88,17 @@ public class RankupCommand implements CommandExecutor, TabCompleter {
 
         if (sub.equals("setuplp") || sub.equals("autoconfig-lp") || sub.equals("synclp")) {
             if (!sender.hasPermission("drakesrankup.admin") && !sender.isOp()) {
-                sender.sendMessage("§cNo tienes permiso para ejecutar este comando.");
+                sender.sendMessage("§cYou do not have permission to run this command.");
                 return true;
             }
-            sender.sendMessage("§e[DrakesRankup] Iniciando auto-configuración de los 100 rangos en LuckPerms y TAB...");
+            sender.sendMessage("§e[DrakesRankup] Starting automatic LuckPerms and TAB setup for all 100 ranks...");
             plugin.getRankManager().autoConfigureLuckPermsAndTab(sender);
             return true;
         }
 
         if (sub.equals("gui") || sub.equals("menu")) {
             if (!(sender instanceof Player player)) {
-                sender.sendMessage("§cEste comando solo puede ser ejecutado por un jugador.");
+                sender.sendMessage("§cOnly in-game players can run this command.");
                 return true;
             }
             new RankupMenu(plugin, player, 0).open();
@@ -107,7 +107,7 @@ public class RankupCommand implements CommandExecutor, TabCompleter {
 
         if (sub.equals("kit")) {
             if (!(sender instanceof Player player)) {
-                sender.sendMessage("§cSolo jugadores pueden reclamar kits de rankup.");
+                sender.sendMessage("§cOnly players can claim rankup kits.");
                 return true;
             }
             if (plugin.getKitManager() != null) {
@@ -118,7 +118,7 @@ public class RankupCommand implements CommandExecutor, TabCompleter {
 
         if (sub.equals("bolsa") || sub.equals("pouch")) {
             if (!(sender instanceof Player player)) {
-                sender.sendMessage("§cEste comando solo puede ser ejecutado por un jugador.");
+                sender.sendMessage("§cOnly in-game players can run this command.");
                 return true;
             }
             var rm = plugin.getRankManager();
