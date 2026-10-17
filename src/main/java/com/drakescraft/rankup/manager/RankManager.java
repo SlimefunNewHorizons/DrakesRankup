@@ -641,6 +641,7 @@ public class RankManager {
 
         applyLuckPermsRank(player, previousTier, next);
         dispatchRewards(player, next);
+        expandIslandProtectionRanges(player, next.getTier());
 
         if (plugin.getKineticPushListener() != null) {
             plugin.getKineticPushListener().updatePushEligibility(player);
@@ -752,6 +753,8 @@ public class RankManager {
             plugin.getKineticPushListener().updatePushEligibility(player);
         }
 
+        expandIslandProtectionRanges(player, targetTier);
+
         int ranksGained = targetTier - previousTier;
         player.sendMessage("§a§l¡ASCENSO MULTIPLE COMPLETADO! §eHas ascendido §6" + ranksGained + " §erangos hasta §b" + (finalRank != null ? finalRank.getDisplayName() : "") + "§e por un total de §a$" + MONEY_FORMAT.format(totalCost) + "§e.");
         try {
@@ -759,6 +762,42 @@ public class RankManager {
         } catch (Exception ignored) {}
 
         return ranksGained;
+    }
+
+    public void expandIslandProtectionRanges(Player player, int tier) {
+        if (player == null || !player.isOnline() || tier <= 0) return;
+        int newRange = 64 + tier;
+        int chunkRange = 16 + tier;
+
+        if (Bukkit.getPluginManager().isPluginEnabled("BentoBox")) {
+            try {
+                Class<?> bboxClass = Class.forName("world.bentobox.bentobox.BentoBox");
+                Object bbox = bboxClass.getMethod("getInstance").invoke(null);
+                Object islandsManager = bboxClass.getMethod("getIslands").invoke(bbox);
+                java.lang.reflect.Method getIslandsMethod = islandsManager.getClass().getMethod("getIslands", UUID.class);
+                java.util.Collection<?> islands = (java.util.Collection<?>) getIslandsMethod.invoke(islandsManager, player.getUniqueId());
+                if (islands != null) {
+                    for (Object island : islands) {
+                        java.lang.reflect.Method getOwnerMethod = island.getClass().getMethod("getOwner");
+                        UUID owner = (UUID) getOwnerMethod.invoke(island);
+                        if (owner != null && owner.equals(player.getUniqueId())) {
+                            java.lang.reflect.Method getRangeMethod = island.getClass().getMethod("getProtectionRange");
+                            int oldRange = (int) getRangeMethod.invoke(island);
+                            int targetRange = Math.max(oldRange, newRange);
+                            if (targetRange > oldRange) {
+                                java.lang.reflect.Method setRangeMethod = island.getClass().getMethod("setProtectionRange", int.class);
+                                setRangeMethod.invoke(island, targetRange);
+                                player.sendMessage("§e[DrakesCraft] §a¡El radio de protección de tu isla se expandió a §6" + targetRange + " bloques §a(+" + tier + " por tu Rango)!");
+                            }
+                        }
+                    }
+                }
+            } catch (Throwable t) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "bsbadmin range set " + player.getName() + " " + newRange);
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "obadmin range set " + player.getName() + " " + newRange);
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chadmin range set " + player.getName() + " " + chunkRange);
+            }
+        }
     }
 
     private void dispatchRewards(Player player, Rank rank) {

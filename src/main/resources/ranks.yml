@@ -2,13 +2,17 @@ ranks:
   senku:
     tier: 1
     display-name: '&asᴇɴᴋᴜ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ
     cost: 10000
     icon: STONE
     permissions:
     - essentials.sethome.multiple.senku
+    - bskyblock.island.range.65
+    - aoneblock.island.range.65
+    - chunkblock.island.range.17
     perks:
     - +1 Home (/sethome)
+    - '+1 Bloque radio isla (Radio total: 65m)'
     - Acceso a /recipe
     - Título [Senku]
     reward-commands: []
@@ -20,13 +24,17 @@ ranks:
   chrome:
     tier: 2
     display-name: '&eᴄʜʀᴏᴍᴇ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ
     cost: 20000
     icon: FLINT
     permissions:
     - essentials.hat
+    - bskyblock.island.range.66
+    - aoneblock.island.range.66
+    - chunkblock.island.range.18
     perks:
     - Visión de recolector astuto
+    - '+1 Bloque radio isla (Radio total: 66m)'
     - Acceso a /hat
     - Título [Chrome]
     reward-commands: []
@@ -38,13 +46,17 @@ ranks:
   kohaku:
     tier: 3
     display-name: '&6ᴋᴏʜᴀᴋᴜ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ
     cost: 35000
     icon: FEATHER
     permissions:
     - playervaults.amount.2
+    - bskyblock.island.range.67
+    - aoneblock.island.range.67
+    - chunkblock.island.range.19
     perks:
     - Resistencia a caídas -50%
+    - '+1 Bloque radio isla (Radio total: 67m)'
     - +1 Bóveda (/pv 2)
     - Título [Kohaku]
     reward-commands: []
@@ -56,13 +68,17 @@ ranks:
   gen:
     tier: 4
     display-name: '&dɢᴇɴ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ
     cost: 55000
     icon: GOLD_NUGGET
     permissions:
     - essentials.workbench
+    - bskyblock.island.range.68
+    - aoneblock.island.range.68
+    - chunkblock.island.range.20
     perks:
     - Elocuencia del Mentalista
+    - '+1 Bloque radio isla (Radio total: 68m)'
     - Acceso a mesa /craft
     - Título [Gen]
     reward-commands: []
@@ -74,13 +90,17 @@ ranks:
   tsukasa:
     tier: 5
     display-name: '&cᴛsᴜᴋᴀsᴀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ
     cost: 80000
     icon: IRON_CHESTPLATE
     permissions:
     - essentials.sethome.multiple.tsukasa
+    - bskyblock.island.range.69
+    - aoneblock.island.range.69
+    - chunkblock.island.range.21
     perks:
     - Fuerza primitiva y resistencia pasiva
+    - '+1 Bloque radio isla (Radio total: 69m)'
     - +1 Home
     - Título [Tsukasa]
     reward-commands: []
@@ -92,13 +112,17 @@ ranks:
   gon:
     tier: 6
     display-name: '&2ɢᴏɴ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ
     cost: 120000
     icon: FISHING_ROD
     permissions:
     - essentials.near
+    - bskyblock.island.range.70
+    - aoneblock.island.range.70
+    - chunkblock.island.range.22
     perks:
     - Aura de Nen (Ten y Ren)
+    - '+1 Bloque radio isla (Radio total: 70m)'
     - Acceso a /near básico
     - Título [Gon]
     reward-commands: []
@@ -110,13 +134,17 @@ ranks:
   killua:
     tier: 7
     display-name: '&bᴋɪʟʟᴜᴀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ
     cost: 175000
     icon: LIGHTNING_ROD
     permissions:
     - playervaults.amount.3
+    - bskyblock.island.range.71
+    - aoneblock.island.range.71
+    - chunkblock.island.range.23
     perks:
     - 'Transmutación de rayo: velocidad pasiva'
+    - '+1 Bloque radio isla (Radio total: 71m)'
     - +1 Bóveda (/pv 3)
     - Título [Killua]
     reward-commands: []
@@ -128,13 +156,17 @@ ranks:
   kurapika:
     tier: 8
     display-name: '&eᴋᴜʀᴀᴘɪᴋᴀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ
     cost: 250000
     icon: CHAIN
     permissions:
     - essentials.condense
+    - bskyblock.island.range.72
+    - aoneblock.island.range.72
+    - chunkblock.island.range.24
     perks:
     - Cadenas del juicio espectral
+    - '+1 Bloque radio isla (Radio total: 72m)'
     - Acceso a /condense
     - Título [Kurapika]
     reward-commands: []
@@ -146,13 +178,17 @@ ranks:
   netero:
     tier: 9
     display-name: '&6ɴᴇᴛᴇʀᴏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ
     cost: 350000
     icon: GOLDEN_APPLE
     permissions:
     - essentials.sethome.multiple.netero
+    - bskyblock.island.range.73
+    - aoneblock.island.range.73
+    - chunkblock.island.range.25
     perks:
     - 'Bodhisattva Guanyin: bono de XP'
+    - '+1 Bloque radio isla (Radio total: 73m)'
     - +1 Home
     - Título [Netero]
     reward-commands: []
@@ -164,13 +200,17 @@ ranks:
   meruem:
     tier: 10
     display-name: '&5ᴍᴇʀᴜᴇᴍ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪ · ᴄɪᴇɴᴄɪᴀ & ɴᴇɴ
     cost: 500000
     icon: NETHERITE_HELMET
     permissions:
     - essentials.ptime
+    - bskyblock.island.range.74
+    - aoneblock.island.range.74
+    - chunkblock.island.range.26
     perks:
     - 'Cima División I: Título dorado [Meruem]'
+    - '+1 Bloque radio isla (Radio total: 74m)'
     - Efecto sonoro al conectar
     - Acceso a /ptime
     reward-commands: []
@@ -182,13 +222,17 @@ ranks:
   genin:
     tier: 11
     display-name: '&7ɢᴇɴɪɴ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ
     cost: 750000
     icon: WOODEN_SWORD
     permissions:
     - drakesrankup.push.genin
+    - bskyblock.island.range.75
+    - aoneblock.island.range.75
+    - chunkblock.island.range.27
     perks:
     - Desbloquea Empuje Cinético (Salto Shinobi)
+    - '+1 Bloque radio isla (Radio total: 75m)'
     - Salto potenciado
     - Título [Genin]
     reward-commands: []
@@ -200,13 +244,17 @@ ranks:
   chunin:
     tier: 12
     display-name: '&aᴄʜᴜɴɪɴ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ
     cost: 1000000
     icon: IRON_SWORD
     permissions:
     - essentials.near.chunin
+    - bskyblock.island.range.76
+    - aoneblock.island.range.76
+    - chunkblock.island.range.28
     perks:
     - 'Empuje Cinético mejorado (CD: 6s)'
+    - '+1 Bloque radio isla (Radio total: 76m)'
     - Percepción táctica
     - Título [Chunin]
     reward-commands: []
@@ -218,13 +266,17 @@ ranks:
   jonin:
     tier: 13
     display-name: '&2ᴊᴏɴɪɴ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ
     cost: 1350000
     icon: DIAMOND_SWORD
     permissions:
     - playervaults.amount.4
+    - bskyblock.island.range.77
+    - aoneblock.island.range.77
+    - chunkblock.island.range.29
     perks:
     - 'Empuje Cinético mejorado (CD: 5s)'
+    - '+1 Bloque radio isla (Radio total: 77m)'
     - +1 Bóveda (/pv 4)
     - Título [Jonin]
     reward-commands: []
@@ -236,13 +288,17 @@ ranks:
   anbu:
     tier: 14
     display-name: '&8ᴀɴʙᴜ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ
     cost: 1800000
     icon: WITHER_SKELETON_SKULL
     permissions:
     - essentials.ext
+    - bskyblock.island.range.78
+    - aoneblock.island.range.78
+    - chunkblock.island.range.30
     perks:
     - 'Empuje Cinético sigiloso (CD: 5s)'
+    - '+1 Bloque radio isla (Radio total: 78m)'
     - Acceso a /ext
     - Título [ANBU]
     reward-commands: []
@@ -254,13 +310,17 @@ ranks:
   kage:
     tier: 15
     display-name: '&6ᴋᴀɢᴇ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ
     cost: 2400000
     icon: GOLDEN_HELMET
     permissions:
     - essentials.sethome.multiple.kage
+    - bskyblock.island.range.79
+    - aoneblock.island.range.79
+    - chunkblock.island.range.31
     perks:
     - 'Mandatario Shinobi: Anuncio especial en chat'
+    - '+1 Bloque radio isla (Radio total: 79m)'
     - +1 Home
     - Título [Kage]
     reward-commands: []
@@ -272,13 +332,17 @@ ranks:
   megumi:
     tier: 16
     display-name: '&3ᴍᴇɢᴜᴍɪ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ
     cost: 3200000
     icon: BONE
     permissions:
     - essentials.pweather
+    - bskyblock.island.range.80
+    - aoneblock.island.range.80
+    - chunkblock.island.range.32
     perks:
     - Técnica de Diez Sombras
+    - '+1 Bloque radio isla (Radio total: 80m)'
     - Acceso a /pweather
     - Título [Megumi]
     reward-commands: []
@@ -290,13 +354,17 @@ ranks:
   nobara:
     tier: 17
     display-name: '&dɴᴏʙᴀʀᴀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ
     cost: 4000000
     icon: IRON_HOE
     permissions:
     - playervaults.amount.5
+    - bskyblock.island.range.81
+    - aoneblock.island.range.81
+    - chunkblock.island.range.33
     perks:
     - Técnica de Resonancia Maldita
+    - '+1 Bloque radio isla (Radio total: 81m)'
     - +1 Bóveda (/pv 5)
     - Título [Nobara]
     reward-commands: []
@@ -308,13 +376,17 @@ ranks:
   yuji:
     tier: 18
     display-name: '&cʏᴜᴊɪ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ
     cost: 5000000
     icon: CRIMSON_FUNGUS
     permissions:
     - essentials.recipe
+    - bskyblock.island.range.82
+    - aoneblock.island.range.82
+    - chunkblock.island.range.34
     perks:
     - 'Destello Negro (Black Flash: 15% daño x1.5)'
+    - '+1 Bloque radio isla (Radio total: 82m)'
     - Empuje Cinético x1.4
     - Título [Yuji]
     reward-commands: []
@@ -326,13 +398,17 @@ ranks:
   gojo:
     tier: 19
     display-name: '&bɢᴏᴊᴏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ
     cost: 6200000
     icon: END_ROD
     permissions:
     - essentials.speed
+    - bskyblock.island.range.83
+    - aoneblock.island.range.83
+    - chunkblock.island.range.35
     perks:
     - 'Infinito (Mugen: 15% desvía proyectiles)'
+    - '+1 Bloque radio isla (Radio total: 83m)'
     - Aura de Seis Ojos
     - Título [Gojo]
     reward-commands: []
@@ -344,13 +420,17 @@ ranks:
   sukuna:
     tier: 20
     display-name: '&4sᴜᴋᴜɴᴀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ
     cost: 7500000
     icon: SOUL_CAMPFIRE
     permissions:
     - essentials.sethome.multiple.sukuna
+    - bskyblock.island.range.84
+    - aoneblock.island.range.84
+    - chunkblock.island.range.36
     perks:
     - 'Cima División II: Fuego Maldito cuerpo a cuerpo'
+    - '+1 Bloque radio isla (Radio total: 84m)'
     - Título Carmesí [Sukuna]
     - +1 Home
     reward-commands: []
@@ -362,13 +442,17 @@ ranks:
   grumete:
     tier: 21
     display-name: '&bɢʀᴜᴍᴇᴛᴇ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs
     cost: 10000000
     icon: PRISMARINE_SHARD
     permissions:
     - essentials.sethome.multiple.grumete
+    - bskyblock.island.range.85
+    - aoneblock.island.range.85
+    - chunkblock.island.range.37
     perks:
     - Respiración acuática ilimitada
+    - '+1 Bloque radio isla (Radio total: 85m)'
     - Paso Marino
     - Título [Grumete]
     reward-commands: []
@@ -380,13 +464,17 @@ ranks:
   pirata:
     tier: 22
     display-name: '&3ᴘɪʀᴀᴛᴀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs
     cost: 12500000
     icon: HEART_OF_THE_SEA
     permissions:
     - playervaults.amount.6
+    - bskyblock.island.range.86
+    - aoneblock.island.range.86
+    - chunkblock.island.range.38
     perks:
     - Gracia del Delfín en océanos
+    - '+1 Bloque radio isla (Radio total: 86m)'
     - +1 Bóveda (/pv 6)
     - Título [Pirata]
     reward-commands: []
@@ -398,13 +486,17 @@ ranks:
   supernova:
     tier: 23
     display-name: '&csᴜᴘᴇʀɴᴏᴠᴀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs
     cost: 15500000
     icon: COMPASS
     permissions:
     - essentials.compass
+    - bskyblock.island.range.87
+    - aoneblock.island.range.87
+    - chunkblock.island.range.39
     perks:
     - 'La Peor Generación: Cartel de recompensa'
+    - '+1 Bloque radio isla (Radio total: 87m)'
     - Acceso a /compass
     - Título [Supernova]
     reward-commands: []
@@ -416,13 +508,17 @@ ranks:
   shichibukai:
     tier: 24
     display-name: '&6sʜɪᴄʜɪʙᴜᴋᴀɪ ︱ ᴢᴏʀᴏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs
     cost: 19000000
     icon: IRON_SWORD
     permissions:
     - essentials.dispose
+    - bskyblock.island.range.88
+    - aoneblock.island.range.88
+    - chunkblock.island.range.40
     perks:
     - 'Estilo Tres Espadas (Santoryu): +25% daño con espadas'
+    - '+1 Bloque radio isla (Radio total: 88m)'
     - 'Corte del Dragón Volador: Ráfaga de viento cortante a distancia'
     - Acceso a /dispose
     - Título [Zoro/Santoryu]
@@ -435,13 +531,17 @@ ranks:
   yonkou:
     tier: 25
     display-name: '&4ʏᴏɴᴋᴏᴜ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs
     cost: 24000000
     icon: NETHERITE_SWORD
     permissions:
     - essentials.sethome.multiple.yonkou
+    - bskyblock.island.range.89
+    - aoneblock.island.range.89
+    - chunkblock.island.range.41
     perks:
     - 'Haki del Conquistador: ralentiza hostiles'
+    - '+1 Bloque radio isla (Radio total: 89m)'
     - +1 Home
     - Título [Yonkou]
     reward-commands: []
@@ -453,13 +553,17 @@ ranks:
   shinigami:
     tier: 26
     display-name: '&fsʜɪɴɪɢᴀᴍɪ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs
     cost: 30000000
     icon: IRON_SWORD
     permissions:
     - playervaults.amount.7
+    - bskyblock.island.range.90
+    - aoneblock.island.range.90
+    - chunkblock.island.range.42
     perks:
     - 'Segador de Almas: Zanpakuto cosmética'
+    - '+1 Bloque radio isla (Radio total: 90m)'
     - +1 Bóveda (/pv 7)
     - Título [Shinigami]
     reward-commands: []
@@ -471,13 +575,17 @@ ranks:
   teniente:
     tier: 27
     display-name: '&bᴛᴇɴɪᴇɴᴛᴇ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs
     cost: 35000000
     icon: GHAST_TEAR
     permissions:
     - essentials.back
+    - bskyblock.island.range.91
+    - aoneblock.island.range.91
+    - chunkblock.island.range.43
     perks:
     - 'Oficial del Gotei 13: Shunpo en /back'
+    - '+1 Bloque radio isla (Radio total: 91m)'
     - Acceso a /back rápido
     - Título [Teniente]
     reward-commands: []
@@ -489,13 +597,17 @@ ranks:
   capitan:
     tier: 28
     display-name: '&fᴄᴀᴘɪᴛáɴ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs
     cost: 40000000
     icon: WHITE_BANNER
     permissions:
     - essentials.anvil
+    - bskyblock.island.range.92
+    - aoneblock.island.range.92
+    - chunkblock.island.range.44
     perks:
     - 'Haori blanco de capitán: Reiatsu visible'
+    - '+1 Bloque radio isla (Radio total: 92m)'
     - Acceso virtual a /anvil
     - Título [Capitán]
     reward-commands: []
@@ -507,13 +619,17 @@ ranks:
   bankai:
     tier: 29
     display-name: '&cʙᴀɴᴋᴀɪ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs
     cost: 45000000
     icon: DIAMOND_SWORD
     permissions:
     - essentials.grindstone
+    - bskyblock.island.range.93
+    - aoneblock.island.range.93
+    - chunkblock.island.range.45
     perks:
     - 'Liberación Definitiva: Sonido y partículas al desenvainar'
+    - '+1 Bloque radio isla (Radio total: 93m)'
     - Acceso a /grindstone
     - Título [Bankai]
     reward-commands: []
@@ -525,13 +641,17 @@ ranks:
   joyboy:
     tier: 30
     display-name: '&eᴊᴏʏʙᴏʏ ︱ ʟᴜғғʏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪɪɪ · ʀᴜᴛᴀ ᴘɪʀᴀᴛᴀ & sᴇɢᴀᴅᴏʀᴇs
     cost: 50000000
     icon: SUNFLOWER
     permissions:
     - essentials.sethome.multiple.joyboy
+    - bskyblock.island.range.94
+    - aoneblock.island.range.94
+    - chunkblock.island.range.46
     perks:
     - 'Fruta Gomu Gomu: Gear Second (Vapor, Velocidad III y Red Hawk)'
+    - '+1 Bloque radio isla (Radio total: 94m)'
     - '⚠️ Maldición del Océano: El agua marina drena tu fuerza vital'
     - Tambores de la Liberación
     - +1 Home
@@ -545,13 +665,17 @@ ranks:
   saiyajin:
     tier: 31
     display-name: '&6sᴀɪʏᴀᴊɪɴ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ
     cost: 65000000
     icon: DRAGON_BREATH
     permissions:
     - playervaults.amount.8
+    - bskyblock.island.range.95
+    - aoneblock.island.range.95
+    - chunkblock.island.range.47
     perks:
     - 'Zenkai Boost: Fuerza y Regen al bajar de 3 corazones'
+    - '+1 Bloque radio isla (Radio total: 95m)'
     - +1 Bóveda (/pv 8)
     - Título [Saiyajin]
     reward-commands: []
@@ -563,13 +687,17 @@ ranks:
   supersaiyajin:
     tier: 32
     display-name: '&esᴜᴘᴇʀsᴀɪʏᴀᴊɪɴ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ
     cost: 85000000
     icon: GLOWSTONE_DUST
     permissions:
     - essentials.smithingtable
+    - bskyblock.island.range.96
+    - aoneblock.island.range.96
+    - chunkblock.island.range.48
     perks:
     - Aura de Llamas Doradas continua
+    - '+1 Bloque radio isla (Radio total: 96m)'
     - Acceso a /smithingtable
     - Título [SSJ]
     reward-commands: []
@@ -581,13 +709,17 @@ ranks:
   ssj2:
     tier: 33
     display-name: '&essᴊ2'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ
     cost: 110000000
     icon: LIGHTNING_ROD
     permissions:
     - essentials.stonecutter
+    - bskyblock.island.range.97
+    - aoneblock.island.range.97
+    - chunkblock.island.range.49
     perks:
     - 'Rayo Ascendente: Chispas eléctricas azules continuas'
+    - '+1 Bloque radio isla (Radio total: 97m)'
     - Acceso a /stonecutter
     - Título [SSJ2]
     reward-commands: []
@@ -599,13 +731,17 @@ ranks:
   ssj3:
     tier: 34
     display-name: '&6ssᴊ3 ︱ ʙʀᴏʟʏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ
     cost: 140000000
     icon: GOLD_BLOCK
     permissions:
     - essentials.sethome.multiple.ssj3
+    - bskyblock.island.range.98
+    - aoneblock.island.range.98
+    - chunkblock.island.range.50
     perks:
     - 'Broly Berserker (LSSJ): Fuerza III, Resistencia II e Inmunidad a empuje'
+    - '+1 Bloque radio isla (Radio total: 98m)'
     - '⚠️ Furia Descontrolada: Lentitud I al agotarse la furia y debilidad a proyectiles'
     - +1 Home
     - Título [SSJ3/Broly]
@@ -618,13 +754,17 @@ ranks:
   ssjgod:
     tier: 35
     display-name: '&cssᴊɢᴏᴅ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ
     cost: 180000000
     icon: REDSTONE_BLOCK
     permissions:
     - playervaults.amount.9
+    - bskyblock.island.range.99
+    - aoneblock.island.range.99
+    - chunkblock.island.range.51
     perks:
     - 'Ki Divino Carmesí: Carga de Ki (Shift) activa regeneración y agilidad divina'
+    - '+1 Bloque radio isla (Radio total: 99m)'
     - +1 Bóveda (/pv 9)
     - Título [SSJGod]
     reward-commands: []
@@ -636,13 +776,18 @@ ranks:
   ssjblue:
     tier: 36
     display-name: '&9ssᴊʙʟᴜᴇ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ
     cost: 230000000
     icon: LAPIS_BLOCK
     permissions:
     - essentials.loom
+    - bskyblock.island.range.100
+    - aoneblock.island.range.100
+    - chunkblock.island.range.52
     perks:
-    - 'Dios Super Saiyajin: Carga de Ki (Shift) activa Fuerza I y Velocidad II con plasma'
+    - 'Dios Super Saiyajin: Carga de Ki (Shift) activa Fuerza I y Velocidad II con
+      plasma'
+    - '+1 Bloque radio isla (Radio total: 100m)'
     - Acceso a /loom
     - Título [SSJBlue]
     reward-commands: []
@@ -654,13 +799,17 @@ ranks:
   cazadore:
     tier: 37
     display-name: '&7ᴄᴀᴢᴀᴅᴏʀ-ᴇ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ
     cost: 260000000
     icon: WOODEN_PICKAXE
     permissions:
     - essentials.cartographytable
+    - bskyblock.island.range.101
+    - aoneblock.island.range.101
+    - chunkblock.island.range.53
     perks:
     - 'El más débil de la humanidad: Perseverancia inquebrantable'
+    - '+1 Bloque radio isla (Radio total: 101m)'
     - Acceso a /cartographytable
     - Título [Cazador-E]
     reward-commands: []
@@ -672,13 +821,17 @@ ranks:
   cazadors:
     tier: 38
     display-name: '&6ᴄᴀᴢᴀᴅᴏʀ-s'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ
     cost: 290000000
     icon: DIAMOND_PICKAXE
     permissions:
     - essentials.sethome.multiple.cazadors
+    - bskyblock.island.range.102
+    - aoneblock.island.range.102
+    - chunkblock.island.range.54
     perks:
     - 'Rango S Nacional: Aura opresiva'
+    - '+1 Bloque radio isla (Radio total: 102m)'
     - +1 Home
     - Título [Cazador-S]
     reward-commands: []
@@ -690,13 +843,17 @@ ranks:
   monarcasombras:
     tier: 39
     display-name: '&8ᴍᴏɴᴀʀᴄᴀsᴏᴍʙʀᴀs'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ
     cost: 320000000
     icon: OBSIDIAN
     permissions:
     - playervaults.amount.10
+    - bskyblock.island.range.103
+    - aoneblock.island.range.103
+    - chunkblock.island.range.55
     perks:
     - 'Extracción de Sombras: 10% al matar mobs de invocar sombra aliada'
+    - '+1 Bloque radio isla (Radio total: 103m)'
     - +1 Bóveda (/pv 10)
     - Título [MonarcaSombras]
     reward-commands: []
@@ -708,13 +865,17 @@ ranks:
   sungjinwoo:
     tier: 40
     display-name: '&5sᴜɴɢᴊɪɴᴡᴏᴏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ
     cost: 350000000
     icon: NETHERITE_INGOT
     permissions:
     - essentials.repair
+    - bskyblock.island.range.104
+    - aoneblock.island.range.104
+    - chunkblock.island.range.56
     perks:
     - 'Cima División IV: Ojos morados ardientes y ''SURGE'''
+    - '+1 Bloque radio isla (Radio total: 104m)'
     - Acceso a /repair
     - Título [SungJinwoo]
     reward-commands: []
@@ -726,13 +887,17 @@ ranks:
   saitama:
     tier: 41
     display-name: '&esᴀɪᴛᴀᴍᴀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ
     cost: 400000000
     icon: RAW_GOLD
     permissions:
     - essentials.sethome.multiple.saitama
+    - bskyblock.island.range.105
+    - aoneblock.island.range.105
+    - chunkblock.island.range.57
     perks:
     - 'Golpe Serio: 12% de empuje colosal cinematográfico'
+    - '+1 Bloque radio isla (Radio total: 105m)'
     - +1 Home
     - Título [Saitama]
     reward-commands: []
@@ -744,13 +909,17 @@ ranks:
   rimuru:
     tier: 42
     display-name: '&bʀɪᴍᴜʀᴜ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ
     cost: 480000000
     icon: SLIME_BALL
     permissions:
     - playervaults.amount.12
+    - bskyblock.island.range.106
+    - aoneblock.island.range.106
+    - chunkblock.island.range.58
     perks:
     - 'Gobernante Slime: Compañero flotante personalizado'
+    - '+1 Bloque radio isla (Radio total: 106m)'
     - +2 Bóvedas (/pv 12)
     - Título [Rimuru]
     reward-commands: []
@@ -762,13 +931,17 @@ ranks:
   anos:
     tier: 43
     display-name: '&4ᴀɴᴏs'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ
     cost: 580000000
     icon: DRAGON_HEAD
     permissions:
     - essentials.heal
+    - bskyblock.island.range.107
+    - aoneblock.island.range.107
+    - chunkblock.island.range.59
     perks:
     - 'Rey Demonio de la Tiranía: Ojos mágicos de destrucción'
+    - '+1 Bloque radio isla (Radio total: 107m)'
     - Acceso a /heal
     - Título [Anos]
     reward-commands: []
@@ -780,13 +953,17 @@ ranks:
   alquimistaestatal:
     tier: 44
     display-name: '&6ᴀʟǫᴜɪᴍɪsᴛᴀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ
     cost: 700000000
     icon: BEACON
     permissions:
     - essentials.repair.all
+    - bskyblock.island.range.108
+    - aoneblock.island.range.108
+    - chunkblock.island.range.60
     perks:
     - 'Círculo de Transmutación: Duplica drops y crafteos'
+    - '+1 Bloque radio isla (Radio total: 108m)'
     - Acceso a /repair all
     - Título [Alquimista]
     reward-commands: []
@@ -798,13 +975,17 @@ ranks:
   hakari:
     tier: 45
     display-name: '&dɢᴏʜᴀɴ ʙᴇᴀsᴛ ︱ ʜᴀᴋᴀʀɪ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ
     cost: 850000000
     icon: AMETHYST_SHARD
     permissions:
     - essentials.sethome.multiple.hakari
+    - bskyblock.island.range.109
+    - aoneblock.island.range.109
+    - chunkblock.island.range.61
     perks:
     - 'Gohan Bestia (Beast): Explosión crítica colosal (+75%) y Makankosappo magenta'
+    - '+1 Bloque radio isla (Radio total: 109m)'
     - '⚠️ Metabolismo Voraz: Consume 4 muslos de comida e induce Hambre II'
     - +1 Home
     - Título [GohanBeast]
@@ -817,13 +998,17 @@ ranks:
   ultrainstinto:
     tier: 46
     display-name: '&fᴜʟᴛʀᴀɪɴsᴛɪɴᴛᴏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ
     cost: 1000000000
     icon: NETHER_STAR
     permissions:
     - playervaults.amount.15
+    - bskyblock.island.range.110
+    - aoneblock.island.range.110
+    - chunkblock.island.range.62
     perks:
     - 'Doctrina Egoísta Dominada: Carga de Ki (Shift) activa Evasión 100% por 5s'
+    - '+1 Bloque radio isla (Radio total: 110m)'
     - '⚠️ Fatiga Divina: El uso repetido desata colapso y daño muscular interno'
     - +3 Bóvedas (/pv 15)
     - Título [UltraInstinto]
@@ -836,13 +1021,18 @@ ranks:
   beerus:
     tier: 47
     display-name: '&5ʙᴇᴇʀᴜs ︱ ᴜʟᴛʀᴀᴇɢᴏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ
     cost: 1150000000
     icon: END_CRYSTAL
     permissions:
     - essentials.feed
+    - bskyblock.island.range.111
+    - aoneblock.island.range.111
+    - chunkblock.island.range.63
     perks:
-    - 'Mega Instinto (Ultra Ego): Carga de Ki (Shift) aumenta daño según el dolor recibido (+60%)'
+    - 'Mega Instinto (Ultra Ego): Carga de Ki (Shift) aumenta daño según el dolor
+      recibido (+60%)'
+    - '+1 Bloque radio isla (Radio total: 111m)'
     - 'Hakai Aura: Inmunidad a fuego/lava y 3.5 corazones de daño puro reflejado'
     - Acceso a /feed
     - Título [UltraEgo]
@@ -855,13 +1045,18 @@ ranks:
   whis:
     tier: 48
     display-name: '&bᴡʜɪs ︱ ᴠᴇɢᴇᴛᴛᴏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ
     cost: 1300000000
     icon: ELYTRA
     permissions:
     - essentials.fly
+    - bskyblock.island.range.112
+    - aoneblock.island.range.112
+    - chunkblock.island.range.64
     perks:
-    - 'Espada de Haz de Luz (Vegetto): Shift + Clic derecho dispara haz perforante a 14 bloques'
+    - 'Espada de Haz de Luz (Vegetto): Shift + Clic derecho dispara haz perforante
+      a 14 bloques'
+    - '+1 Bloque radio isla (Radio total: 112m)'
     - 'Guía Angelical: Halo orbital de ángel y paz absoluta'
     - Acceso a /fly
     - Título [Whis/Vegetto]
@@ -874,13 +1069,17 @@ ranks:
   zeno:
     tier: 49
     display-name: '&eᴢᴇɴᴏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ
     cost: 1400000000
     icon: ENCHANTED_GOLDEN_APPLE
     permissions:
     - essentials.sethome.multiple.zeno
+    - bskyblock.island.range.113
+    - aoneblock.island.range.113
+    - chunkblock.island.range.65
     perks:
     - 'Omni-Rey del Multiverso: Corona celestial universal'
+    - '+1 Bloque radio isla (Radio total: 113m)'
     - +2 Homes
     - Título [Zeno]
     reward-commands: []
@@ -892,14 +1091,18 @@ ranks:
   kamisama:
     tier: 50
     display-name: '&6ᴋᴀᴍɪsᴀᴍᴀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ
     cost: 1500000000
     icon: TOTEM_OF_UNDYING
     permissions:
     - essentials.god
     - playervaults.amount.20
+    - bskyblock.island.range.114
+    - aoneblock.island.range.114
+    - chunkblock.island.range.66
     perks:
     - CIMA ABSOLUTA DE DRAKESRANKUP
+    - '+1 Bloque radio isla (Radio total: 114m)'
     - Corona Divina Suprema de Oro Puro
     - Presencia Divina Inmortal
     - +5 Bóvedas (/pv 20)
@@ -913,16 +1116,20 @@ ranks:
   yuji_itadori:
     tier: 51
     display-name: '&cʏᴜᴊɪ ɪᴛᴀᴅᴏʀɪ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ
     cost: 2000000000
     icon: IRON_SWORD
     permissions:
     - essentials.sethome.multiple.yuji_itadori
     - drakesrankup.tier.51
+    - bskyblock.island.range.115
+    - aoneblock.island.range.115
+    - chunkblock.island.range.67
     perks:
-    - 'Recipiente de Sukuna'
-    - 'Impacto de Puño Divergente'
-    - '+1 Home'
+    - Recipiente de Sukuna
+    - '+1 Bloque radio isla (Radio total: 115m)'
+    - Impacto de Puño Divergente
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.03
@@ -932,16 +1139,20 @@ ranks:
   megumi_fushiguro:
     tier: 52
     display-name: '&9ᴍᴇɢᴜᴍɪ ғᴜsʜɪɢᴜʀᴏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ
     cost: 2500000000
     icon: ENDER_EYE
     permissions:
     - playervaults.amount.21
     - drakesrankup.tier.52
+    - bskyblock.island.range.116
+    - aoneblock.island.range.116
+    - chunkblock.island.range.68
     perks:
-    - 'Técnica de las Diez Sombras'
-    - 'Invocación de Shikigamis'
-    - '+1 Bóveda (/pv 21)'
+    - Técnica de las Diez Sombras
+    - '+1 Bloque radio isla (Radio total: 116m)'
+    - Invocación de Shikigamis
+    - +1 Bóveda (/pv 21)
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.06
@@ -951,16 +1162,20 @@ ranks:
   nobara_kugisaki:
     tier: 53
     display-name: '&6ɴᴏʙᴀʀᴀ ᴋᴜɢɪsᴀᴋɪ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ
     cost: 3000000000
     icon: CROSSBOW
     permissions:
     - essentials.sethome.multiple.nobara_kugisaki
     - drakesrankup.tier.53
+    - bskyblock.island.range.117
+    - aoneblock.island.range.117
+    - chunkblock.island.range.69
     perks:
-    - 'Técnica del Muñeco de Paja'
-    - 'Resonancia Perforante'
-    - '+1 Home'
+    - Técnica del Muñeco de Paja
+    - '+1 Bloque radio isla (Radio total: 117m)'
+    - Resonancia Perforante
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.09
@@ -970,16 +1185,20 @@ ranks:
   maki_zenin:
     tier: 54
     display-name: '&aᴍᴀᴋɪ ᴢᴇɴ''''ɪɴ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ
     cost: 3500000000
     icon: NETHERITE_SWORD
     permissions:
     - essentials.sethome.multiple.maki_zenin
     - drakesrankup.tier.54
+    - bskyblock.island.range.118
+    - aoneblock.island.range.118
+    - chunkblock.island.range.70
     perks:
-    - 'Restricción Celestial Completa'
-    - 'Velocidad sobrehumana inmune a dominios'
-    - '+1 Home'
+    - Restricción Celestial Completa
+    - '+1 Bloque radio isla (Radio total: 118m)'
+    - Velocidad sobrehumana inmune a dominios
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.12
@@ -989,16 +1208,20 @@ ranks:
   aoi_todo:
     tier: 55
     display-name: '&dᴀᴏɪ ᴛᴏᴅᴏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ
     cost: 4000000000
     icon: BELL
     permissions:
     - playervaults.amount.22
     - drakesrankup.tier.55
+    - bskyblock.island.range.119
+    - aoneblock.island.range.119
+    - chunkblock.island.range.71
     perks:
     - 'Boogie Woogie: Aplaude para permutar posición'
-    - '530,000 de IQ de combate'
-    - '+1 Bóveda (/pv 22)'
+    - '+1 Bloque radio isla (Radio total: 119m)'
+    - 530,000 de IQ de combate
+    - +1 Bóveda (/pv 22)
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.15
@@ -1008,16 +1231,20 @@ ranks:
   nanami_kento:
     tier: 56
     display-name: '&eᴋᴇɴᴛᴏ ɴᴀɴᴀᴍɪ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ
     cost: 4500000000
     icon: SHEARS
     permissions:
     - essentials.sethome.multiple.nanami_kento
     - drakesrankup.tier.56
+    - bskyblock.island.range.120
+    - aoneblock.island.range.120
+    - chunkblock.island.range.72
     perks:
-    - 'Técnica de Proporción 7:3'
-    - 'Golpes Críticos Garantizados en Punto Débil'
-    - '+1 Home'
+    - Técnica de Proporción 7:3
+    - '+1 Bloque radio isla (Radio total: 120m)'
+    - Golpes Críticos Garantizados en Punto Débil
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.18
@@ -1027,16 +1254,20 @@ ranks:
   suguru_geto:
     tier: 57
     display-name: '&8sᴜɢᴜʀᴜ ɢᴇᴛᴏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ
     cost: 5000000000
     icon: WITHER_SKELETON_SKULL
     permissions:
     - essentials.sethome.multiple.suguru_geto
     - drakesrankup.tier.57
+    - bskyblock.island.range.121
+    - aoneblock.island.range.121
+    - chunkblock.island.range.73
     perks:
-    - 'Manipulación de Maldiciones'
-    - 'Vórtice Supremo Uzumaki'
-    - '+1 Home'
+    - Manipulación de Maldiciones
+    - '+1 Bloque radio isla (Radio total: 121m)'
+    - Vórtice Supremo Uzumaki
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.21
@@ -1046,16 +1277,20 @@ ranks:
   yuta_okkotsu:
     tier: 58
     display-name: '&bʏᴜᴛᴀ ᴏᴋᴋᴏᴛsᴜ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ
     cost: 6000000000
     icon: DIAMOND_SWORD
     permissions:
     - playervaults.amount.23
     - drakesrankup.tier.58
+    - bskyblock.island.range.122
+    - aoneblock.island.range.122
+    - chunkblock.island.range.74
     perks:
     - 'Rika: Reina de las Maldiciones'
-    - 'Mimetismo de Técnicas Prohibidas'
-    - '+1 Bóveda (/pv 23)'
+    - '+1 Bloque radio isla (Radio total: 122m)'
+    - Mimetismo de Técnicas Prohibidas
+    - +1 Bóveda (/pv 23)
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.24
@@ -1065,14 +1300,18 @@ ranks:
   ryomen_sukuna:
     tier: 59
     display-name: '&4ʀʏᴏᴍᴇɴ sᴜᴋᴜɴᴀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ
     cost: 7500000000
     icon: NETHER_WART
     permissions:
     - drakesrankup.tier.59
+    - bskyblock.island.range.123
+    - aoneblock.island.range.123
+    - chunkblock.island.range.75
     perks:
-    - 'Rey de las Maldiciones'
-    - 'Desmantelar y Cortar espacial'
+    - Rey de las Maldiciones
+    - '+1 Bloque radio isla (Radio total: 123m)'
+    - Desmantelar y Cortar espacial
     - 'Expansión: Relicario Maldito'
     reward-commands: []
     kinetic-push: true
@@ -1083,15 +1322,19 @@ ranks:
   satoru_gojo:
     tier: 60
     display-name: '&bɢᴏᴊᴏ sᴀᴛᴏʀᴜ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪ · ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ & ᴍᴀʟᴅɪᴄɪᴏ́ɴ
     cost: 9000000000
     icon: BEACON
     permissions:
     - drakesrankup.tier.60
+    - bskyblock.island.range.124
+    - aoneblock.island.range.124
+    - chunkblock.island.range.76
     perks:
-    - 'Los Seis Ojos & Infinito Ilimitado'
-    - 'Hollow Purple (Púrpura Devastador)'
-    - 'Vacío Infinito Infranqueable'
+    - Los Seis Ojos & Infinito Ilimitado
+    - '+1 Bloque radio isla (Radio total: 124m)'
+    - Hollow Purple (Púrpura Devastador)
+    - Vacío Infinito Infranqueable
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.3
@@ -1101,16 +1344,20 @@ ranks:
   renji_abarai:
     tier: 61
     display-name: '&cʀᴇɴᴊɪ ᴀʙᴀʀᴀɪ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ
     cost: 11000000000
     icon: CHAIN
     permissions:
     - essentials.sethome.multiple.renji_abarai
     - drakesrankup.tier.61
+    - bskyblock.island.range.125
+    - aoneblock.island.range.125
+    - chunkblock.island.range.77
     perks:
     - 'Zabimaru: Rugido de la Serpiente Babosa'
-    - 'Hihio Zabimaru'
-    - '+1 Home'
+    - '+1 Bloque radio isla (Radio total: 125m)'
+    - Hihio Zabimaru
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.33
@@ -1120,16 +1367,20 @@ ranks:
   rukia_kuchiki:
     tier: 62
     display-name: '&fʀᴜᴋɪᴀ ᴋᴜᴄʜɪᴋɪ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ
     cost: 13000000000
     icon: SNOWBALL
     permissions:
     - playervaults.amount.24
     - drakesrankup.tier.62
+    - bskyblock.island.range.126
+    - aoneblock.island.range.126
+    - chunkblock.island.range.78
     perks:
-    - 'Sode no Shirayuki'
-    - 'Hakka no Togame Cero Absoluto'
-    - '+1 Bóveda (/pv 24)'
+    - Sode no Shirayuki
+    - '+1 Bloque radio isla (Radio total: 126m)'
+    - Hakka no Togame Cero Absoluto
+    - +1 Bóveda (/pv 24)
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.36
@@ -1139,16 +1390,20 @@ ranks:
   byakuya_kuchiki:
     tier: 63
     display-name: '&dʙʏᴀᴋᴜʏᴀ ᴋᴜᴄʜɪᴋɪ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ
     cost: 15000000000
     icon: CHERRY_LEAVES
     permissions:
     - essentials.sethome.multiple.byakuya_kuchiki
     - drakesrankup.tier.63
+    - bskyblock.island.range.127
+    - aoneblock.island.range.127
+    - chunkblock.island.range.79
     perks:
     - 'Senbonzakura Kageyoshi: Tormenta de Pétalos Cortantes'
-    - 'Shunpo del Clan Kuchiki'
-    - '+1 Home'
+    - '+1 Bloque radio isla (Radio total: 127m)'
+    - Shunpo del Clan Kuchiki
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.39
@@ -1158,15 +1413,19 @@ ranks:
   kenpachi_zaraki:
     tier: 64
     display-name: '&4ᴋᴇɴᴘᴀᴄʜɪ ᴢᴀʀᴀᴋɪ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ
     cost: 17000000000
     icon: NETHERITE_AXE
     permissions:
     - drakesrankup.tier.64
+    - bskyblock.island.range.128
+    - aoneblock.island.range.128
+    - chunkblock.island.range.80
     perks:
-    - 'Reiatsu Monstruoso Incontrolable'
+    - Reiatsu Monstruoso Incontrolable
+    - '+1 Bloque radio isla (Radio total: 128m)'
     - 'Nozarashi: Traga todo a tu paso'
-    - 'Modo Berserker Bankai'
+    - Modo Berserker Bankai
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.42
@@ -1176,16 +1435,20 @@ ranks:
   shunsui_kyoraku:
     tier: 65
     display-name: '&5sʜᴜɴsᴜɪ ᴋʏᴏ̄ʀᴀᴋᴜ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ
     cost: 19000000000
     icon: TWISTING_VINES
     permissions:
     - playervaults.amount.25
     - drakesrankup.tier.65
+    - bskyblock.island.range.129
+    - aoneblock.island.range.129
+    - chunkblock.island.range.81
     perks:
     - 'Katen Kyōkotsu: Karamatsu Shinjū'
-    - 'Capitán Comandante del Gotei 13'
-    - '+1 Bóveda (/pv 25)'
+    - '+1 Bloque radio isla (Radio total: 129m)'
+    - Capitán Comandante del Gotei 13
+    - +1 Bóveda (/pv 25)
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.45
@@ -1195,16 +1458,20 @@ ranks:
   ulquiorra_cifer:
     tier: 66
     display-name: '&2ᴜʟǫᴜɪᴏʀʀᴀ ᴄɪғᴇʀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ
     cost: 22000000000
     icon: DRAGON_BREATH
     permissions:
     - essentials.sethome.multiple.ulquiorra_cifer
     - drakesrankup.tier.66
+    - bskyblock.island.range.130
+    - aoneblock.island.range.130
+    - chunkblock.island.range.82
     perks:
     - 'Resurrección: Segunda Etapa'
-    - 'Lanza del Relámpago Cero Oscuras'
-    - '+1 Home'
+    - '+1 Bloque radio isla (Radio total: 130m)'
+    - Lanza del Relámpago Cero Oscuras
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.48
@@ -1214,15 +1481,19 @@ ranks:
   sosuke_aizen:
     tier: 67
     display-name: '&5sᴏ̄sᴜᴋᴇ ᴀɪᴢᴇɴ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ
     cost: 25000000000
     icon: ENDER_EYE
     permissions:
     - drakesrankup.tier.67
+    - bskyblock.island.range.131
+    - aoneblock.island.range.131
+    - chunkblock.island.range.83
     perks:
     - 'Kyōka Suigetsu: Hipnosis Total'
-    - 'Fusión con el Hōgyoku'
-    - 'Soberano de Las Noches'
+    - '+1 Bloque radio isla (Radio total: 131m)'
+    - Fusión con el Hōgyoku
+    - Soberano de Las Noches
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.51
@@ -1232,15 +1503,19 @@ ranks:
   yamamoto_genryusai:
     tier: 68
     display-name: '&6ʏᴀᴍᴀᴍᴏᴛᴏ ɢᴇɴʀʏᴜ̄sᴀɪ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ
     cost: 28000000000
     icon: BLAZE_ROD
     permissions:
     - drakesrankup.tier.68
+    - bskyblock.island.range.132
+    - aoneblock.island.range.132
+    - chunkblock.island.range.84
     perks:
-    - 'Ryūjin Jakka & Zanka no Tachi'
+    - Ryūjin Jakka & Zanka no Tachi
+    - '+1 Bloque radio isla (Radio total: 132m)'
     - 'Calor del Sol: 15 Millones de Grados'
-    - 'Incinera materia y terreno salvaje'
+    - Incinera materia y terreno salvaje
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.54
@@ -1250,16 +1525,20 @@ ranks:
   yhwach_almighty:
     tier: 69
     display-name: '&eʏʜᴡᴀᴄʜ: ᴛʜᴇ ᴀʟᴍɪɢʜᴛʏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ
     cost: 32000000000
     icon: GOLDEN_SWORD
     permissions:
     - playervaults.amount.26
     - drakesrankup.tier.69
+    - bskyblock.island.range.133
+    - aoneblock.island.range.133
+    - chunkblock.island.range.85
     perks:
-    - 'Padre de los Quincy & Soberano del Wandenreich'
+    - Padre de los Quincy & Soberano del Wandenreich
+    - '+1 Bloque radio isla (Radio total: 133m)'
     - 'The Almighty: Alteración de futuros'
-    - '+1 Bóveda (/pv 26)'
+    - +1 Bóveda (/pv 26)
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.57
@@ -1269,15 +1548,19 @@ ranks:
   ichigo_mugetsu:
     tier: 70
     display-name: '&8ɪᴄʜɪɢᴏ ᴋᴜʀᴏsᴀᴋɪ: ᴍᴜɢᴇᴛsᴜ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪ · sᴏᴄɪᴇᴅᴀᴅ ᴅᴇ ᴀʟᴍᴀs & ᴀʀʀᴀɴᴄᴀʀ
     cost: 36000000000
     icon: NETHERITE_SWORD
     permissions:
     - drakesrankup.tier.70
+    - bskyblock.island.range.134
+    - aoneblock.island.range.134
+    - chunkblock.island.range.86
     perks:
-    - 'Getsuga Tenshō Final'
-    - 'Corte del Vasto Lorde Trascendental'
-    - 'Poder más allá de las dimensiones'
+    - Getsuga Tenshō Final
+    - '+1 Bloque radio isla (Radio total: 134m)'
+    - Corte del Vasto Lorde Trascendental
+    - Poder más allá de las dimensiones
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.6
@@ -1287,16 +1570,20 @@ ranks:
   aki_hayakawa:
     tier: 71
     display-name: '&bᴀᴋɪ ʜᴀʏᴀᴋᴀᴡᴀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs
     cost: 40000000000
     icon: SPECTRAL_ARROW
     permissions:
     - essentials.sethome.multiple.aki_hayakawa
     - drakesrankup.tier.71
+    - bskyblock.island.range.135
+    - aoneblock.island.range.135
+    - chunkblock.island.range.87
     perks:
     - 'Contrato con el Demonio Zorro: ¡Kon!'
-    - 'Demonio de la Maldición y del Futuro'
-    - '+1 Home'
+    - '+1 Bloque radio isla (Radio total: 135m)'
+    - Demonio de la Maldición y del Futuro
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.63
@@ -1306,16 +1593,20 @@ ranks:
   power_blood:
     tier: 72
     display-name: '&cᴘᴏᴡᴇʀ: ᴅᴇᴍᴏɴɪᴏ sᴀɴɢᴜɪ́ɴᴇᴏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs
     cost: 44000000000
     icon: REDSTONE
     permissions:
     - essentials.sethome.multiple.power_blood
     - drakesrankup.tier.72
+    - bskyblock.island.range.136
+    - aoneblock.island.range.136
+    - chunkblock.island.range.88
     perks:
-    - 'Manipulación de la Sangre'
-    - 'Martillo gigante de sangre coagulada'
-    - '+1 Home'
+    - Manipulación de la Sangre
+    - '+1 Bloque radio isla (Radio total: 136m)'
+    - Martillo gigante de sangre coagulada
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.66
@@ -1325,16 +1616,20 @@ ranks:
   makima_control:
     tier: 73
     display-name: '&eᴍᴀᴋɪᴍᴀ: ᴅᴇᴍᴏɴɪᴏ ᴅᴇʟ ᴄᴏɴᴛʀᴏʟ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs
     cost: 48000000000
     icon: LEAD
     permissions:
     - playervaults.amount.27
     - drakesrankup.tier.73
+    - bskyblock.island.range.137
+    - aoneblock.island.range.137
+    - chunkblock.island.range.89
     perks:
-    - 'Poder del Control Absoluto'
+    - Poder del Control Absoluto
+    - '+1 Bloque radio isla (Radio total: 137m)'
     - 'Disparo invisible: ¡Bang!'
-    - '+1 Bóveda (/pv 27)'
+    - +1 Bóveda (/pv 27)
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.69
@@ -1344,15 +1639,19 @@ ranks:
   denji_chainsaw:
     tier: 74
     display-name: '&cᴅᴇɴᴊɪ: ᴅᴇᴍᴏɴɪᴏ ᴍᴏᴛᴏsɪᴇʀʀᴀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs
     cost: 52000000000
     icon: IRON_BLOCK
     permissions:
     - drakesrankup.tier.74
+    - bskyblock.island.range.138
+    - aoneblock.island.range.138
+    - chunkblock.island.range.90
     perks:
-    - 'Tira del cable de arranque'
-    - 'Sierras giratorias que absorben vitalidad'
-    - 'Terror del Infierno'
+    - Tira del cable de arranque
+    - '+1 Bloque radio isla (Radio total: 138m)'
+    - Sierras giratorias que absorben vitalidad
+    - Terror del Infierno
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.72
@@ -1362,16 +1661,20 @@ ranks:
   cha_hae_in:
     tier: 75
     display-name: '&eᴄʜᴀ ʜᴀᴇ-ɪɴ: ʟᴀ ʙᴀɪʟᴀʀɪɴᴀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs
     cost: 57000000000
     icon: GOLDEN_SWORD
     permissions:
     - essentials.sethome.multiple.cha_hae_in
     - drakesrankup.tier.75
+    - bskyblock.island.range.139
+    - aoneblock.island.range.139
+    - chunkblock.island.range.91
     perks:
-    - 'Espadachina Rango S de Luz'
-    - 'Danza de la Espada de Luz Cegadora'
-    - '+1 Home'
+    - Espadachina Rango S de Luz
+    - '+1 Bloque radio isla (Radio total: 139m)'
+    - Danza de la Espada de Luz Cegadora
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.75
@@ -1381,16 +1684,20 @@ ranks:
   beru_shadow:
     tier: 76
     display-name: '&5ʙᴇʀᴜ: ʀᴇʏ ʜᴏʀᴍɪɢᴀ ᴅᴇ sᴏᴍʙʀᴀs'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs
     cost: 62000000000
     icon: DRAGON_HEAD
     permissions:
     - essentials.sethome.multiple.beru_shadow
     - drakesrankup.tier.76
+    - bskyblock.island.range.140
+    - aoneblock.island.range.140
+    - chunkblock.island.range.92
     perks:
-    - 'Mariscal del Ejército de las Sombras'
-    - 'Garras venenosas y grito sónico'
-    - '+1 Home'
+    - Mariscal del Ejército de las Sombras
+    - '+1 Bloque radio isla (Radio total: 140m)'
+    - Garras venenosas y grito sónico
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.78
@@ -1400,16 +1707,20 @@ ranks:
   igris_commander:
     tier: 77
     display-name: '&4ɪɢʀɪs: ᴄᴀʙᴀʟʟᴇʀᴏ ʀᴏᴊᴏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs
     cost: 67000000000
     icon: SHIELD
     permissions:
     - playervaults.amount.28
     - drakesrankup.tier.77
+    - bskyblock.island.range.141
+    - aoneblock.island.range.141
+    - chunkblock.island.range.93
     perks:
-    - 'Comandante Sombra Sangriento'
-    - 'Tajo relámpago con mandoble dual'
-    - '+1 Bóveda (/pv 28)'
+    - Comandante Sombra Sangriento
+    - '+1 Bloque radio isla (Radio total: 141m)'
+    - Tajo relámpago con mandoble dual
+    - +1 Bóveda (/pv 28)
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.81
@@ -1419,16 +1730,20 @@ ranks:
   bellion_shadow:
     tier: 78
     display-name: '&8ʙᴇʟʟɪᴏɴ: ɢʀᴀɴ ᴍᴀʀɪsᴄᴀʟ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs
     cost: 72000000000
     icon: NETHER_STAR
     permissions:
     - essentials.sethome.multiple.bellion_shadow
     - drakesrankup.tier.78
+    - bskyblock.island.range.142
+    - aoneblock.island.range.142
+    - chunkblock.island.range.94
     perks:
-    - 'Servidor primordial de Ashborn'
-    - 'Espada cienpiés ciñe mundos'
-    - '+1 Home'
+    - Servidor primordial de Ashborn
+    - '+1 Bloque radio isla (Radio total: 142m)'
+    - Espada cienpiés ciñe mundos
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.84
@@ -1438,16 +1753,20 @@ ranks:
   sung_arise:
     tier: 79
     display-name: '&9sᴜɴɢ ᴊɪɴ-ᴡᴏᴏ: ¡ᴀʀɪsᴇ!'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs
     cost: 78000000000
     icon: SOUL_CAMPFIRE
     permissions:
     - essentials.sethome.multiple.sung_arise
     - drakesrankup.tier.79
+    - bskyblock.island.range.143
+    - aoneblock.island.range.143
+    - chunkblock.island.range.95
     perks:
-    - 'Comando ¡Levántate! (Arise)'
-    - 'Extracción y control ilimitado de sombras'
-    - '+1 Home'
+    - Comando ¡Levántate! (Arise)
+    - '+1 Bloque radio isla (Radio total: 143m)'
+    - Extracción y control ilimitado de sombras
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.87
@@ -1457,15 +1776,19 @@ ranks:
   shadow_monarch_ashborn:
     tier: 80
     display-name: '&5ᴍᴏɴᴀʀᴄᴀ ᴅᴇ ʟᴀs sᴏᴍʙʀᴀs'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ᴠɪɪɪ · ᴅᴇᴍᴏɴɪᴏs & ᴄᴀᴢᴀᴅᴏʀᴇs ᴅᴇ sᴏᴍʙʀᴀs
     cost: 84000000000
     icon: OBSIDIAN
     permissions:
     - drakesrankup.tier.80
+    - bskyblock.island.range.144
+    - aoneblock.island.range.144
+    - chunkblock.island.range.96
     perks:
-    - 'Heredero absoluto del Poder de la Muerte'
+    - Heredero absoluto del Poder de la Muerte
+    - '+1 Bloque radio isla (Radio total: 144m)'
     - 'Dominio del Monarca: Territorio Umbrío Total'
-    - 'Inmunidad a caídas y fatiga'
+    - Inmunidad a caídas y fatiga
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.9
@@ -1475,16 +1798,20 @@ ranks:
   killua_godspeed:
     tier: 81
     display-name: '&bᴋɪʟʟᴜᴀ: ɢᴏᴅsᴘᴇᴇᴅ (ᴋᴀɴᴍᴜʀᴜ)'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs
     cost: 90000000000
     icon: LIGHTNING_ROD
     permissions:
     - essentials.sethome.multiple.killua_godspeed
     - drakesrankup.tier.81
+    - bskyblock.island.range.145
+    - aoneblock.island.range.145
+    - chunkblock.island.range.97
     perks:
-    - 'Modo Kanmuru (Velocidad Divina del Relámpago)'
-    - 'Reflejos automáticos sin latencia'
-    - '+1 Home'
+    - Modo Kanmuru (Velocidad Divina del Relámpago)
+    - '+1 Bloque radio isla (Radio total: 145m)'
+    - Reflejos automáticos sin latencia
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.93
@@ -1494,16 +1821,20 @@ ranks:
   gon_adulto:
     tier: 82
     display-name: '&eɢᴏɴ ғʀᴇᴇᴄss: ᴀᴅᴜʟᴛᴏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs
     cost: 96000000000
     icon: ANVIL
     permissions:
     - playervaults.amount.29
     - drakesrankup.tier.82
+    - bskyblock.island.range.146
+    - aoneblock.island.range.146
+    - chunkblock.island.range.98
     perks:
-    - 'Voto Sagrado y Renuncia al Futuro'
+    - Voto Sagrado y Renuncia al Futuro
+    - '+1 Bloque radio isla (Radio total: 146m)'
     - 'Jajanken: Piedra de Destrucción Masiva'
-    - '+1 Bóveda (/pv 29)'
+    - +1 Bóveda (/pv 29)
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.96
@@ -1513,16 +1844,20 @@ ranks:
   netero_guanyin:
     tier: 83
     display-name: '&6ɪsᴀᴀᴄ ɴᴇᴛᴇʀᴏ: ᴄᴇʀᴏ ʜᴀɴᴅ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs
     cost: 102000000000
     icon: GOLD_BLOCK
     permissions:
     - essentials.sethome.multiple.netero_guanyin
     - drakesrankup.tier.83
+    - bskyblock.island.range.147
+    - aoneblock.island.range.147
+    - chunkblock.island.range.99
     perks:
-    - 'Bodhisattva Guanyin de las 100 Manos'
+    - Bodhisattva Guanyin de las 100 Manos
+    - '+1 Bloque radio isla (Radio total: 147m)'
     - 'Mano Cero: Descarga cósmica de aura'
-    - '+1 Home'
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 2.99
@@ -1532,16 +1867,20 @@ ranks:
   meruem_postrose:
     tier: 84
     display-name: '&aᴍᴇʀᴜᴇᴍ: ʀᴇʏ ʜᴏʀᴍɪɢᴀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs
     cost: 108000000000
     icon: EMERALD_BLOCK
     permissions:
     - essentials.sethome.multiple.meruem_postrose
     - drakesrankup.tier.84
+    - bskyblock.island.range.148
+    - aoneblock.island.range.148
+    - chunkblock.island.range.100
     perks:
-    - 'Fotón de Aura Omnisciente'
-    - 'Síntesis de Aura Evolutiva'
-    - '+1 Home'
+    - Fotón de Aura Omnisciente
+    - '+1 Bloque radio isla (Radio total: 148m)'
+    - Síntesis de Aura Evolutiva
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 3.02
@@ -1551,16 +1890,20 @@ ranks:
   minato_hiraishin:
     tier: 85
     display-name: '&eᴍɪɴᴀᴛᴏ ɴᴀᴍɪᴋᴀᴢᴇ: ʜɪʀᴀɪsʜɪɴ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs
     cost: 115000000000
     icon: ENDER_PEARL
     permissions:
     - playervaults.amount.30
     - drakesrankup.tier.85
+    - bskyblock.island.range.149
+    - aoneblock.island.range.149
+    - chunkblock.island.range.101
     perks:
-    - 'El Relámpago Amarillo de Konoha'
-    - 'Dios del Trueno Volador instantáneo'
-    - '+1 Bóveda (/pv 30)'
+    - El Relámpago Amarillo de Konoha
+    - '+1 Bloque radio isla (Radio total: 149m)'
+    - Dios del Trueno Volador instantáneo
+    - +1 Bóveda (/pv 30)
     reward-commands: []
     kinetic-push: true
     push-multiplier: 3.05
@@ -1570,15 +1913,19 @@ ranks:
   itachi_susanoo:
     tier: 86
     display-name: '&4ɪᴛᴀᴄʜɪ ᴜᴄʜɪʜᴀ: ᴀᴍᴀᴛᴇʀᴀsᴜ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs
     cost: 122000000000
     icon: MAGMA_BLOCK
     permissions:
     - drakesrankup.tier.86
+    - bskyblock.island.range.150
+    - aoneblock.island.range.150
+    - chunkblock.island.range.102
     perks:
-    - 'Mangekyō Sharingan & Tsukuyomi'
+    - Mangekyō Sharingan & Tsukuyomi
+    - '+1 Bloque radio isla (Radio total: 150m)'
     - 'Amaterasu: Fuego negro que arde eternamente'
-    - 'Escudo Yata & Espada Totsuka'
+    - Escudo Yata & Espada Totsuka
     reward-commands: []
     kinetic-push: true
     push-multiplier: 3.08
@@ -1588,15 +1935,19 @@ ranks:
   madara_rikudo:
     tier: 87
     display-name: '&5ᴍᴀᴅᴀʀᴀ ᴜᴄʜɪʜᴀ: sᴇɪs ᴄᴀᴍɪɴᴏs'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs
     cost: 129000000000
     icon: CRYING_OBSIDIAN
     permissions:
     - drakesrankup.tier.87
+    - bskyblock.island.range.151
+    - aoneblock.island.range.151
+    - chunkblock.island.range.103
     perks:
-    - 'Jinchūriki del Diez Colas & Rinnegan'
+    - Jinchūriki del Diez Colas & Rinnegan
+    - '+1 Bloque radio isla (Radio total: 151m)'
     - 'Tengai Shinsei: Caída de Meteoros orbitales'
-    - 'Tsukuyomi Infinito'
+    - Tsukuyomi Infinito
     reward-commands: []
     kinetic-push: true
     push-multiplier: 3.11
@@ -1606,15 +1957,19 @@ ranks:
   naruto_baryon:
     tier: 88
     display-name: '&cɴᴀʀᴜᴛᴏ ᴜᴢᴜᴍᴀᴋɪ: ᴍᴏᴅᴏ ʙᴀʀɪᴏ́ɴ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs
     cost: 136000000000
     icon: FIRE_CHARGE
     permissions:
     - drakesrankup.tier.88
+    - bskyblock.island.range.152
+    - aoneblock.island.range.152
+    - chunkblock.island.range.104
     perks:
-    - 'Fusión Nuclear de Chakras'
-    - 'Drenaje de esperanza de vida adversaria'
-    - 'Velocidad absoluta'
+    - Fusión Nuclear de Chakras
+    - '+1 Bloque radio isla (Radio total: 152m)'
+    - Drenaje de esperanza de vida adversaria
+    - Velocidad absoluta
     reward-commands: []
     kinetic-push: true
     push-multiplier: 3.14
@@ -1624,15 +1979,19 @@ ranks:
   luffy_gear5:
     tier: 89
     display-name: '&fʟᴜғғʏ: ɢᴇᴀʀ 5 sᴜɴ ɢᴏᴅ ɴɪᴋᴀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs
     cost: 144000000000
     icon: WHITE_WOOL
     permissions:
     - drakesrankup.tier.89
+    - bskyblock.island.range.153
+    - aoneblock.island.range.153
+    - chunkblock.island.range.105
     perks:
-    - 'El Guerrero de la Liberación Nika'
-    - 'Tambores de la Libertad y Rebote Cartoon'
-    - 'Libertad de combate total'
+    - El Guerrero de la Liberación Nika
+    - '+1 Bloque radio isla (Radio total: 153m)'
+    - Tambores de la Libertad y Rebote Cartoon
+    - Libertad de combate total
     reward-commands: []
     kinetic-push: true
     push-multiplier: 3.17
@@ -1642,15 +2001,19 @@ ranks:
   shanks_kamisari:
     tier: 90
     display-name: '&csʜᴀɴᴋs ᴇʟ ᴘᴇʟɪʀʀᴏᴊᴏ: ᴋᴀᴍɪsᴀʀɪ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs'
+    division: ᴅɪᴠɪsɪᴏ́ɴ ɪx · ʟᴇʏᴇɴᴅᴀs ᴄᴏ́sᴍɪᴄᴀs & sᴇɪs ᴄᴀᴍɪɴᴏs
     cost: 152000000000
     icon: NETHERITE_SWORD
     permissions:
     - drakesrankup.tier.90
+    - bskyblock.island.range.154
+    - aoneblock.island.range.154
+    - chunkblock.island.range.106
     perks:
-    - 'Haki del Conquistador Infundido Avanzado'
-    - 'Kamisari (Partida Divina)'
-    - 'Presión que anula la visión de futuro'
+    - Haki del Conquistador Infundido Avanzado
+    - '+1 Bloque radio isla (Radio total: 154m)'
+    - Kamisari (Partida Divina)
+    - Presión que anula la visión de futuro
     reward-commands: []
     kinetic-push: true
     push-multiplier: 3.2
@@ -1660,16 +2023,20 @@ ranks:
   jiren_universe11:
     tier: 91
     display-name: '&cᴊɪʀᴇɴ ᴇʟ ɢʀɪs'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ
     cost: 160000000000
     icon: REDSTONE_BLOCK
     permissions:
     - essentials.sethome.multiple.jiren_universe11
     - drakesrankup.tier.91
+    - bskyblock.island.range.155
+    - aoneblock.island.range.155
+    - chunkblock.island.range.107
     perks:
-    - 'Guerrero más fuerte del Universo 11'
-    - 'Muralla de Ki Inconmovible'
-    - '+1 Home'
+    - Guerrero más fuerte del Universo 11
+    - '+1 Bloque radio isla (Radio total: 155m)'
+    - Muralla de Ki Inconmovible
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 3.23
@@ -1679,15 +2046,19 @@ ranks:
   gogeta_blue:
     tier: 92
     display-name: '&bɢᴏɢᴇᴛᴀ sᴜᴘᴇʀ sᴀɪʏᴀᴊɪɴ ʙʟᴜᴇ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ
     cost: 168000000000
     icon: SOUL_TORCH
     permissions:
     - drakesrankup.tier.92
+    - bskyblock.island.range.156
+    - aoneblock.island.range.156
+    - chunkblock.island.range.108
     perks:
-    - 'Fusión Metamoran Definitiva'
-    - 'Stardust Breaker (Castigador de Almas)'
-    - 'Fuerza destructiva cósmica'
+    - Fusión Metamoran Definitiva
+    - '+1 Bloque radio isla (Radio total: 156m)'
+    - Stardust Breaker (Castigador de Almas)
+    - Fuerza destructiva cósmica
     reward-commands: []
     kinetic-push: true
     push-multiplier: 3.26
@@ -1697,16 +2068,20 @@ ranks:
   vegito_blue:
     tier: 93
     display-name: '&9ᴠᴇɢɪᴛᴏ sᴜᴘᴇʀ sᴀɪʏᴀᴊɪɴ ʙʟᴜᴇ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ
     cost: 176000000000
     icon: SEA_LANTERN
     permissions:
     - essentials.sethome.multiple.vegito_blue
     - drakesrankup.tier.93
+    - bskyblock.island.range.157
+    - aoneblock.island.range.157
+    - chunkblock.island.range.109
     perks:
-    - 'Fusión Pothala Divina'
-    - 'Espada de Espíritu Divina & Final Kamehameha'
-    - '+1 Home'
+    - Fusión Pothala Divina
+    - '+1 Bloque radio isla (Radio total: 157m)'
+    - Espada de Espíritu Divina & Final Kamehameha
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 3.29
@@ -1716,15 +2091,19 @@ ranks:
   bills_god:
     tier: 94
     display-name: '&5ʙɪʟʟs: ᴅɪᴏs ᴅᴇ ʟᴀ ᴅᴇsᴛʀᴜᴄᴄɪᴏ́ɴ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ
     cost: 184000000000
     icon: PURPLE_GLAZED_TERRACOTTA
     permissions:
     - drakesrankup.tier.94
+    - bskyblock.island.range.158
+    - aoneblock.island.range.158
+    - chunkblock.island.range.110
     perks:
     - 'Hakai Supremo: Esfera de la Destrucción'
-    - 'Inmunidad al fuego y lava cósmica'
-    - 'Vaporiza materia salvaje'
+    - '+1 Bloque radio isla (Radio total: 158m)'
+    - Inmunidad al fuego y lava cósmica
+    - Vaporiza materia salvaje
     reward-commands: []
     kinetic-push: true
     push-multiplier: 3.32
@@ -1734,15 +2113,19 @@ ranks:
   whis_angel:
     tier: 95
     display-name: '&bᴡʜɪs: ᴀ́ɴɢᴇʟ ᴅᴇʟ ᴜɴɪᴠᴇʀsᴏ 7'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ
     cost: 192000000000
     icon: END_ROD
     permissions:
     - drakesrankup.tier.95
+    - bskyblock.island.range.159
+    - aoneblock.island.range.159
+    - chunkblock.island.range.111
     perks:
-    - 'Gracia Angelical Inmortal'
-    - 'Doctrina Egoísta fluida permanente'
-    - 'Retroceso temporal protector'
+    - Gracia Angelical Inmortal
+    - '+1 Bloque radio isla (Radio total: 159m)'
+    - Doctrina Egoísta fluida permanente
+    - Retroceso temporal protector
     reward-commands: []
     kinetic-push: true
     push-multiplier: 3.35
@@ -1752,16 +2135,20 @@ ranks:
   daishinkan_sama:
     tier: 96
     display-name: '&fɢʀᴀɴ sᴀᴄᴇʀᴅᴏᴛᴇ: ᴅᴀɪsʜɪɴᴋᴀɴ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ
     cost: 200000000000
     icon: CONDUIT
     permissions:
     - essentials.sethome.multiple.daishinkan_sama
     - drakesrankup.tier.96
+    - bskyblock.island.range.160
+    - aoneblock.island.range.160
+    - chunkblock.island.range.112
     perks:
-    - 'Soberano de todos los Ángeles'
-    - 'Poder más allá del reino mortal'
-    - '+1 Home'
+    - Soberano de todos los Ángeles
+    - '+1 Bloque radio isla (Radio total: 160m)'
+    - Poder más allá del reino mortal
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 3.38
@@ -1771,16 +2158,20 @@ ranks:
   zalama_dragon:
     tier: 97
     display-name: '&eᴢᴀʟᴀᴍᴀ: ᴅʀᴀɢᴏ́ɴ ᴅɪᴠɪɴᴏ sᴜᴘᴇʀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ
     cost: 210000000000
     icon: DRAGON_EGG
     permissions:
     - essentials.sethome.multiple.zalama_dragon
     - drakesrankup.tier.97
+    - bskyblock.island.range.161
+    - aoneblock.island.range.161
+    - chunkblock.island.range.113
     perks:
-    - 'Creador de las Super Esferas del Dragón'
-    - 'Concede deseos sin límites dimensionales'
-    - '+1 Home'
+    - Creador de las Super Esferas del Dragón
+    - '+1 Bloque radio isla (Radio total: 161m)'
+    - Concede deseos sin límites dimensionales
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 3.41
@@ -1790,16 +2181,20 @@ ranks:
   toribot_creator:
     tier: 98
     display-name: '&6ᴛᴏʀɪ-ʙᴏᴛ: ᴇʟ ᴄʀᴇᴀᴅᴏʀ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ
     cost: 22000000000
     icon: ENCHANTED_BOOK
     permissions:
     - essentials.sethome.multiple.toribot_creator
     - drakesrankup.tier.98
+    - bskyblock.island.range.162
+    - aoneblock.island.range.162
+    - chunkblock.island.range.114
     perks:
-    - 'El Creador de Todo el Universo'
-    - 'La Pluma Sagrada de la Existencia'
-    - '+1 Home'
+    - El Creador de Todo el Universo
+    - '+1 Bloque radio isla (Radio total: 162m)'
+    - La Pluma Sagrada de la Existencia
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 3.44
@@ -1809,16 +2204,20 @@ ranks:
   zeno_duo:
     tier: 99
     display-name: '&dᴢᴇɴᴏ-sᴀᴍᴀ: ᴘʀᴇsᴇɴᴛᴇ & ғᴜᴛᴜʀᴏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ
     cost: 235000000000
     icon: TOTEM_OF_UNDYING
     permissions:
     - essentials.sethome.multiple.zeno_duo
     - drakesrankup.tier.99
+    - bskyblock.island.range.163
+    - aoneblock.island.range.163
+    - chunkblock.island.range.115
     perks:
-    - 'Dúo Omni-Rey Universal'
-    - 'Juicio y balance de realidades infinitas'
-    - '+1 Home'
+    - Dúo Omni-Rey Universal
+    - '+1 Bloque radio isla (Radio total: 163m)'
+    - Juicio y balance de realidades infinitas
+    - +1 Home
     reward-commands: []
     kinetic-push: true
     push-multiplier: 3.47
@@ -1828,21 +2227,26 @@ ranks:
   zeno_omni_supremo:
     tier: 100
     display-name: '&6ᴢᴇɴᴏ ᴏᴍɴɪ-sᴜᴘʀᴇᴍᴏ'
-    division: 'ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ'
+    division: ᴅɪᴠɪsɪᴏ́ɴ x · ᴅɪᴏsᴇs ᴍᴜʟᴛɪᴠᴇʀsᴀʟᴇs & sɪɴɢᴜʟᴀʀɪᴅᴀᴅ
     cost: 250000000000
     icon: NETHER_STAR
     permissions:
     - drakesrankup.tier.100
+    - bskyblock.island.range.164
+    - aoneblock.island.range.164
+    - chunkblock.island.range.116
     perks:
-    - 'CIMA ABSOLUTA DE DRAKESRANKUP (TIER 100)'
-    - 'Acceso al Renacimiento (/rebirth para reiniciar y ganar daño permanente)'
-    - 'Armadura Celestial Omni-Suprema Completa (Endgame)'
-    - 'Artefactos Endgame Slimefun (Infinity, Supreme, Tinker, Daxis)'
-    - 'Corona Divina Suprema y Presencia Multiversal'
-    - 'Título Supremo [Omni-Supremo]'
+    - CIMA ABSOLUTA DE DRAKESRANKUP (TIER 100)
+    - '+1 Bloque radio isla (Radio total: 164m)'
+    - Acceso al Renacimiento (/rebirth para reiniciar y ganar daño permanente)
+    - Armadura Celestial Omni-Suprema Completa (Endgame)
+    - Artefactos Endgame Slimefun (Infinity, Supreme, Tinker, Daxis)
+    - Corona Divina Suprema y Presencia Multiversal
+    - Título Supremo [Omni-Supremo]
     reward-commands:
-    - 'drakesrankup kit %player%'
-    - 'broadcast &6&lDRAKES RANKUP &8▶ &f¡El guerrero &e&l%player% &fha conquistado el universo alcanzando el &d&lTIER 100: ZENO OMNI-SUPREMO&f!'
+    - drakesrankup kit %player%
+    - 'broadcast &6&lDRAKES RANKUP &8▶ &f¡El guerrero &e&l%player% &fha conquistado
+      el universo alcanzando el &d&lTIER 100: ZENO OMNI-SUPREMO&f!'
     kinetic-push: true
     push-multiplier: 3.5
     push-cooldown: 2
