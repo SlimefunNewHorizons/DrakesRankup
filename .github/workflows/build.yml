@@ -2,9 +2,9 @@ name: Build and Verify DrakesRankup
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "port-26x" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "port-26x" ]
   workflow_dispatch:
 
 jobs:
@@ -40,3 +40,10 @@ jobs:
           name: DrakesRankup-Jar
           path: target/*.jar
           if-no-files-found: error
+
+  seguridad:
+    permissions:
+      contents: read
+      security-events: write
+      pull-requests: write
+    uses: SlimefunNewHorizons/.github/.github/workflows/seguridad.yml@main
