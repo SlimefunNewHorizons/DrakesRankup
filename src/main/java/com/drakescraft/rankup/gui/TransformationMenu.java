@@ -35,7 +35,7 @@ public class TransformationMenu implements InventoryHolder {
     }
 
     public void open() {
-        this.inv = Bukkit.createInventory(this, 54, ChatColor.translateAlternateColorCodes('&', "&8⚡ &6&lTRANSFORMACIONES Y HABILIDADES"));
+        this.inv = Bukkit.createInventory(this, 54, ChatColor.translateAlternateColorCodes('&', "&8⚡ &6&lTRANSFORMATIONS & ABILITIES"));
 
         // Fill background with black glass panes
         ItemStack bg = createItem(Material.BLACK_STAINED_GLASS_PANE, " ");
@@ -53,12 +53,12 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 35,
                 "SSJ_GOD".equalsIgnoreCase(active),
                 Material.REDSTONE_BLOCK,
-                "&c&lSuper Saiyajin God",
+                "&c&lSuper Saiyan God",
                 35,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fKi Divino Carmesí",
-                        "&8▪ &aEfectos: &fRegeneración II, Absorción II y Agilidad Divina (5m).",
-                        "&8▪ &bActivación: &fSneak (Shift) sostenido hasta detonar."
+                        "&8▪ &eType: &fCrimson Divine Ki",
+                        "&8▪ &aEffects: &fRegeneration II, Absorption II and Divine Agility (5m).",
+                        "&8▪ &bActivation: &fHold sneak (Shift) until it detonates."
                 )
         ));
 
@@ -67,12 +67,12 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 36,
                 "SSJ_BLUE".equalsIgnoreCase(active),
                 Material.LAPIS_BLOCK,
-                "&9&lSuper Saiyajin Blue",
+                "&9&lSuper Saiyan Blue",
                 36,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fKi Divino Azul Super Saiyajin",
-                        "&8▪ &aEfectos: &fFuerza II, Velocidad II y Resistencia I por 5 minutos.",
-                        "&8▪ &bActivación: &fSneak (Shift) sostenido hasta detonar."
+                        "&8▪ &eType: &fBlue Super Saiyan Divine Ki",
+                        "&8▪ &aEffects: &fStrength II, Speed II and Resistance I for 5 minutes.",
+                        "&8▪ &bActivation: &fHold sneak (Shift) until it detonates."
                 )
         ));
 
@@ -81,13 +81,13 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 46,
                 "MUI".equalsIgnoreCase(active),
                 Material.NETHER_STAR,
-                "&f&lDoctrina Egoísta (MUI)",
+                "&f&lUltra Instinct (MUI)",
                 46,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fEstado de los Ángeles",
-                        "&8▪ &aEfectos: &fEvasión total milagrosa de ataques por 60 segundos.",
-                        "&8▪ &cDesgaste: &7El uso repetido en menos de 2m induce fatiga corporal.",
-                        "&8▪ &bActivación: &fSneak (Shift) sostenido hasta detonar."
+                        "&8▪ &eType: &fAngelic State",
+                        "&8▪ &aEffects: &fMiraculous full attack evasion for 60 seconds.",
+                        "&8▪ &cStrain: &7Repeated use within 2m causes bodily fatigue.",
+                        "&8▪ &bActivation: &fHold sneak (Shift) until it detonates."
                 )
         ));
 
@@ -96,12 +96,12 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 47,
                 "ULTRA_EGO".equalsIgnoreCase(active),
                 Material.PURPLE_GLAZED_TERRACOTTA,
-                "&5&lMega Instinto (Ultra Ego)",
+                "&5&lUltra Ego",
                 47,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fPoder del Dios de la Destrucción",
-                        "&8▪ &aEfectos: &fA menor vida, mayor daño destructivo por 5 minutos.",
-                        "&8▪ &bActivación: &fSneak (Shift) sostenido hasta detonar."
+                        "&8▪ &eType: &fGod of Destruction Power",
+                        "&8▪ &aEffects: &fThe lower your health, the greater your destructive damage for 5 minutes.",
+                        "&8▪ &bActivation: &fHold sneak (Shift) until it detonates."
                 )
         ));
 
@@ -110,12 +110,12 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 45,
                 "GOHAN_BEAST".equalsIgnoreCase(active),
                 Material.AMETHYST_CLUSTER,
-                "&d&lGohan Bestia (Beast)",
+                "&d&lGohan Beast",
                 45,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fFuria Híbrida Desatada",
-                        "&8▪ &aEfectos: &f+75% probabilidad crítica y rayos magentas por 5m.",
-                        "&8▪ &bActivación: &fSneak (Shift) sostenido hasta detonar."
+                        "&8▪ &eType: &fUnleashed Hybrid Fury",
+                        "&8▪ &aEffects: &f+75% critical chance and magenta lightning for 5m.",
+                        "&8▪ &bActivation: &fHold sneak (Shift) until it detonates."
                 )
         ));
 
@@ -124,12 +124,12 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 34,
                 "BROLY_LSSJ".equalsIgnoreCase(active),
                 Material.EMERALD_BLOCK,
-                "&a&lBroly Legendario (LSSJ)",
+                "&a&lLegendary Broly (LSSJ)",
                 34,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fPoder Berserker Destructivo",
-                        "&8▪ &aEfectos: &fFuerza III, Resistencia II e Inmunidad a empuje (5m).",
-                        "&8▪ &bActivación: &fSneak (Shift) sostenido hasta detonar."
+                        "&8▪ &eType: &fDestructive Berserker Power",
+                        "&8▪ &aEffects: &fStrength III, Resistance II and knockback immunity (5m).",
+                        "&8▪ &bActivation: &fHold sneak (Shift) until it detonates."
                 )
         ));
 
@@ -138,12 +138,12 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 48,
                 "VEGETTO_SWORD".equalsIgnoreCase(active),
                 Material.GOLDEN_SWORD,
-                "&e&lEspada de Luz (Vegetto)",
+                "&e&lSword of Light (Vegetto)",
                 48,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fTécnica de Fusión Saiyajin",
-                        "&8▪ &aEfectos: &fDispara un haz perforante dorado a 14 bloques.",
-                        "&8▪ &bActivación: &fShift + Clic Derecho con espada en mano."
+                        "&8▪ &eType: &fSaiyan Fusion Technique",
+                        "&8▪ &aEffects: &fFires a piercing golden beam for 14 blocks.",
+                        "&8▪ &bActivation: &fShift + right-click with a sword in hand."
                 )
         ));
 
@@ -152,12 +152,12 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 33,
                 "SSJ_2".equalsIgnoreCase(active),
                 Material.LIGHTNING_ROD,
-                "&e&lSuper Saiyajin 2",
+                "&e&lSuper Saiyan 2",
                 33,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fKi Dorado Ascendido con Bio-Electricidad",
-                        "&8▪ &aEfectos: &fArcos eléctricos permanentes, Fuerza II y Velocidad II (5m).",
-                        "&8▪ &bActivación: &fSneak (Shift) sostenido hasta detonar."
+                        "&8▪ &eType: &fAscended Golden Ki with Bio-Electricity",
+                        "&8▪ &aEffects: &fPersistent lightning arcs, Strength II and Speed II (5m).",
+                        "&8▪ &bActivation: &fHold sneak (Shift) until it detonates."
                 )
         ));
 
@@ -166,12 +166,12 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 55,
                 "MERA_MERA".equalsIgnoreCase(active),
                 Material.BLAZE_POWDER,
-                "&6&lFruta Mera Mera (Ace / Sabo)",
+                "&6&lMera Mera Fruit (Ace / Sabo)",
                 55,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fFruta del Diablo Tipo Logia (Fuego)",
-                        "&8▪ &aEfectos: &fInmunidad a fuego, Puño de Fuego (Hiken) y Entei solar.",
-                        "&8▪ &bActivación: &fClic Derecho (Hiken) / Shift + Clic Der (Entei)."
+                        "&8▪ &eType: &fLogia Devil Fruit (Fire)",
+                        "&8▪ &aEffects: &fFire immunity, Fire Fist (Hiken) and solar Entei.",
+                        "&8▪ &bActivation: &fRight-click (Hiken) / shift + right-click (Entei)."
                 )
         ));
 
@@ -180,12 +180,12 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 65,
                 "OPE_OPE".equalsIgnoreCase(active),
                 Material.HEART_OF_THE_SEA,
-                "&b&lFruta Ope Ope (Trafalgar Law)",
+                "&b&lOpe Ope Fruit (Trafalgar Law)",
                 65,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fFruta de la Operación Quirúrgica",
-                        "&8▪ &aEfectos: &fDomo ROOM y Shambles (intercambio de posición).",
-                        "&8▪ &bActivación: &fClic Derecho (ROOM) / Shift + Clic Der (Shambles)."
+                        "&8▪ &eType: &fSurgical Operation Fruit",
+                        "&8▪ &aEffects: &fROOM dome and Shambles (position swap).",
+                        "&8▪ &bActivation: &fRight-click (ROOM) / shift + right-click (Shambles)."
                 )
         ));
 
@@ -194,12 +194,12 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 75,
                 "PIKA_PIKA".equalsIgnoreCase(active),
                 Material.GLOWSTONE,
-                "&e&lFruta Pika Pika (Kizaru)",
+                "&e&lPika Pika Fruit (Kizaru)",
                 75,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fFruta de la Luz Absoluta",
-                        "&8▪ &aEfectos: &fVelocidad fotónica y salto de luz Yata no Kagami.",
-                        "&8▪ &bActivación: &fShift + Clic Izquierdo (Salto de Luz)."
+                        "&8▪ &eType: &fAbsolute Light Fruit",
+                        "&8▪ &aEffects: &fPhoton speed and Yata no Kagami light leap.",
+                        "&8▪ &bActivation: &fShift + left-click (Light Leap)."
                 )
         ));
 
@@ -208,12 +208,12 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 85,
                 "GURA_GURA".equalsIgnoreCase(active),
                 Material.IRON_BLOCK,
-                "&f&lFruta Gura Gura (Barbablanca)",
+                "&f&lGura Gura Fruit (Whitebeard)",
                 85,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fFruta del Terremoto Sísmico",
-                        "&8▪ &aEfectos: &fGolpe que agrieta el espacio y lanza enemigos por el aire.",
-                        "&8▪ &bActivación: &fClic Izquierdo en combate."
+                        "&8▪ &eType: &fSeismic Earthquake Fruit",
+                        "&8▪ &aEffects: &fA strike that cracks space and launches enemies into the air.",
+                        "&8▪ &bActivation: &fLeft-click in combat."
                 )
         ));
 
@@ -222,12 +222,12 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 60,
                 "JIKI_MAGNET".equalsIgnoreCase(active),
                 Material.LODESTONE,
-                "&b&lVórtice Magnético (Jiki Jiki)",
+                "&b&lMagnetic Vortex (Jiki Jiki)",
                 60,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fMagnetismo Polar Atractor",
-                        "&8▪ &aEfectos: &fAtrae al instante todos los ítems en un radio de 200 bloques.",
-                        "&8▪ &bActivación: &fShift + Clic Derecho o comando /rankup magnet."
+                        "&8▪ &eType: &fAttractive Polar Magnetism",
+                        "&8▪ &aEffects: &fInstantly attracts all items within a 200-block radius.",
+                        "&8▪ &bActivation: &fShift + right-click or /rankup magnet."
                 )
         ));
 
@@ -236,12 +236,12 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 70,
                 "DANCING_BLADES".equalsIgnoreCase(active),
                 Material.DIAMOND_SWORD,
-                "&c&lFilos Danzantes (Aura Kill)",
+                "&c&lDancing Blades (Aura Kill)",
                 70,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fMaestría Telequinética de Armas",
-                        "&8▪ &aEfectos: &fLas espadas y hachas flotan y golpean solas en 10 bloques.",
-                        "&8▪ &bActivación: &fHaz clic para alternar el Aura Kill autónomo."
+                        "&8▪ &eType: &fTelekinetic Weapon Mastery",
+                        "&8▪ &aEffects: &fSwords and axes float and strike on their own within 10 blocks.",
+                        "&8▪ &bActivation: &fClick to toggle autonomous Aura Kill."
                 )
         ));
 
@@ -253,10 +253,10 @@ public class TransformationMenu implements InventoryHolder {
                 "&f&l☀ Sun God Nika (Gear 5)",
                 88,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fGuerrero de la Liberación Shonen",
-                        "&8▪ &aEfectos: &fTambores de júbilo, rebote cartoon sin daño de caída,",
-                        "  &fLanzamiento de Rayos Kaminari y Puño Colosal Bajrang Gun (5m).",
-                        "&8▪ &bActivación: &fShift + Clic Izquierdo (Bajrang) / Clic Izq (Kaminari)."
+                        "&8▪ &eType: &fShonen Warrior of Liberation",
+                        "&8▪ &aEffects: &fDrums of liberation, cartoon bouncing with no fall damage,",
+                        "  &fKaminari lightning throws and the colossal Bajrang Gun (5m).",
+                        "&8▪ &bActivation: &fShift + left-click (Bajrang) / left-click (Kaminari)."
                 )
         ));
 
@@ -265,13 +265,13 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 30,
                 "GOMU_GOMU".equalsIgnoreCase(active),
                 Material.SLIME_BALL,
-                "&c&lFruta Gomu Gomu (Luffy)",
+                "&c&lGomu Gomu Fruit (Luffy)",
                 30,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fHombre de Goma",
-                        "&8▪ &aEfectos: &fGear 2 (vapor), Gear 3 (gigante 2.8) y Gear 4 (Bounceman).",
-                        "  &f¡El Gear 4 bota continuamente en el suelo como en el anime!",
-                        "&8▪ &bActivación: &fSneak + Clic Derecho (Gear 3) / Sneak + Clic Izq (Gear 4)."
+                        "&8▪ &eType: &fRubber Human",
+                        "&8▪ &aEffects: &fGear 2 (steam), Gear 3 (2.8x giant) and Gear 4 (Bounceman).",
+                        "  &fGear 4 continuously bounces on the ground just like in the anime!",
+                        "&8▪ &bActivation: &fSneak + right-click (Gear 3) / sneak + left-click (Gear 4)."
                 )
         ));
 
@@ -280,13 +280,13 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 24,
                 "SANTORYU".equalsIgnoreCase(active),
                 Material.IRON_SWORD,
-                "&2&lEstilo Tres Espadas (Santoryu - Zoro)",
+                "&2&lThree-Sword Style (Santoryu - Zoro)",
                 24,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fMaestría de Espadachín de Wano",
-                        "&8▪ &aEfectos Positivos: &f+25% daño físico permanente con espadas",
-                        "  &fy Corte del Dragón Volador de viento a distancia.",
-                        "&8▪ &bActivación: &fClic Derecho con espada en combate."
+                        "&8▪ &eType: &fWano Swordsman Mastery",
+                        "&8▪ &aPositive Effects: &f+25% permanent physical sword damage",
+                        "  &fand a ranged Flying Dragon wind slash.",
+                        "&8▪ &bActivation: &fRight-click with a sword in combat."
                 )
         ));
 
@@ -298,52 +298,52 @@ public class TransformationMenu implements InventoryHolder {
                 "&c&lKaio-ken (x3 / x10 / x20)",
                 92,
                 Arrays.asList(
-                        "&8▪ &eTipo: &fMultiplicador Divino Saiyajin",
-                        "&8▪ &aEfectos Positivos: &fVelocidad III, Fuerza II, Salto II y Vuelo Libre (5m).",
-                        "&8▪ &bActivación: &fSneak (Shift) sostenido hasta detonar."
+                        "&8▪ &eType: &fDivine Saiyan Multiplier",
+                        "&8▪ &aPositive Effects: &fSpeed III, Strength II, Jump II and Free Flight (5m).",
+                        "&8▪ &bActivation: &fHold sneak (Shift) until it detonates."
                 )
         ));
 
         // 19. Vuelo de Ki Supersónico (Tier 31+)
         inv.setItem(31, createItem(
                 tier >= 31 ? Material.FIREWORK_ROCKET : Material.GUNPOWDER,
-                tier >= 31 ? "&b&l⚡ Vuelo de Ki Supersónico" : "&c🔒 Vuelo de Ki (Requiere Tier 31)",
-                "&8▪ &eTipo: &fPropulsión Aérea Shonen",
-                "&8▪ &aEfectos: &fSuper impulso a 100 bloques con W + Doble Salto (CD escalonado).",
+                tier >= 31 ? "&b&l⚡ Supersonic Ki Flight" : "&c🔒 Ki Flight (Requires Tier 31)",
+                "&8▪ &eType: &fShonen Aerial Propulsion",
+                "&8▪ &aEffects: &f100-block super boost with W + double jump (scaling cooldown).",
                 "",
-                tier >= 31 ? (settings.isKiFlightEnabled() ? "&a✔ HABILITADO &7(Clic para alternar)" : "&c✖ DESHABILITADO &7(Clic para activar)") : "&cBloqueado por rango."
+                tier >= 31 ? (settings.isKiFlightEnabled() ? "&a✔ ENABLED &7(Click to toggle)" : "&c✖ DISABLED &7(Click to enable)") : "&cLocked by rank."
         ));
 
         // Desequipar (Slot 40)
-        inv.setItem(40, createItem(Material.BARRIER, "&c&lDesequipar Transformación Activa",
-                "&7Quita la transformación seleccionada y regresa",
-                "&7al aura natural y pasiva de tu rango actual.",
+        inv.setItem(40, createItem(Material.BARRIER, "&c&lUnequip Active Transformation",
+                "&7Removes the selected transformation and restores",
+                "&7your current rank's natural passive aura.",
                 "",
-                "&eClic para desequipar"
+                "&eClick to unequip"
         ));
 
         // Volver al menú de Rangos (Slot 49)
-        inv.setItem(49, createItem(Material.ARROW, "&a◀ Volver al Menú de Rangos", "&7Abrir la interfaz principal de /rankup"));
+        inv.setItem(49, createItem(Material.ARROW, "&a◀ Back to Rank Menu", "&7Open the main /rankup interface"));
 
         player.openInventory(this.inv);
     }
 
     private ItemStack buildTransformationItem(boolean unlocked, boolean isEquipped, Material mat, String name, int reqTier, List<String> details) {
         List<String> lore = new ArrayList<>();
-        lore.add("&7Nivel Requerido: &6Tier " + reqTier);
+        lore.add("&7Required Level: &6Tier " + reqTier);
         lore.add("");
         lore.addAll(details);
         lore.add("");
 
         if (isEquipped) {
-            lore.add("&a✔ ¡EQUIPADA Y ACTIVA!");
-            return createItem(Material.ENCHANTED_BOOK, name + " &8(&aEQUIPADO&8)", lore);
+            lore.add("&a✔ EQUIPPED AND ACTIVE!");
+            return createItem(Material.ENCHANTED_BOOK, name + " &8(&aEQUIPPED&8)", lore);
         } else if (unlocked) {
-            lore.add("&e▶ Desbloqueada. Haz clic para equiparla como activa.");
-            return createItem(mat, name + " &8(&eDisponible&8)", lore);
+            lore.add("&e▶ Unlocked. Click to equip it as active.");
+            return createItem(mat, name + " &8(&eAvailable&8)", lore);
         } else {
-            lore.add("&c🔒 Bloqueada. Debes ascender hasta el Tier " + reqTier + ".");
-            return createItem(Material.RED_STAINED_GLASS_PANE, name + " &8(&cBloqueada&8)", lore);
+            lore.add("&c🔒 Locked. You must advance to Tier " + reqTier + ".");
+            return createItem(Material.RED_STAINED_GLASS_PANE, name + " &8(&cLocked&8)", lore);
         }
     }
 
@@ -375,7 +375,7 @@ public class TransformationMenu implements InventoryHolder {
                 p.setAllowFlight(false);
             }
             p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0f, 0.8f);
-            p.sendMessage("§b[Transformación] §7Has desequipado tu transformación. Aura y vuelo restablecidos a la base de tu rango.");
+            p.sendMessage("§b[Transformation] §7Your transformation has been unequipped. Aura and flight restored to your rank baseline.");
             open();
             return;
         }
@@ -383,7 +383,7 @@ public class TransformationMenu implements InventoryHolder {
         // Toggle Ki Flight (Slot 31)
         if (slot == 31) {
             if (tier < 31 && !settings.isKiFlightEnabled() && !p.hasPermission("drakesrankup.staff") && !plugin.getStaffManager().isAngel(p.getUniqueId())) {
-                p.sendMessage("§c[Rankup] Necesitas alcanzar el Tier 31 (Saiyajin) para usar el Vuelo de Ki.");
+                p.sendMessage("§c[Rankup] You need to reach Tier 31 (Saiyan) to use Ki Flight.");
                 p.playSound(p.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
                 return;
             }
@@ -396,7 +396,7 @@ public class TransformationMenu implements InventoryHolder {
                 p.setAllowFlight(false);
             }
             p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.2f);
-            p.sendMessage("§b[Rankup] §7Vuelo de Ki supersónico: " + (newState ? "§aHabilitado" : "§cDeshabilitado (Velocidad normal restaurada)"));
+            p.sendMessage("§b[Rankup] §7Supersonic Ki Flight: " + (newState ? "§aEnabled" : "§cDisabled (normal speed restored)"));
             open();
             return;
         }
@@ -426,15 +426,15 @@ public class TransformationMenu implements InventoryHolder {
 
         if (newTrans != null) {
             if (tier < reqTier) {
-                p.sendMessage("§c[Transformación] Requiere Tier " + reqTier + " para desbloquear esta técnica.");
+                p.sendMessage("§c[Transformation] Tier " + reqTier + " is required to unlock this technique.");
                 p.playSound(p.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
                 return;
             }
             settings.setActiveTransformation(newTrans);
             plugin.getRankManager().savePlayerData();
             p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.0f, 1.2f);
-            p.sendMessage("§a[Transformación] §f¡Has equipado la transformación: §e" + newTrans + "§f!");
-            p.sendMessage("§7Usa los controles de la habilidad para desatar su poder.");
+            p.sendMessage("§a[Transformation] §fYou have equipped: §e" + newTrans + "§f!");
+            p.sendMessage("§7Use the ability controls to unleash its power.");
 
             // Activación inmediata para Gear 5 si se selecciona directamente
             if ("GEAR_FIVE".equalsIgnoreCase(newTrans)) {
