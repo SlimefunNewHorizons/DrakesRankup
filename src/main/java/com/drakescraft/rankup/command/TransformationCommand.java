@@ -24,7 +24,7 @@ public class TransformationCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage("§cSolo jugadores pueden abrir el menú de transformaciones.");
+            sender.sendMessage("§cOnly players can open the transformations menu.");
             return true;
         }
 
@@ -45,19 +45,19 @@ public class TransformationCommand implements TabExecutor {
                     player.setFlying(false);
                     player.setAllowFlight(false);
                 }
-                player.sendMessage("§b[Ki] §cHas desactivado el vuelo y propulsión supersónica de Ki. Velocidad de vuelo restablecida.");
+                player.sendMessage("§b[Ki] §cKi flight and supersonic propulsion disabled. Flight speed restored.");
                 return true;
             }
 
             if (sub.equals("on") || sub.equals("activar") || sub.equals("enable")) {
                 int tier = plugin.getRankManager().getPlayerTier(player.getUniqueId());
                 if (tier < 31 && !player.hasPermission("drakesrankup.staff") && !plugin.getStaffManager().isAngel(player.getUniqueId())) {
-                    player.sendMessage("§c[Ki] Necesitas alcanzar el Tier 31 (Saiyajin) para usar el Vuelo de Ki.");
+                    player.sendMessage("§c[Ki] You need to reach Tier 31 (Saiyan) to use Ki Flight.");
                     return true;
                 }
                 s.setKiFlightEnabled(true);
                 plugin.getRankManager().savePlayerData();
-                player.sendMessage("§b[Ki] §aHas activado el vuelo de Ki supersónico (W + Doble Salto).");
+                player.sendMessage("§b[Ki] §aSupersonic Ki Flight enabled (W + Double Jump).");
                 return true;
             }
 
@@ -66,7 +66,7 @@ public class TransformationCommand implements TabExecutor {
                 if (newState) {
                     int tier = plugin.getRankManager().getPlayerTier(player.getUniqueId());
                     if (tier < 31 && !player.hasPermission("drakesrankup.staff") && !plugin.getStaffManager().isAngel(player.getUniqueId())) {
-                        player.sendMessage("§c[Ki] Necesitas alcanzar el Tier 31 (Saiyajin) para usar el Vuelo de Ki.");
+                        player.sendMessage("§c[Ki] You need to reach Tier 31 (Saiyan) to use Ki Flight.");
                         return true;
                     }
                 }
@@ -77,7 +77,7 @@ public class TransformationCommand implements TabExecutor {
                     player.setFlying(false);
                     player.setAllowFlight(false);
                 }
-                player.sendMessage("§b[Ki] §7Vuelo de Ki supersónico: " + (newState ? "§aActivado" : "§cDesactivado (Velocidad normal restaurada)"));
+                player.sendMessage("§b[Ki] §7Supersonic Ki Flight: " + (newState ? "§aEnabled" : "§cDisabled (normal flight speed restored)"));
                 return true;
             }
         }

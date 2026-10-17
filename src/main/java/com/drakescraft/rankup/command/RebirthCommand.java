@@ -48,26 +48,26 @@ public class RebirthCommand implements CommandExecutor, TabCompleter {
 
         // Mostrar menú informativo de Rebirth
         player.sendMessage("§8§m--------------------------------------------------");
-        player.sendMessage("  §6§lSISTEMA DE RENACIMIENTO (REBIRTH) · DRAKESRANKUP");
+        player.sendMessage("  §6§lREBIRTH SYSTEM · DRAKESRANKUP");
         player.sendMessage("§8§m--------------------------------------------------");
-        player.sendMessage("§7Nivel de Rebirth actual: §e" + currentRebirth + " §8/ §650");
-        player.sendMessage("§7Tu Rango actual: " + (currentRank != null ? currentRank.getDisplayName() : "§7Sin rango") + " §8(Tier " + currentTier + "/" + maxTier + ")");
+        player.sendMessage("§7Current Rebirth level: §e" + currentRebirth + " §8/ §650");
+        player.sendMessage("§7Your current rank: " + (currentRank != null ? currentRank.getDisplayName() : "§7No rank") + " §8(Tier " + currentTier + "/" + maxTier + ")");
         player.sendMessage("");
-        player.sendMessage("§e§nBeneficios permanentes por Rebirth:§r");
-        player.sendMessage(" §8▪ §fDaño físico y mágico: §a+" + (currentRebirth * 3) + "% §7(+3% por cada Rebirth)");
-        player.sendMessage(" §8▪ §fReducción de enfriamiento: §b-" + Math.min(50, currentRebirth) + "% §7(-1% CDR por Rebirth)");
-        player.sendMessage(" §8▪ §fDistintivo visual en chat, TAB y auras celestiales exclusivas.");
+        player.sendMessage("§e§nPermanent Rebirth benefits:§r");
+        player.sendMessage(" §8▪ §fPhysical and magic damage: §a+" + (currentRebirth * 3) + "% §7(+3% per Rebirth)");
+        player.sendMessage(" §8▪ §fCooldown reduction: §b-" + Math.min(50, currentRebirth) + "% §7(-1% CDR per Rebirth)");
+        player.sendMessage(" §8▪ §fVisual badge in chat, TAB, and exclusive celestial auras.");
         player.sendMessage("");
 
         if (currentRebirth >= 50) {
-            player.sendMessage("§6§l¡HAS ALCANZADO LA GLORIA MÁXIMA DE 50 REBIRTHS!");
+            player.sendMessage("§6§lYOU HAVE REACHED THE GLORY OF 50 REBIRTHS!");
         } else if (currentTier < maxTier) {
-            player.sendMessage("§c✖ No cumples con los requisitos: Debes alcanzar el §6Tier " + maxTier + " §cpara renacer.");
-            player.sendMessage("§7Al renacer, tu progreso de rangos se reiniciará a §aTier 1 (Senku)§7, pero tus");
-            player.sendMessage("§7multiplicadores de daño y auras de Rebirth quedarán guardados para siempre.");
+            player.sendMessage("§c✖ Requirements not met: reach §6Tier " + maxTier + " §cto be reborn.");
+            player.sendMessage("§7Rebirth resets your rank progress to §aTier 1 (Senku)§7, but your");
+            player.sendMessage("§7damage multipliers and Rebirth auras are kept forever.");
         } else {
-            player.sendMessage("§a✔ ¡CUMPLES TODOS LOS REQUISITOS PARA RENACER!");
-            player.sendMessage("§eEscribe §6/rebirth confirm §epara ejecutar el renacimiento supremo.");
+            player.sendMessage("§a✔ YOU MEET ALL REQUIREMENTS FOR REBIRTH!");
+            player.sendMessage("§eType §6/rebirth confirm §eto perform the supreme rebirth.");
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1.0f, 1.2f);
         }
         player.sendMessage("§8§m--------------------------------------------------");
