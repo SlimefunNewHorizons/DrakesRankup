@@ -9,6 +9,7 @@ ranks:
     - essentials.sethome.multiple.senku
     - bskyblock.island.range.65
     - aoneblock.island.range.65
+    - onechunk.island.range.65
     - chunkblock.island.range.17
     perks:
     - +1 Home (/sethome)
@@ -31,6 +32,7 @@ ranks:
     - essentials.hat
     - bskyblock.island.range.66
     - aoneblock.island.range.66
+    - onechunk.island.range.66
     - chunkblock.island.range.18
     perks:
     - Visión de recolector astuto
@@ -53,6 +55,7 @@ ranks:
     - playervaults.amount.2
     - bskyblock.island.range.67
     - aoneblock.island.range.67
+    - onechunk.island.range.67
     - chunkblock.island.range.19
     perks:
     - Resistencia a caídas -50%
@@ -75,6 +78,7 @@ ranks:
     - essentials.workbench
     - bskyblock.island.range.68
     - aoneblock.island.range.68
+    - onechunk.island.range.68
     - chunkblock.island.range.20
     perks:
     - Elocuencia del Mentalista
@@ -97,6 +101,7 @@ ranks:
     - essentials.sethome.multiple.tsukasa
     - bskyblock.island.range.69
     - aoneblock.island.range.69
+    - onechunk.island.range.69
     - chunkblock.island.range.21
     perks:
     - Fuerza primitiva y resistencia pasiva
@@ -119,6 +124,7 @@ ranks:
     - essentials.near
     - bskyblock.island.range.70
     - aoneblock.island.range.70
+    - onechunk.island.range.70
     - chunkblock.island.range.22
     perks:
     - Aura de Nen (Ten y Ren)
@@ -141,6 +147,7 @@ ranks:
     - playervaults.amount.3
     - bskyblock.island.range.71
     - aoneblock.island.range.71
+    - onechunk.island.range.71
     - chunkblock.island.range.23
     perks:
     - 'Transmutación de rayo: velocidad pasiva'
@@ -163,6 +170,7 @@ ranks:
     - essentials.condense
     - bskyblock.island.range.72
     - aoneblock.island.range.72
+    - onechunk.island.range.72
     - chunkblock.island.range.24
     perks:
     - Cadenas del juicio espectral
@@ -185,6 +193,7 @@ ranks:
     - essentials.sethome.multiple.netero
     - bskyblock.island.range.73
     - aoneblock.island.range.73
+    - onechunk.island.range.73
     - chunkblock.island.range.25
     perks:
     - 'Bodhisattva Guanyin: bono de XP'
@@ -207,6 +216,7 @@ ranks:
     - essentials.ptime
     - bskyblock.island.range.74
     - aoneblock.island.range.74
+    - onechunk.island.range.74
     - chunkblock.island.range.26
     perks:
     - 'Cima División I: Título dorado [Meruem]'
@@ -229,6 +239,7 @@ ranks:
     - drakesrankup.push.genin
     - bskyblock.island.range.75
     - aoneblock.island.range.75
+    - onechunk.island.range.75
     - chunkblock.island.range.27
     perks:
     - Desbloquea Empuje Cinético (Salto Shinobi)
@@ -251,6 +262,7 @@ ranks:
     - essentials.near.chunin
     - bskyblock.island.range.76
     - aoneblock.island.range.76
+    - onechunk.island.range.76
     - chunkblock.island.range.28
     perks:
     - 'Empuje Cinético mejorado (CD: 6s)'
@@ -273,6 +285,7 @@ ranks:
     - playervaults.amount.4
     - bskyblock.island.range.77
     - aoneblock.island.range.77
+    - onechunk.island.range.77
     - chunkblock.island.range.29
     perks:
     - 'Empuje Cinético mejorado (CD: 5s)'
@@ -295,6 +308,7 @@ ranks:
     - essentials.ext
     - bskyblock.island.range.78
     - aoneblock.island.range.78
+    - onechunk.island.range.78
     - chunkblock.island.range.30
     perks:
     - 'Empuje Cinético sigiloso (CD: 5s)'
@@ -317,6 +331,7 @@ ranks:
     - essentials.sethome.multiple.kage
     - bskyblock.island.range.79
     - aoneblock.island.range.79
+    - onechunk.island.range.79
     - chunkblock.island.range.31
     perks:
     - 'Mandatario Shinobi: Anuncio especial en chat'
@@ -339,6 +354,7 @@ ranks:
     - essentials.pweather
     - bskyblock.island.range.80
     - aoneblock.island.range.80
+    - onechunk.island.range.80
     - chunkblock.island.range.32
     perks:
     - Técnica de Diez Sombras
@@ -361,6 +377,7 @@ ranks:
     - playervaults.amount.5
     - bskyblock.island.range.81
     - aoneblock.island.range.81
+    - onechunk.island.range.81
     - chunkblock.island.range.33
     perks:
     - Técnica de Resonancia Maldita
@@ -383,6 +400,7 @@ ranks:
     - essentials.recipe
     - bskyblock.island.range.82
     - aoneblock.island.range.82
+    - onechunk.island.range.82
     - chunkblock.island.range.34
     perks:
     - 'Destello Negro (Black Flash: 15% daño x1.5)'
@@ -405,6 +423,7 @@ ranks:
     - essentials.speed
     - bskyblock.island.range.83
     - aoneblock.island.range.83
+    - onechunk.island.range.83
     - chunkblock.island.range.35
     perks:
     - 'Infinito (Mugen: 15% desvía proyectiles)'
@@ -427,6 +446,7 @@ ranks:
     - essentials.sethome.multiple.sukuna
     - bskyblock.island.range.84
     - aoneblock.island.range.84
+    - onechunk.island.range.84
     - chunkblock.island.range.36
     perks:
     - 'Cima División II: Fuego Maldito cuerpo a cuerpo'
@@ -449,6 +469,7 @@ ranks:
     - essentials.sethome.multiple.grumete
     - bskyblock.island.range.85
     - aoneblock.island.range.85
+    - onechunk.island.range.85
     - chunkblock.island.range.37
     perks:
     - Respiración acuática ilimitada
@@ -471,6 +492,7 @@ ranks:
     - playervaults.amount.6
     - bskyblock.island.range.86
     - aoneblock.island.range.86
+    - onechunk.island.range.86
     - chunkblock.island.range.38
     perks:
     - Gracia del Delfín en océanos
@@ -493,6 +515,7 @@ ranks:
     - essentials.compass
     - bskyblock.island.range.87
     - aoneblock.island.range.87
+    - onechunk.island.range.87
     - chunkblock.island.range.39
     perks:
     - 'La Peor Generación: Cartel de recompensa'
@@ -515,6 +538,7 @@ ranks:
     - essentials.dispose
     - bskyblock.island.range.88
     - aoneblock.island.range.88
+    - onechunk.island.range.88
     - chunkblock.island.range.40
     perks:
     - 'Estilo Tres Espadas (Santoryu): +25% daño con espadas'
@@ -538,6 +562,7 @@ ranks:
     - essentials.sethome.multiple.yonkou
     - bskyblock.island.range.89
     - aoneblock.island.range.89
+    - onechunk.island.range.89
     - chunkblock.island.range.41
     perks:
     - 'Haki del Conquistador: ralentiza hostiles'
@@ -560,6 +585,7 @@ ranks:
     - playervaults.amount.7
     - bskyblock.island.range.90
     - aoneblock.island.range.90
+    - onechunk.island.range.90
     - chunkblock.island.range.42
     perks:
     - 'Segador de Almas: Zanpakuto cosmética'
@@ -582,6 +608,7 @@ ranks:
     - essentials.back
     - bskyblock.island.range.91
     - aoneblock.island.range.91
+    - onechunk.island.range.91
     - chunkblock.island.range.43
     perks:
     - 'Oficial del Gotei 13: Shunpo en /back'
@@ -604,6 +631,7 @@ ranks:
     - essentials.anvil
     - bskyblock.island.range.92
     - aoneblock.island.range.92
+    - onechunk.island.range.92
     - chunkblock.island.range.44
     perks:
     - 'Haori blanco de capitán: Reiatsu visible'
@@ -626,6 +654,7 @@ ranks:
     - essentials.grindstone
     - bskyblock.island.range.93
     - aoneblock.island.range.93
+    - onechunk.island.range.93
     - chunkblock.island.range.45
     perks:
     - 'Liberación Definitiva: Sonido y partículas al desenvainar'
@@ -648,6 +677,7 @@ ranks:
     - essentials.sethome.multiple.joyboy
     - bskyblock.island.range.94
     - aoneblock.island.range.94
+    - onechunk.island.range.94
     - chunkblock.island.range.46
     perks:
     - 'Fruta Gomu Gomu: Gear Second (Vapor, Velocidad III y Red Hawk)'
@@ -672,6 +702,7 @@ ranks:
     - playervaults.amount.8
     - bskyblock.island.range.95
     - aoneblock.island.range.95
+    - onechunk.island.range.95
     - chunkblock.island.range.47
     perks:
     - 'Zenkai Boost: Fuerza y Regen al bajar de 3 corazones'
@@ -694,6 +725,7 @@ ranks:
     - essentials.smithingtable
     - bskyblock.island.range.96
     - aoneblock.island.range.96
+    - onechunk.island.range.96
     - chunkblock.island.range.48
     perks:
     - Aura de Llamas Doradas continua
@@ -716,6 +748,7 @@ ranks:
     - essentials.stonecutter
     - bskyblock.island.range.97
     - aoneblock.island.range.97
+    - onechunk.island.range.97
     - chunkblock.island.range.49
     perks:
     - 'Rayo Ascendente: Chispas eléctricas azules continuas'
@@ -738,6 +771,7 @@ ranks:
     - essentials.sethome.multiple.ssj3
     - bskyblock.island.range.98
     - aoneblock.island.range.98
+    - onechunk.island.range.98
     - chunkblock.island.range.50
     perks:
     - 'Broly Berserker (LSSJ): Fuerza III, Resistencia II e Inmunidad a empuje'
@@ -761,6 +795,7 @@ ranks:
     - playervaults.amount.9
     - bskyblock.island.range.99
     - aoneblock.island.range.99
+    - onechunk.island.range.99
     - chunkblock.island.range.51
     perks:
     - 'Ki Divino Carmesí: Carga de Ki (Shift) activa regeneración y agilidad divina'
@@ -783,6 +818,7 @@ ranks:
     - essentials.loom
     - bskyblock.island.range.100
     - aoneblock.island.range.100
+    - onechunk.island.range.100
     - chunkblock.island.range.52
     perks:
     - 'Dios Super Saiyajin: Carga de Ki (Shift) activa Fuerza I y Velocidad II con
@@ -806,6 +842,7 @@ ranks:
     - essentials.cartographytable
     - bskyblock.island.range.101
     - aoneblock.island.range.101
+    - onechunk.island.range.101
     - chunkblock.island.range.53
     perks:
     - 'El más débil de la humanidad: Perseverancia inquebrantable'
@@ -828,6 +865,7 @@ ranks:
     - essentials.sethome.multiple.cazadors
     - bskyblock.island.range.102
     - aoneblock.island.range.102
+    - onechunk.island.range.102
     - chunkblock.island.range.54
     perks:
     - 'Rango S Nacional: Aura opresiva'
@@ -850,6 +888,7 @@ ranks:
     - playervaults.amount.10
     - bskyblock.island.range.103
     - aoneblock.island.range.103
+    - onechunk.island.range.103
     - chunkblock.island.range.55
     perks:
     - 'Extracción de Sombras: 10% al matar mobs de invocar sombra aliada'
@@ -872,6 +911,7 @@ ranks:
     - essentials.repair
     - bskyblock.island.range.104
     - aoneblock.island.range.104
+    - onechunk.island.range.104
     - chunkblock.island.range.56
     perks:
     - 'Cima División IV: Ojos morados ardientes y ''SURGE'''
@@ -894,6 +934,7 @@ ranks:
     - essentials.sethome.multiple.saitama
     - bskyblock.island.range.105
     - aoneblock.island.range.105
+    - onechunk.island.range.105
     - chunkblock.island.range.57
     perks:
     - 'Golpe Serio: 12% de empuje colosal cinematográfico'
@@ -916,6 +957,7 @@ ranks:
     - playervaults.amount.12
     - bskyblock.island.range.106
     - aoneblock.island.range.106
+    - onechunk.island.range.106
     - chunkblock.island.range.58
     perks:
     - 'Gobernante Slime: Compañero flotante personalizado'
@@ -938,6 +980,7 @@ ranks:
     - essentials.heal
     - bskyblock.island.range.107
     - aoneblock.island.range.107
+    - onechunk.island.range.107
     - chunkblock.island.range.59
     perks:
     - 'Rey Demonio de la Tiranía: Ojos mágicos de destrucción'
@@ -960,6 +1003,7 @@ ranks:
     - essentials.repair.all
     - bskyblock.island.range.108
     - aoneblock.island.range.108
+    - onechunk.island.range.108
     - chunkblock.island.range.60
     perks:
     - 'Círculo de Transmutación: Duplica drops y crafteos'
@@ -982,6 +1026,7 @@ ranks:
     - essentials.sethome.multiple.hakari
     - bskyblock.island.range.109
     - aoneblock.island.range.109
+    - onechunk.island.range.109
     - chunkblock.island.range.61
     perks:
     - 'Gohan Bestia (Beast): Explosión crítica colosal (+75%) y Makankosappo magenta'
@@ -1005,6 +1050,7 @@ ranks:
     - playervaults.amount.15
     - bskyblock.island.range.110
     - aoneblock.island.range.110
+    - onechunk.island.range.110
     - chunkblock.island.range.62
     perks:
     - 'Doctrina Egoísta Dominada: Carga de Ki (Shift) activa Evasión 100% por 5s'
@@ -1028,6 +1074,7 @@ ranks:
     - essentials.feed
     - bskyblock.island.range.111
     - aoneblock.island.range.111
+    - onechunk.island.range.111
     - chunkblock.island.range.63
     perks:
     - 'Mega Instinto (Ultra Ego): Carga de Ki (Shift) aumenta daño según el dolor
@@ -1052,6 +1099,7 @@ ranks:
     - essentials.fly
     - bskyblock.island.range.112
     - aoneblock.island.range.112
+    - onechunk.island.range.112
     - chunkblock.island.range.64
     perks:
     - 'Espada de Haz de Luz (Vegetto): Shift + Clic derecho dispara haz perforante
@@ -1076,6 +1124,7 @@ ranks:
     - essentials.sethome.multiple.zeno
     - bskyblock.island.range.113
     - aoneblock.island.range.113
+    - onechunk.island.range.113
     - chunkblock.island.range.65
     perks:
     - 'Omni-Rey del Multiverso: Corona celestial universal'
@@ -1099,6 +1148,7 @@ ranks:
     - playervaults.amount.20
     - bskyblock.island.range.114
     - aoneblock.island.range.114
+    - onechunk.island.range.114
     - chunkblock.island.range.66
     perks:
     - CIMA ABSOLUTA DE DRAKESRANKUP
@@ -1124,6 +1174,7 @@ ranks:
     - drakesrankup.tier.51
     - bskyblock.island.range.115
     - aoneblock.island.range.115
+    - onechunk.island.range.115
     - chunkblock.island.range.67
     perks:
     - Recipiente de Sukuna
@@ -1147,6 +1198,7 @@ ranks:
     - drakesrankup.tier.52
     - bskyblock.island.range.116
     - aoneblock.island.range.116
+    - onechunk.island.range.116
     - chunkblock.island.range.68
     perks:
     - Técnica de las Diez Sombras
@@ -1170,6 +1222,7 @@ ranks:
     - drakesrankup.tier.53
     - bskyblock.island.range.117
     - aoneblock.island.range.117
+    - onechunk.island.range.117
     - chunkblock.island.range.69
     perks:
     - Técnica del Muñeco de Paja
@@ -1193,6 +1246,7 @@ ranks:
     - drakesrankup.tier.54
     - bskyblock.island.range.118
     - aoneblock.island.range.118
+    - onechunk.island.range.118
     - chunkblock.island.range.70
     perks:
     - Restricción Celestial Completa
@@ -1216,6 +1270,7 @@ ranks:
     - drakesrankup.tier.55
     - bskyblock.island.range.119
     - aoneblock.island.range.119
+    - onechunk.island.range.119
     - chunkblock.island.range.71
     perks:
     - 'Boogie Woogie: Aplaude para permutar posición'
@@ -1239,6 +1294,7 @@ ranks:
     - drakesrankup.tier.56
     - bskyblock.island.range.120
     - aoneblock.island.range.120
+    - onechunk.island.range.120
     - chunkblock.island.range.72
     perks:
     - Técnica de Proporción 7:3
@@ -1262,6 +1318,7 @@ ranks:
     - drakesrankup.tier.57
     - bskyblock.island.range.121
     - aoneblock.island.range.121
+    - onechunk.island.range.121
     - chunkblock.island.range.73
     perks:
     - Manipulación de Maldiciones
@@ -1285,6 +1342,7 @@ ranks:
     - drakesrankup.tier.58
     - bskyblock.island.range.122
     - aoneblock.island.range.122
+    - onechunk.island.range.122
     - chunkblock.island.range.74
     perks:
     - 'Rika: Reina de las Maldiciones'
@@ -1307,6 +1365,7 @@ ranks:
     - drakesrankup.tier.59
     - bskyblock.island.range.123
     - aoneblock.island.range.123
+    - onechunk.island.range.123
     - chunkblock.island.range.75
     perks:
     - Rey de las Maldiciones
@@ -1329,6 +1388,7 @@ ranks:
     - drakesrankup.tier.60
     - bskyblock.island.range.124
     - aoneblock.island.range.124
+    - onechunk.island.range.124
     - chunkblock.island.range.76
     perks:
     - Los Seis Ojos & Infinito Ilimitado
@@ -1352,6 +1412,7 @@ ranks:
     - drakesrankup.tier.61
     - bskyblock.island.range.125
     - aoneblock.island.range.125
+    - onechunk.island.range.125
     - chunkblock.island.range.77
     perks:
     - 'Zabimaru: Rugido de la Serpiente Babosa'
@@ -1375,6 +1436,7 @@ ranks:
     - drakesrankup.tier.62
     - bskyblock.island.range.126
     - aoneblock.island.range.126
+    - onechunk.island.range.126
     - chunkblock.island.range.78
     perks:
     - Sode no Shirayuki
@@ -1398,6 +1460,7 @@ ranks:
     - drakesrankup.tier.63
     - bskyblock.island.range.127
     - aoneblock.island.range.127
+    - onechunk.island.range.127
     - chunkblock.island.range.79
     perks:
     - 'Senbonzakura Kageyoshi: Tormenta de Pétalos Cortantes'
@@ -1420,6 +1483,7 @@ ranks:
     - drakesrankup.tier.64
     - bskyblock.island.range.128
     - aoneblock.island.range.128
+    - onechunk.island.range.128
     - chunkblock.island.range.80
     perks:
     - Reiatsu Monstruoso Incontrolable
@@ -1443,6 +1507,7 @@ ranks:
     - drakesrankup.tier.65
     - bskyblock.island.range.129
     - aoneblock.island.range.129
+    - onechunk.island.range.129
     - chunkblock.island.range.81
     perks:
     - 'Katen Kyōkotsu: Karamatsu Shinjū'
@@ -1466,6 +1531,7 @@ ranks:
     - drakesrankup.tier.66
     - bskyblock.island.range.130
     - aoneblock.island.range.130
+    - onechunk.island.range.130
     - chunkblock.island.range.82
     perks:
     - 'Resurrección: Segunda Etapa'
@@ -1488,6 +1554,7 @@ ranks:
     - drakesrankup.tier.67
     - bskyblock.island.range.131
     - aoneblock.island.range.131
+    - onechunk.island.range.131
     - chunkblock.island.range.83
     perks:
     - 'Kyōka Suigetsu: Hipnosis Total'
@@ -1510,6 +1577,7 @@ ranks:
     - drakesrankup.tier.68
     - bskyblock.island.range.132
     - aoneblock.island.range.132
+    - onechunk.island.range.132
     - chunkblock.island.range.84
     perks:
     - Ryūjin Jakka & Zanka no Tachi
@@ -1533,6 +1601,7 @@ ranks:
     - drakesrankup.tier.69
     - bskyblock.island.range.133
     - aoneblock.island.range.133
+    - onechunk.island.range.133
     - chunkblock.island.range.85
     perks:
     - Padre de los Quincy & Soberano del Wandenreich
@@ -1555,6 +1624,7 @@ ranks:
     - drakesrankup.tier.70
     - bskyblock.island.range.134
     - aoneblock.island.range.134
+    - onechunk.island.range.134
     - chunkblock.island.range.86
     perks:
     - Getsuga Tenshō Final
@@ -1578,6 +1648,7 @@ ranks:
     - drakesrankup.tier.71
     - bskyblock.island.range.135
     - aoneblock.island.range.135
+    - onechunk.island.range.135
     - chunkblock.island.range.87
     perks:
     - 'Contrato con el Demonio Zorro: ¡Kon!'
@@ -1601,6 +1672,7 @@ ranks:
     - drakesrankup.tier.72
     - bskyblock.island.range.136
     - aoneblock.island.range.136
+    - onechunk.island.range.136
     - chunkblock.island.range.88
     perks:
     - Manipulación de la Sangre
@@ -1624,6 +1696,7 @@ ranks:
     - drakesrankup.tier.73
     - bskyblock.island.range.137
     - aoneblock.island.range.137
+    - onechunk.island.range.137
     - chunkblock.island.range.89
     perks:
     - Poder del Control Absoluto
@@ -1646,6 +1719,7 @@ ranks:
     - drakesrankup.tier.74
     - bskyblock.island.range.138
     - aoneblock.island.range.138
+    - onechunk.island.range.138
     - chunkblock.island.range.90
     perks:
     - Tira del cable de arranque
@@ -1669,6 +1743,7 @@ ranks:
     - drakesrankup.tier.75
     - bskyblock.island.range.139
     - aoneblock.island.range.139
+    - onechunk.island.range.139
     - chunkblock.island.range.91
     perks:
     - Espadachina Rango S de Luz
@@ -1692,6 +1767,7 @@ ranks:
     - drakesrankup.tier.76
     - bskyblock.island.range.140
     - aoneblock.island.range.140
+    - onechunk.island.range.140
     - chunkblock.island.range.92
     perks:
     - Mariscal del Ejército de las Sombras
@@ -1715,6 +1791,7 @@ ranks:
     - drakesrankup.tier.77
     - bskyblock.island.range.141
     - aoneblock.island.range.141
+    - onechunk.island.range.141
     - chunkblock.island.range.93
     perks:
     - Comandante Sombra Sangriento
@@ -1738,6 +1815,7 @@ ranks:
     - drakesrankup.tier.78
     - bskyblock.island.range.142
     - aoneblock.island.range.142
+    - onechunk.island.range.142
     - chunkblock.island.range.94
     perks:
     - Servidor primordial de Ashborn
@@ -1761,6 +1839,7 @@ ranks:
     - drakesrankup.tier.79
     - bskyblock.island.range.143
     - aoneblock.island.range.143
+    - onechunk.island.range.143
     - chunkblock.island.range.95
     perks:
     - Comando ¡Levántate! (Arise)
@@ -1783,6 +1862,7 @@ ranks:
     - drakesrankup.tier.80
     - bskyblock.island.range.144
     - aoneblock.island.range.144
+    - onechunk.island.range.144
     - chunkblock.island.range.96
     perks:
     - Heredero absoluto del Poder de la Muerte
@@ -1806,6 +1886,7 @@ ranks:
     - drakesrankup.tier.81
     - bskyblock.island.range.145
     - aoneblock.island.range.145
+    - onechunk.island.range.145
     - chunkblock.island.range.97
     perks:
     - Modo Kanmuru (Velocidad Divina del Relámpago)
@@ -1829,6 +1910,7 @@ ranks:
     - drakesrankup.tier.82
     - bskyblock.island.range.146
     - aoneblock.island.range.146
+    - onechunk.island.range.146
     - chunkblock.island.range.98
     perks:
     - Voto Sagrado y Renuncia al Futuro
@@ -1852,6 +1934,7 @@ ranks:
     - drakesrankup.tier.83
     - bskyblock.island.range.147
     - aoneblock.island.range.147
+    - onechunk.island.range.147
     - chunkblock.island.range.99
     perks:
     - Bodhisattva Guanyin de las 100 Manos
@@ -1875,6 +1958,7 @@ ranks:
     - drakesrankup.tier.84
     - bskyblock.island.range.148
     - aoneblock.island.range.148
+    - onechunk.island.range.148
     - chunkblock.island.range.100
     perks:
     - Fotón de Aura Omnisciente
@@ -1898,6 +1982,7 @@ ranks:
     - drakesrankup.tier.85
     - bskyblock.island.range.149
     - aoneblock.island.range.149
+    - onechunk.island.range.149
     - chunkblock.island.range.101
     perks:
     - El Relámpago Amarillo de Konoha
@@ -1920,6 +2005,7 @@ ranks:
     - drakesrankup.tier.86
     - bskyblock.island.range.150
     - aoneblock.island.range.150
+    - onechunk.island.range.150
     - chunkblock.island.range.102
     perks:
     - Mangekyō Sharingan & Tsukuyomi
@@ -1942,6 +2028,7 @@ ranks:
     - drakesrankup.tier.87
     - bskyblock.island.range.151
     - aoneblock.island.range.151
+    - onechunk.island.range.151
     - chunkblock.island.range.103
     perks:
     - Jinchūriki del Diez Colas & Rinnegan
@@ -1964,6 +2051,7 @@ ranks:
     - drakesrankup.tier.88
     - bskyblock.island.range.152
     - aoneblock.island.range.152
+    - onechunk.island.range.152
     - chunkblock.island.range.104
     perks:
     - Fusión Nuclear de Chakras
@@ -1986,6 +2074,7 @@ ranks:
     - drakesrankup.tier.89
     - bskyblock.island.range.153
     - aoneblock.island.range.153
+    - onechunk.island.range.153
     - chunkblock.island.range.105
     perks:
     - El Guerrero de la Liberación Nika
@@ -2008,6 +2097,7 @@ ranks:
     - drakesrankup.tier.90
     - bskyblock.island.range.154
     - aoneblock.island.range.154
+    - onechunk.island.range.154
     - chunkblock.island.range.106
     perks:
     - Haki del Conquistador Infundido Avanzado
@@ -2031,6 +2121,7 @@ ranks:
     - drakesrankup.tier.91
     - bskyblock.island.range.155
     - aoneblock.island.range.155
+    - onechunk.island.range.155
     - chunkblock.island.range.107
     perks:
     - Guerrero más fuerte del Universo 11
@@ -2053,6 +2144,7 @@ ranks:
     - drakesrankup.tier.92
     - bskyblock.island.range.156
     - aoneblock.island.range.156
+    - onechunk.island.range.156
     - chunkblock.island.range.108
     perks:
     - Fusión Metamoran Definitiva
@@ -2076,6 +2168,7 @@ ranks:
     - drakesrankup.tier.93
     - bskyblock.island.range.157
     - aoneblock.island.range.157
+    - onechunk.island.range.157
     - chunkblock.island.range.109
     perks:
     - Fusión Pothala Divina
@@ -2098,6 +2191,7 @@ ranks:
     - drakesrankup.tier.94
     - bskyblock.island.range.158
     - aoneblock.island.range.158
+    - onechunk.island.range.158
     - chunkblock.island.range.110
     perks:
     - 'Hakai Supremo: Esfera de la Destrucción'
@@ -2120,6 +2214,7 @@ ranks:
     - drakesrankup.tier.95
     - bskyblock.island.range.159
     - aoneblock.island.range.159
+    - onechunk.island.range.159
     - chunkblock.island.range.111
     perks:
     - Gracia Angelical Inmortal
@@ -2143,6 +2238,7 @@ ranks:
     - drakesrankup.tier.96
     - bskyblock.island.range.160
     - aoneblock.island.range.160
+    - onechunk.island.range.160
     - chunkblock.island.range.112
     perks:
     - Soberano de todos los Ángeles
@@ -2166,6 +2262,7 @@ ranks:
     - drakesrankup.tier.97
     - bskyblock.island.range.161
     - aoneblock.island.range.161
+    - onechunk.island.range.161
     - chunkblock.island.range.113
     perks:
     - Creador de las Super Esferas del Dragón
@@ -2189,6 +2286,7 @@ ranks:
     - drakesrankup.tier.98
     - bskyblock.island.range.162
     - aoneblock.island.range.162
+    - onechunk.island.range.162
     - chunkblock.island.range.114
     perks:
     - El Creador de Todo el Universo
@@ -2212,6 +2310,7 @@ ranks:
     - drakesrankup.tier.99
     - bskyblock.island.range.163
     - aoneblock.island.range.163
+    - onechunk.island.range.163
     - chunkblock.island.range.115
     perks:
     - Dúo Omni-Rey Universal
@@ -2234,6 +2333,7 @@ ranks:
     - drakesrankup.tier.100
     - bskyblock.island.range.164
     - aoneblock.island.range.164
+    - onechunk.island.range.164
     - chunkblock.island.range.116
     perks:
     - CIMA ABSOLUTA DE DRAKESRANKUP (TIER 100)
