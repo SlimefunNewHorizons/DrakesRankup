@@ -309,13 +309,29 @@ public class DrakesRankupPlugin extends JavaPlugin {
             }
         } catch (Throwable ignored) {}
 
+        // Slimefun por ID (no depende del nombre traducido): Angel Gem / gemas de vuelo / Infinity Matrix
+        try {
+            if (getServer().getPluginManager().isPluginEnabled("Slimefun")) {
+                Class<?> sfc = Class.forName("io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem");
+                java.lang.reflect.Method byItem = sfc.getMethod("getByItem", org.bukkit.inventory.ItemStack.class);
+                java.lang.reflect.Method getId = sfc.getMethod("getId");
+                for (org.bukkit.inventory.ItemStack it : player.getInventory().getContents()) {
+                    if (it == null || !it.hasItemMeta()) continue;
+                    Object sf = byItem.invoke(null, it);
+                    if (sf == null) continue;
+                    String id = String.valueOf(getId.invoke(sf)).toUpperCase();
+                    if (id.contains("ANGEL_GEM") || id.contains("FLIGHT") || id.contains("FLYING") || id.contains("INFINITY_MATRIX")) return true;
+                }
+            }
+        } catch (Throwable ignored) {}
+
         // Slimefun / Custom items check en el inventario (Infinity Matrix, Flight Gem, etc.)
         try {
             String pUuidStr = player.getUniqueId().toString();
             for (org.bukkit.inventory.ItemStack item : player.getInventory().getContents()) {
                 if (item != null && item.hasItemMeta()) {
                     if (item.getItemMeta().hasDisplayName()) {
-                        String name = org.bukkit.ChatColor.stripColor(item.getItemMeta().getDisplayName()).toUpperCase();
+                        String name = java.text.Normalizer.normalize(org.bukkit.ChatColor.stripColor(item.getItemMeta().getDisplayName()), java.text.Normalizer.Form.NFD).replaceAll("\\p{M}", "").toUpperCase();
                         if (name.contains("FLIGHT") || name.contains("VUELO") || name.contains("MATRIX") || name.contains("ANGEL") || name.contains("GEMA")) {
                             return true;
                         }
