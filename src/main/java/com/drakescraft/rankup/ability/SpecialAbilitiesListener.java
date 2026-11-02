@@ -229,6 +229,16 @@ public class SpecialAbilitiesListener implements Listener {
         if (renderTask != null) renderTask.cancel();
         if (combatTask != null) combatTask.cancel();
 
+        // Purpur can invoke plugin shutdown from its shutdown thread. World entity
+        // enumeration is main-thread-only and cannot safely be deferred because the
+        // server is already stopping. Displays tracked in memory are cleaned up on
+        // the normal path; avoid touching Bukkit world state during that shutdown.
+        if (!Bukkit.isPrimaryThread()) {
+            bladeDisplays.clear();
+            activeDancingBlades.clear();
+            return;
+        }
+
         for (List<ItemDisplay> list : bladeDisplays.values()) {
             for (ItemDisplay d : list) {
                 if (d != null && d.isValid()) {
