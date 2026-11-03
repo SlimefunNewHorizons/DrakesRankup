@@ -24,7 +24,7 @@ public class DrakesRankupExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getAuthor() {
-        return "DrakesCraft-Labs";
+        return "SlimefunNewHorizons";
     }
 
     @Override

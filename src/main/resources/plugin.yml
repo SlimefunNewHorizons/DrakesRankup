@@ -2,7 +2,7 @@ name: DrakesRankup
 version: '${project.version}'
 main: com.drakescraft.rankup.DrakesRankupPlugin
 api-version: '1.21'
-author: DrakesCraft-Labs
+author: SlimefunNewHorizons
 description: Sistema oficial de 50 Rangos Anime/Shonen, Transformaciones Saiyajin, Modo Angel y Sumidero de Economía
 softdepend: [Vault, LuckPerms, PlaceholderAPI]
 commands:
