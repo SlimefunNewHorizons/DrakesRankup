@@ -53,6 +53,15 @@ public class RankupCommand implements CommandExecutor, TabCompleter {
 
         String sub = args[0].toLowerCase();
 
+        if (sub.equals("dominio") || sub.equals("vacio") || sub.equals("santuario")) {
+            if (!(sender instanceof Player player)) { sender.sendMessage("§cSolo jugadores."); return true; }
+            String type = sub.equals("dominio") ? (args.length > 1 ? args[1].toLowerCase() : "vacio") : sub;
+            if (!type.equals("vacio") && !type.equals("santuario")) { sender.sendMessage("§cUso: /rankup dominio <vacio|santuario>"); return true; }
+            long wait = plugin.getGojoListener().castDomain(player, type);
+            if (wait > 0) player.sendMessage("§cTu dominio se esta recuperando: " + wait + "s.");
+            return true;
+        }
+
         if (sub.equals("magnet") || sub.equals("iman")) {
             if (!(sender instanceof Player player)) {
                 sender.sendMessage("§cOnly players can use magnetism.");
@@ -425,6 +434,8 @@ public class RankupCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(" §6/rankup max §7- Sube al rango máximo que puedas pagar");
         sender.sendMessage(" §6/rankup gui §7(o /ranks) - Abre el menú visual de las 10 divisiones");
         sender.sendMessage(" §6/rankup magnet §7- Activa el Vórtice Magnético (200 bloques)");
+        sender.sendMessage(" §6/rankup dominio <vacio|santuario> §7- Expansion de dominio (Gojo, tier 19+)");
+        sender.sendMessage(" §6/herobrine §7- Invoca al jefe Herobrine (3 fases)");
         sender.sendMessage(" §6/rankup blades §7- Activa Filos Danzantes / Aura Kill");
         sender.sendMessage(" §6/rankup conqueror §7- Desata el Haki del Conquistador Haoshoku");
         sender.sendMessage(" §6/rankup info §7- Consulta tus habilidades, estabilidad y progreso");
@@ -441,10 +452,12 @@ public class RankupCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         List<String> list = new ArrayList<>();
         if (args.length == 1) {
-            list.addAll(Arrays.asList("gui", "kit", "max", "bolsa", "maintain", "mantener", "magnet", "blades", "conqueror", "info", "toggle", "admin"));
+            list.addAll(Arrays.asList("gui", "kit", "max", "bolsa", "maintain", "mantener", "magnet", "blades", "dominio", "vacio", "santuario", "conqueror", "info", "toggle", "admin"));
             if (sender.hasPermission("drakesrankup.staff")) {
                 list.add("test");
             }
+        } else if (args.length == 2 && args[0].equalsIgnoreCase("dominio")) {
+            list.addAll(Arrays.asList("vacio", "santuario"));
         } else if (args.length == 2 && args[0].equalsIgnoreCase("toggle")) {
             list.addAll(Arrays.asList("empuje", "particulas", "habilidades", "vuelo", "ki"));
         } else if (args.length == 2 && args[0].equalsIgnoreCase("test")) {

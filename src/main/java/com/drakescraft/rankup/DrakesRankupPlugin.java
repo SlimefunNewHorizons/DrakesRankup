@@ -60,6 +60,9 @@ public class DrakesRankupPlugin extends JavaPlugin {
 
     private AuraTask auraTask;
     private RankDecayTask rankDecayTask;
+    private com.drakescraft.rankup.ability.GojoListener gojoListener;
+    private com.drakescraft.rankup.ability.HerobrineBoss herobrineBoss;
+    private com.drakescraft.rankup.ability.PurifiedMeat purifiedMeat;
 
     @Override
     public void onEnable() {
@@ -116,6 +119,14 @@ public class DrakesRankupPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new CustomKitItemListener(this), this);
         Bukkit.getPluginManager().registerEvents(new RankDecayListener(this), this);
 
+        gojoListener = new com.drakescraft.rankup.ability.GojoListener(this);
+        Bukkit.getPluginManager().registerEvents(gojoListener, this);
+        herobrineBoss = new com.drakescraft.rankup.ability.HerobrineBoss(this);
+        Bukkit.getPluginManager().registerEvents(herobrineBoss, this);
+        if (getCommand("herobrine") != null) getCommand("herobrine").setExecutor(herobrineBoss);
+        purifiedMeat = new com.drakescraft.rankup.ability.PurifiedMeat(this);
+        Bukkit.getPluginManager().registerEvents(purifiedMeat, this);
+
         // Start aura particle task every second (20 ticks)
         auraTask = new AuraTask(this);
         auraTask.runTaskTimerAsynchronously(this, 20L, 20L);
@@ -138,6 +149,8 @@ public class DrakesRankupPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (herobrineBoss != null) herobrineBoss.shutdown();
+        if (purifiedMeat != null) purifiedMeat.unregister();
         if (auraTask != null) {
             auraTask.cancel();
         }
@@ -317,4 +330,5 @@ public class DrakesRankupPlugin extends JavaPlugin {
         return false;
     }
 
+    public com.drakescraft.rankup.ability.GojoListener getGojoListener() { return gojoListener; }
 }

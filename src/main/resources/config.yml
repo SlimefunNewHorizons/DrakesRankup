@@ -94,3 +94,31 @@ messages:
   success: "&aYou advanced to &b{rank}&a! &e${cost}&a has been deducted from your balance."
   no-permission: "&cYou do not have permission to run this command."
   reload-success: "&aConfiguration and ranks reloaded successfully."
+
+# El Infinito y dominios de Gojo (tier 19+). Comandos: /rankup dominio <vacio|santuario>
+gojo:
+  infinity:
+    min-tier: 19
+    base-chance: 0.15   # prob. de detener un proyectil en el tier minimo
+    per-tier: 0.01      # +1% por tier
+    max-chance: 0.60    # los golpes cuerpo a cuerpo usan la mitad
+  domain:
+    cooldown-seconds: 90
+    duration-seconds: 8
+    radius: 12
+    supreme-tier: 60    # x1.5 de radio y duracion
+    vacio: { min-tier: 19 }
+    santuario: { min-tier: 20, damage: 3.0 }
+
+# Herobrine publico (/herobrine)
+herobrine:
+  health: 400
+  damage: 10
+  cooldown-seconds: 600
+  lifetime-seconds: 900
+  reward-diamonds: 5
+
+# Puente DrakesArcana: XP de Arcana por cada rango ganado (usa /arcana staff xp)
+arcana-bridge:
+  enabled: true
+  xp-per-tier: 600   # XP plana por rango ganado (tier 19 = 11400 = CATALIZADOR)

@@ -9,6 +9,8 @@ commands:
   rankup:
     description: Opens the Rankup menu, ranks up, or manages trials.
     aliases: [ranks, rangos, subirrango]
+  herobrine:
+    description: Invoca a Herobrine, jefe publico de 3 fases.
   angel:
     description: Angelic staff mode (invulnerability and Infinite Ultra Instinct).
     aliases: [zenosama, zeno, daishinkan]

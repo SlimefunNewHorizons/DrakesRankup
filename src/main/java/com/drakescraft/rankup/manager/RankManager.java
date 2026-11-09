@@ -761,7 +761,20 @@ public class RankManager {
         return ranksGained;
     }
 
+    /** Puente con DrakesArcana: cada rango ganado otorga XP de Arcana (config arcana-bridge). */
+    private void arcanaBridge(Player player, Rank rank) {
+        if (!plugin.getConfig().getBoolean("arcana-bridge.enabled", true)) return;
+        if (!Bukkit.getPluginManager().isPluginEnabled("DrakesArcana")) return;
+        int step = plugin.getConfig().getInt("arcana-bridge.xp-per-tier", 600);
+        try {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arcana staff xp " + player.getName() + " " + step);
+        } catch (Exception e) {
+            plugin.getLogger().warning("Puente Arcana fallo: " + e.getMessage());
+        }
+    }
+
     private void dispatchRewards(Player player, Rank rank) {
+        arcanaBridge(player, rank);
         if (rank.getRewardCommands() == null || rank.getRewardCommands().isEmpty()) return;
         for (String cmd : rank.getRewardCommands()) {
             if (cmd != null && !cmd.trim().isEmpty()) {
