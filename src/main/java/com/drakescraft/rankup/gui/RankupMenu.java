@@ -89,12 +89,15 @@ public class RankupMenu implements InventoryHolder {
         double balance = monedero + bolsa; // fondos de ascenso: bolsa + monedero
         PlayerSettings settings = plugin.getRankManager().getPlayerSettings(player.getUniqueId());
 
+        Rank nxt = plugin.getRankManager().getNextRank(player.getUniqueId());
+        String nextLine = nxt == null ? "&7Next: &6MAX" : "&7Next: " + nxt.getDisplayName() + " &8- &f" + (int) Math.min(100, balance * 100 / Math.max(1, nxt.getCost())) + "%";
         inv.setItem(4, createItem(Material.PLAYER_HEAD, "&e&l" + player.getName(),
                 "&7Current rank: " + (currentRank != null ? currentRank.getDisplayName() : "&7None"),
                 "&7Tier: &6" + currentTier + "/100",
-                "&7Rebirth: &e" + settings.getRebirthCount() + "/50 &7(+" + (settings.getRebirthCount() * 3) + "% damage)",
+                "&7Rebirth: &e" + settings.getRebirthCount() + "/50 &7(small, capped bonus)",
                 "&7Wallet: &a$" + MONEY_FORMAT.format(monedero),
                 "&7Rankup fund: &6$" + MONEY_FORMAT.format(bolsa) + " &8(/rankup bolsa)",
+                nextLine,
                 "&7Ability: " + (currentRank != null && currentRank.getAbilityType() != null ? "&b" + currentRank.getAbilityType().getName() : "&7None"),
                 "&7Kinetic Push: " + (currentRank != null && currentRank.isHasKineticPush() ? "&aUnlocked" : "&cLocked"),
                 "",
@@ -128,7 +131,7 @@ public class RankupMenu implements InventoryHolder {
             List<String> lore = new ArrayList<>();
             lore.add("&8" + r.getDivision());
             lore.add("&7Cost: &6$" + MONEY_FORMAT.format(r.getCost()));
-            lore.add("&7Type: " + (r.isPermanent() ? "&aPermanent (Anchor)" : "&eTemporary (14 days)"));
+            lore.add("&7Type: " + (r.isPermanent() ? "&aPermanent (Anchor)" : "&eTemporary (maintenance)"));
             lore.add("");
             lore.add("&e&nPerks and Benefits:&r");
             for (String perk : r.getPerks()) {
@@ -149,6 +152,8 @@ public class RankupMenu implements InventoryHolder {
             } else if (t == currentTier + 1) {
                 statusTitle = "&e⚡ " + r.getDisplayName() + " &8(&eAvailable!&8)";
                 boolean canAfford = balance >= r.getCost();
+                lore.addAll(RankupFx.progressLore(r, currentTier, balance));
+                lore.add("");
                 if (canAfford) {
                     lore.add("&a▶ You have enough money! Click to rank up.");
                 } else {
@@ -156,7 +161,7 @@ public class RankupMenu implements InventoryHolder {
                 }
                 inv.setItem(targetSlot, createItem(r.getIcon(), statusTitle, lore));
             } else {
-                statusTitle = "&c🔒 " + r.getDisplayName() + " &8(&cLocked&8)";
+                statusTitle = "&c[X] " + r.getDisplayName() + " &8(&cLocked&8)";
                 lore.add("&cYou must unlock earlier ranks first.");
                 inv.setItem(targetSlot, createItem(Material.RED_STAINED_GLASS_PANE, statusTitle, lore));
             }
@@ -165,11 +170,11 @@ public class RankupMenu implements InventoryHolder {
         // Bottom Controls
         // Slot 45: Núcleo de Estabilidad de Rango (Mantención)
         if (currentRank == null || currentTier == 0) {
-            inv.setItem(45, createItem(Material.RESPAWN_ANCHOR, "&8🏺 Stability Core",
+            inv.setItem(45, createItem(Material.RESPAWN_ANCHOR, "&8Stability Core",
                     "&7You do not have an active rank.",
                     "&7Reach Tier 1 to begin your journey."));
         } else if (currentRank.isPermanent()) {
-            inv.setItem(45, createItem(Material.BEACON, "&a&l🏺 Permanent Rank",
+            inv.setItem(45, createItem(Material.BEACON, "&a&lPermanent Rank",
                     "&7Your rank: " + currentRank.getDisplayName(),
                     "&8" + currentRank.getDivision(),
                     "",
@@ -211,7 +216,7 @@ public class RankupMenu implements InventoryHolder {
             }
             bar.append("&8]");
 
-            inv.setItem(45, createItem(mIcon, "&6&l🏺 Rank Stability Core",
+            inv.setItem(45, createItem(mIcon, "&6&lRank Stability Core",
                     "&7Rank: " + currentRank.getDisplayName() + " &8(Temporary)",
                     "&7Stability: " + statusColor + statusText + " " + bar.toString(),
                     "&7Time remaining: " + statusColor + days + "d " + hours + "h",
@@ -231,7 +236,7 @@ public class RankupMenu implements InventoryHolder {
         ));
 
         // Transformation Menu Button (Slot 47)
-        inv.setItem(47, createItem(Material.DRAGON_BREATH, "&d&l⚡ Transformations Menu",
+        inv.setItem(47, createItem(Material.DRAGON_BREATH, "&d&lTransformations Menu",
                 "&7Open the anime transformations selector,",
                 "&7abilities, Ki Flight, and special techniques.",
                 "",
@@ -266,13 +271,13 @@ public class RankupMenu implements InventoryHolder {
         long h = remMs / (1000 * 60 * 60);
         long m = (remMs % (1000 * 60 * 60)) / (1000 * 60);
 
-        inv.setItem(51, createItem(Material.CHEST_MINECART, "&6&l🎁 Claim Rankup Kit",
+        inv.setItem(51, createItem(Material.CHEST_MINECART, "&6&lClaim Rankup Kit",
                 "&7Get your current division's daily kit with",
                 "&7armor, custom-enchanted weapons, and",
                 "&7healing Senzu Beans.",
                 "",
                 div == 0 ? "&c✖ Requires at least Tier 1" :
-                        (canClaimKit ? "&a✔ AVAILABLE! Click to claim" : "&c⏳ Available in &e" + h + "h " + m + "m"),
+                        (canClaimKit ? "&a✔ AVAILABLE! Click to claim" : "&cAvailable in &e" + h + "h " + m + "m"),
                 "",
                 "&eClick to run /rankup kit"
         ));

@@ -57,7 +57,7 @@ public class TransformationMenu implements InventoryHolder {
                 35,
                 Arrays.asList(
                         "&8▪ &eType: &fCrimson Divine Ki",
-                        "&8▪ &aEffects: &fRegeneration II, Absorption II and Divine Agility (5m).",
+                        "&8▪ &aEffects: &fRegeneration I and Absorption I (45s).",
                         "&8▪ &bActivation: &fHold sneak (Shift) until it detonates."
                 )
         ));
@@ -71,7 +71,7 @@ public class TransformationMenu implements InventoryHolder {
                 36,
                 Arrays.asList(
                         "&8▪ &eType: &fBlue Super Saiyan Divine Ki",
-                        "&8▪ &aEffects: &fStrength II, Speed II and Resistance I for 5 minutes.",
+                        "&8▪ &aEffects: &fStrength I, Speed II and Resistance I for 45 seconds.",
                         "&8▪ &bActivation: &fHold sneak (Shift) until it detonates."
                 )
         ));
@@ -85,7 +85,7 @@ public class TransformationMenu implements InventoryHolder {
                 46,
                 Arrays.asList(
                         "&8▪ &eType: &fAngelic State",
-                        "&8▪ &aEffects: &fMiraculous full attack evasion for 60 seconds.",
+                        "&8▪ &aEffects: &fMiraculous full attack evasion for 8 seconds (5 min cooldown).",
                         "&8▪ &cStrain: &7Repeated use within 2m causes bodily fatigue.",
                         "&8▪ &bActivation: &fHold sneak (Shift) until it detonates."
                 )
@@ -100,7 +100,7 @@ public class TransformationMenu implements InventoryHolder {
                 47,
                 Arrays.asList(
                         "&8▪ &eType: &fGod of Destruction Power",
-                        "&8▪ &aEffects: &fThe lower your health, the greater your destructive damage for 5 minutes.",
+                        "&8▪ &aEffects: &fThe lower your health, the greater your destructive damage (limited) for 45 seconds.",
                         "&8▪ &bActivation: &fHold sneak (Shift) until it detonates."
                 )
         ));
@@ -114,7 +114,7 @@ public class TransformationMenu implements InventoryHolder {
                 45,
                 Arrays.asList(
                         "&8▪ &eType: &fUnleashed Hybrid Fury",
-                        "&8▪ &aEffects: &f+75% critical chance and magenta lightning for 5m.",
+                        "&8▪ &aEffects: &flimited critical burst and magenta lightning for 45s.",
                         "&8▪ &bActivation: &fHold sneak (Shift) until it detonates."
                 )
         ));
@@ -128,7 +128,7 @@ public class TransformationMenu implements InventoryHolder {
                 34,
                 Arrays.asList(
                         "&8▪ &eType: &fDestructive Berserker Power",
-                        "&8▪ &aEffects: &fStrength III, Resistance II and knockback immunity (5m).",
+                        "&8▪ &aEffects: &fStrength I and Resistance I (45s).",
                         "&8▪ &bActivation: &fHold sneak (Shift) until it detonates."
                 )
         ));
@@ -156,7 +156,7 @@ public class TransformationMenu implements InventoryHolder {
                 33,
                 Arrays.asList(
                         "&8▪ &eType: &fAscended Golden Ki with Bio-Electricity",
-                        "&8▪ &aEffects: &fPersistent lightning arcs, Strength II and Speed II (5m).",
+                        "&8▪ &aEffects: &fPersistent lightning arcs, Strength I and Speed II (45s).",
                         "&8▪ &bActivation: &fHold sneak (Shift) until it detonates."
                 )
         ));
@@ -226,7 +226,7 @@ public class TransformationMenu implements InventoryHolder {
                 60,
                 Arrays.asList(
                         "&8▪ &eType: &fAttractive Polar Magnetism",
-                        "&8▪ &aEffects: &fInstantly attracts all items within a 200-block radius.",
+                        "&8▪ &aEffects: &fInstantly attracts all items within a 30-block radius.",
                         "&8▪ &bActivation: &fShift + right-click or /rankup magnet."
                 )
         ));
@@ -240,7 +240,7 @@ public class TransformationMenu implements InventoryHolder {
                 70,
                 Arrays.asList(
                         "&8▪ &eType: &fTelekinetic Weapon Mastery",
-                        "&8▪ &aEffects: &fSwords and axes float and strike on their own within 10 blocks.",
+                        "&8▪ &aEffects: &fSwords and axes float and strike on their own within 6 blocks (weak, 45s).",
                         "&8▪ &bActivation: &fClick to toggle autonomous Aura Kill."
                 )
         ));
@@ -284,7 +284,7 @@ public class TransformationMenu implements InventoryHolder {
                 24,
                 Arrays.asList(
                         "&8▪ &eType: &fWano Swordsman Mastery",
-                        "&8▪ &aPositive Effects: &f+25% permanent physical sword damage",
+                        "&8▪ &aPositive Effects: &fWind slash with swords (long cooldown)",
                         "  &fand a ranged Flying Dragon wind slash.",
                         "&8▪ &bActivation: &fRight-click with a sword in combat."
                 )
@@ -299,7 +299,7 @@ public class TransformationMenu implements InventoryHolder {
                 92,
                 Arrays.asList(
                         "&8▪ &eType: &fDivine Saiyan Multiplier",
-                        "&8▪ &aPositive Effects: &fSpeed III, Strength II, Jump II and Free Flight (5m).",
+                        "&8▪ &aPositive Effects: &fSpeed II, Strength I and Jump II (45s). No free flight.",
                         "&8▪ &bActivation: &fHold sneak (Shift) until it detonates."
                 )
         ));
@@ -309,7 +309,7 @@ public class TransformationMenu implements InventoryHolder {
                 tier >= 31 ? Material.FIREWORK_ROCKET : Material.GUNPOWDER,
                 tier >= 31 ? "&b&l⚡ Supersonic Ki Flight" : "&c🔒 Ki Flight (Requires Tier 31)",
                 "&8▪ &eType: &fShonen Aerial Propulsion",
-                "&8▪ &aEffects: &f100-block super boost with W + double jump (scaling cooldown).",
+                "&8▪ &aEffects: &fShort aerial dash with W + double jump (30-60s cooldown).",
                 "",
                 tier >= 31 ? (settings.isKiFlightEnabled() ? "&a✔ ENABLED &7(Click to toggle)" : "&c✖ DISABLED &7(Click to enable)") : "&cLocked by rank."
         ));

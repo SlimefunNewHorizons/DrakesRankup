@@ -17,7 +17,7 @@ public enum AbilityType {
     SANTORYU_ZORO("Three-Sword Style (Santoryu)", "&2Sword mastery (+25% physical damage) and Wind Flying Slash."),
     ZENKAI_BOOST("Saiyajin Zenkai", "&cRegeneration II and Strength I below 3 hearts (CD: 90s)."),
     SSJ_2("Super Saiyajin 2", "&eRising Golden Ki with permanent electric arcs, bio-electricity and Strength II."),
-    KAIOKEN("Kaio-ken (x3 / x10 / x20)", "&cDivine multiplier with a crimson aura and aerial propulsion for 5 minutes."),
+    KAIOKEN("Kaio-ken (x3 / x10 / x20)", "&cDivine multiplier with a crimson aura for 45 seconds."),
     SSJ_GOD("Super Saiyajin God", "&cCrimson Divine Ki: Shift Ki Charge grants regeneration and divine agility for 5m."),
     SSJ_BLUE("Super Saiyajin Blue", "&9Ki Divino Azul: Carga de Ki con Shift activa Fuerza I y Velocidad II con aura de plasma por 5m."),
     GOHAN_BEAST("Gohan Bestia (Beast)", "&fExplosión crítica colosal (+75%) y Makankosappo con rayos magentas por 5m."),

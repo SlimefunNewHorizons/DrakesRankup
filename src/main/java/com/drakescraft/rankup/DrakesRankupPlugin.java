@@ -128,6 +128,7 @@ public class DrakesRankupPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(purifiedMeat, this);
 
         // Start aura particle task every second (20 ticks)
+        com.drakescraft.rankup.ability.Balance.init(this);
         auraTask = new AuraTask(this);
         auraTask.runTaskTimerAsynchronously(this, 20L, 20L);
 
@@ -172,6 +173,9 @@ public class DrakesRankupPlugin extends JavaPlugin {
 
     public boolean isWorldAllowed(World world) {
         if (world == null) return true;
+        // Clasico nunca tiene poderes de rankup, aunque el filtro este apagado o mal configurado.
+        String lw = world.getName().toLowerCase();
+        if (lw.contains("clasico") || lw.contains("classic")) return false;
         if (!getConfig().getBoolean("settings.world-filter.enabled", true)) {
             return true;
         }

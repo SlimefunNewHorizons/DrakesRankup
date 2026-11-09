@@ -40,23 +40,25 @@ public class RankDecayListener implements Listener {
         }, 40L); // 2 segundos tras conectar
     }
 
+    /** Deja al jugador sin ningun poder de rankup (clasico): transformaciones, escala, efectos, vuelo. */
+    private void stripPowers(Player player) {
+        if (plugin.getDragonBallListener() != null) plugin.getDragonBallListener().revertTransformations(player);
+        if (plugin.getOnePieceListener() != null) plugin.getOnePieceListener().revertTransformations(player);
+        if (player.getGameMode() == GameMode.SURVIVAL || player.getGameMode() == GameMode.ADVENTURE) {
+            if (!player.hasPermission("drakesrankup.admin") && !plugin.hasExternalFlight(player)) {
+                player.setAllowFlight(false);
+                player.setFlying(false);
+            }
+        }
+        player.setFlySpeed(0.10f);
+    }
+
     @EventHandler(priority = EventPriority.HIGH)
     public void onWorldChange(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
         if (!plugin.isWorldAllowed(player.getWorld())) {
             // El jugador ingresó a un mundo deshabilitado (ej. clasico)
-            // 1. Revertir transformaciones de anime activas
-            if (plugin.getDragonBallListener() != null) {
-                plugin.getDragonBallListener().revertTransformations(player);
-            }
-            // 2. Desactivar vuelo en supervivencia si no es admin ni staff ángel
-            if (player.getGameMode() == GameMode.SURVIVAL || player.getGameMode() == GameMode.ADVENTURE) {
-                if (!player.hasPermission("drakesrankup.admin") &&
-                        (plugin.getStaffManager() == null || !plugin.getStaffManager().isAngel(player.getUniqueId()))) {
-                    player.setAllowFlight(false);
-                    player.setFlying(false);
-                }
-            }
+            stripPowers(player);
         } else {
             // Si regresa a un mundo custom, recordar estabilidad si está próximo al vencimiento
             plugin.getServer().getScheduler().runTaskLater(plugin, () -> {

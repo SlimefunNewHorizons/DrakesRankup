@@ -92,9 +92,9 @@ public class GojoListener implements Listener {
         cooldowns.put(p.getUniqueId(), now + cd);
 
         boolean sup = tier >= plugin.getConfig().getInt("gojo.domain.supreme-tier", 60);
-        double radius = plugin.getConfig().getDouble("gojo.domain.radius", 12) * (sup ? 1.5 : 1.0);
-        int ticks = (int) (plugin.getConfig().getInt("gojo.domain.duration-seconds", 8) * (sup ? 1.5 : 1.0) * 20);
-        double dmg = plugin.getConfig().getDouble("gojo.domain.santuario.damage", 3.0);
+        double radius = plugin.getConfig().getDouble("gojo.domain.radius", 12) * (sup ? 1.25 : 1.0);
+        int ticks = (int) (plugin.getConfig().getInt("gojo.domain.duration-seconds", 8) * (sup ? 1.25 : 1.0) * 20);
+        double dmg = plugin.getConfig().getDouble("gojo.domain.santuario.damage", 1.5);
         Location c = p.getLocation().clone();
         p.getWorld().playSound(c, Sound.ENTITY_WARDEN_SONIC_BOOM, 2.0f, 0.7f);
         p.sendTitle(vacio ? "§5§lVACIO INFINITO" : "§4§lSANTUARIO MALEVOLO", "§7Expansion de dominio", 5, 30, 10);
@@ -112,14 +112,14 @@ public class GojoListener implements Listener {
                 for (LivingEntity le : c.getWorld().getNearbyLivingEntities(c, radius)) {
                     if (le.equals(p) || le instanceof ArmorStand) continue;
                     if (le instanceof Player pl && (pl.getGameMode() == GameMode.CREATIVE || pl.getGameMode() == GameMode.SPECTATOR)) continue;
-                    if (le instanceof Player && plugin.getProtectionGate().isProtected(le.getLocation(), p)) continue;
+                    if (le instanceof Player || Balance.isBoss(le)) continue;
                     if (vacio) {
-                        le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 30, 4, false, false, false));
-                        le.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 30, 3, false, false, false));
-                        le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 0, false, false, false));
+                        le.addPotionEffect(Balance.pe(PotionEffectType.SLOWNESS, 30, 4, false, false, false));
+                        le.addPotionEffect(Balance.pe(PotionEffectType.MINING_FATIGUE, 30, 3, false, false, false));
+                        le.addPotionEffect(Balance.pe(PotionEffectType.BLINDNESS, 30, 0, false, false, false));
                         if (le instanceof Mob m && frozen.add(m)) m.setAI(false);
                     } else {
-                        le.damage(dmg, p);
+                        Balance.hit(p, le, dmg);
                         le.setFireTicks(40);
                     }
                 }

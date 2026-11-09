@@ -13,7 +13,7 @@ ranks:
     - Título [Senku]
     reward-commands: []
     kinetic-push: false
-    push-multiplier: 0.0
+    push-multiplier: 0
     push-cooldown: 0
     ability: DOUBLE_DROP
     particle: SPARK
@@ -31,7 +31,7 @@ ranks:
     - Título [Chrome]
     reward-commands: []
     kinetic-push: false
-    push-multiplier: 0.0
+    push-multiplier: 0
     push-cooldown: 0
     ability: DOUBLE_DROP
     particle: SPARK
@@ -49,7 +49,7 @@ ranks:
     - Título [Kohaku]
     reward-commands: []
     kinetic-push: false
-    push-multiplier: 0.0
+    push-multiplier: 0
     push-cooldown: 0
     ability: FEATHER_STEP
     particle: SPARK
@@ -67,7 +67,7 @@ ranks:
     - Título [Gen]
     reward-commands: []
     kinetic-push: false
-    push-multiplier: 0.0
+    push-multiplier: 0
     push-cooldown: 0
     ability: NONE
     particle: SPARK
@@ -85,7 +85,7 @@ ranks:
     - Título [Tsukasa]
     reward-commands: []
     kinetic-push: false
-    push-multiplier: 0.0
+    push-multiplier: 0
     push-cooldown: 0
     ability: FEATHER_STEP
     particle: SPARK
@@ -103,7 +103,7 @@ ranks:
     - Título [Gon]
     reward-commands: []
     kinetic-push: false
-    push-multiplier: 0.0
+    push-multiplier: 0
     push-cooldown: 0
     ability: NONE
     particle: SPARK
@@ -121,7 +121,7 @@ ranks:
     - Título [Killua]
     reward-commands: []
     kinetic-push: false
-    push-multiplier: 0.0
+    push-multiplier: 0
     push-cooldown: 0
     ability: ELECTRIC_SPEED
     particle: ELECTRIC
@@ -139,7 +139,7 @@ ranks:
     - Título [Kurapika]
     reward-commands: []
     kinetic-push: false
-    push-multiplier: 0.0
+    push-multiplier: 0
     push-cooldown: 0
     ability: NONE
     particle: SPARK
@@ -157,7 +157,7 @@ ranks:
     - Título [Netero]
     reward-commands: []
     kinetic-push: false
-    push-multiplier: 0.0
+    push-multiplier: 0
     push-cooldown: 0
     ability: NONE
     particle: SPARK
@@ -175,7 +175,7 @@ ranks:
     - Acceso a /ptime
     reward-commands: []
     kinetic-push: false
-    push-multiplier: 0.0
+    push-multiplier: 0
     push-cooldown: 0
     ability: NONE
     particle: GOLDEN_KI
@@ -194,7 +194,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.15
-    push-cooldown: 8
+    push-cooldown: 12
     ability: NONE
     particle: SHADOW
   chunin:
@@ -212,7 +212,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.2
-    push-cooldown: 8
+    push-cooldown: 12
     ability: NONE
     particle: SHADOW
   jonin:
@@ -230,7 +230,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.22
-    push-cooldown: 8
+    push-cooldown: 12
     ability: NONE
     particle: SHADOW
   anbu:
@@ -248,7 +248,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.24
-    push-cooldown: 8
+    push-cooldown: 12
     ability: NONE
     particle: SHADOW
   kage:
@@ -266,7 +266,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.25
-    push-cooldown: 8
+    push-cooldown: 12
     ability: NONE
     particle: SHADOW
   megumi:
@@ -284,7 +284,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.26
-    push-cooldown: 8
+    push-cooldown: 12
     ability: NONE
     particle: SHADOW
   nobara:
@@ -302,7 +302,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.27
-    push-cooldown: 8
+    push-cooldown: 12
     ability: NONE
     particle: SHADOW
   yuji:
@@ -314,13 +314,13 @@ ranks:
     permissions:
     - essentials.recipe
     perks:
-    - 'Destello Negro (Black Flash: 15% daño x1.5)'
+    - 'Destello Negro (Black Flash): crítico ocasional, daño extra acotado'
     - Empuje Cinético x1.4
     - Título [Yuji]
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.29
-    push-cooldown: 8
+    push-cooldown: 12
     ability: BLACK_FLASH
     particle: SHADOW
   gojo:
@@ -329,17 +329,16 @@ ranks:
     division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪɪ · sʜɪɴᴏʙɪ & ʜᴇᴄʜɪᴄᴇʀɪ́ᴀ'
     cost: 48000
     icon: END_ROD
-    permissions:
-    - essentials.speed
+    permissions: []
     perks:
-    - 'Infinito (Mugen: 15% desvía proyectiles)'
-    - 'Infinito escalable (15% -> 60%) y dominios: /rankup dominio vacio|santuario'
+    - 'Infinito (Mugen): desvía algunos proyectiles'
+    - 'Infinito escalable (8% -> 25%) y dominios cortos: /rankup dominio vacio|santuario'
     - Aura de Seis Ojos
     - Título [Gojo]
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.3
-    push-cooldown: 8
+    push-cooldown: 12
     ability: MUGEN_DEFENSE
     particle: SHADOW
   sukuna:
@@ -357,7 +356,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.31
-    push-cooldown: 8
+    push-cooldown: 12
     ability: CURSED_FLAME
     particle: CURSED_FLAME
   grumete:
@@ -375,7 +374,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.32
-    push-cooldown: 7
+    push-cooldown: 12
     ability: WATER_GRACE
     particle: WHITE_SMOKE
   pirata:
@@ -393,7 +392,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.34
-    push-cooldown: 7
+    push-cooldown: 12
     ability: WATER_GRACE
     particle: WHITE_SMOKE
   supernova:
@@ -411,7 +410,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.35
-    push-cooldown: 7
+    push-cooldown: 12
     ability: NONE
     particle: WHITE_SMOKE
   shichibukai:
@@ -423,14 +422,14 @@ ranks:
     permissions:
     - essentials.dispose
     perks:
-    - 'Estilo Tres Espadas (Santoryu): +25% daño con espadas'
+    - 'Estilo Tres Espadas (Santoryu): corte a distancia con recarga'
     - 'Corte del Dragón Volador: Ráfaga de viento cortante a distancia'
     - Acceso a /dispose
     - Título [Zoro/Santoryu]
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.36
-    push-cooldown: 7
+    push-cooldown: 12
     ability: SANTORYU_ZORO
     particle: WHITE_SMOKE
   yonkou:
@@ -448,7 +447,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.38
-    push-cooldown: 7
+    push-cooldown: 12
     ability: HAKI_CONQUEROR
     particle: WHITE_SMOKE
   shinigami:
@@ -466,7 +465,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.39
-    push-cooldown: 7
+    push-cooldown: 12
     ability: NONE
     particle: WHITE_SMOKE
   teniente:
@@ -484,7 +483,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.4
-    push-cooldown: 7
+    push-cooldown: 12
     ability: NONE
     particle: WHITE_SMOKE
   capitan:
@@ -502,7 +501,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.41
-    push-cooldown: 7
+    push-cooldown: 12
     ability: NONE
     particle: WHITE_SMOKE
   bankai:
@@ -520,7 +519,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.43
-    push-cooldown: 7
+    push-cooldown: 12
     ability: NONE
     particle: WHITE_SMOKE
   joyboy:
@@ -540,7 +539,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.44
-    push-cooldown: 7
+    push-cooldown: 12
     ability: DEVIL_FRUIT_GOMU
     particle: WHITE_SMOKE
   saiyajin:
@@ -558,7 +557,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.45
-    push-cooldown: 6
+    push-cooldown: 12
     ability: ZENKAI_BOOST
     particle: GOLDEN_KI
   supersaiyajin:
@@ -576,7 +575,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.46
-    push-cooldown: 6
+    push-cooldown: 12
     ability: ZENKAI_BOOST
     particle: GOLDEN_KI
   ssj2:
@@ -594,7 +593,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.48
-    push-cooldown: 6
+    push-cooldown: 12
     ability: ZENKAI_BOOST
     particle: GOLDEN_KI
   ssj3:
@@ -613,7 +612,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.49
-    push-cooldown: 6
+    push-cooldown: 12
     ability: BROLY_LSSJ
     particle: GOLDEN_KI
   ssjgod:
@@ -631,7 +630,7 @@ ranks:
     reward-commands: []
     kinetic-push: true
     push-multiplier: 1.5
-    push-cooldown: 6
+    push-cooldown: 12
     ability: SSJ_GOD
     particle: RED_GOD_KI
   ssjblue:
@@ -648,8 +647,8 @@ ranks:
     - Título [SSJBlue]
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.51
-    push-cooldown: 6
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: SSJ_BLUE
     particle: BLUE_GOD_KI
   cazadore:
@@ -666,8 +665,8 @@ ranks:
     - Título [Cazador-E]
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.52
-    push-cooldown: 6
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: NONE
     particle: SHADOW
   cazadors:
@@ -684,8 +683,8 @@ ranks:
     - Título [Cazador-S]
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.54
-    push-cooldown: 6
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: NONE
     particle: SHADOW
   monarcasombras:
@@ -702,8 +701,8 @@ ranks:
     - Título [MonarcaSombras]
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.55
-    push-cooldown: 6
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: SHADOW_EXTRACTION
     particle: SHADOW
   sungjinwoo:
@@ -712,16 +711,15 @@ ranks:
     division: 'ᴅɪᴠɪsɪᴏ́ɴ ɪᴠ · ɢᴜᴇʀʀᴇʀᴏs ᴢ & ᴍᴏɴᴀʀᴄᴀ'
     cost: 150000
     icon: NETHERITE_INGOT
-    permissions:
-    - essentials.repair
+    permissions: []
     perks:
     - 'Cima División IV: Ojos morados ardientes y ''SURGE'''
-    - Acceso a /repair
+    - Maestría de forja (sólo ambientación)
     - Título [SungJinwoo]
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.56
-    push-cooldown: 6
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: SHADOW_EXTRACTION
     particle: SHADOW
   saitama:
@@ -738,8 +736,8 @@ ranks:
     - Título [Saitama]
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.57
-    push-cooldown: 6
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: SERIOUS_PUNCH
     particle: GOLDEN_KI
   rimuru:
@@ -756,8 +754,8 @@ ranks:
     - Título [Rimuru]
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.59
-    push-cooldown: 6
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: NONE
     particle: BLUE_GOD_KI
   anos:
@@ -766,16 +764,14 @@ ranks:
     division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ'
     cost: 180000
     icon: DRAGON_HEAD
-    permissions:
-    - essentials.heal
+    permissions: []
     perks:
     - 'Rey Demonio de la Tiranía: Ojos mágicos de destrucción'
-    - Acceso a /heal
     - Título [Anos]
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.6
-    push-cooldown: 6
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: CURSED_FLAME
     particle: CURSED_FLAME
   alquimistaestatal:
@@ -784,16 +780,14 @@ ranks:
     division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ'
     cost: 190000
     icon: BEACON
-    permissions:
-    - essentials.repair.all
+    permissions: []
     perks:
-    - 'Círculo de Transmutación: Duplica drops y crafteos'
-    - Acceso a /repair all
+    - 'Círculo de Transmutación: Alquimia ambiental'
     - Título [Alquimista]
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.61
-    push-cooldown: 6
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: DOUBLE_DROP
     particle: GOLDEN_KI
   hakari:
@@ -805,14 +799,14 @@ ranks:
     permissions:
     - essentials.sethome.multiple.hakari
     perks:
-    - 'Gohan Bestia (Beast): Explosión crítica colosal (+75%) y Makankosappo magenta'
+    - 'Gohan Bestia (Beast): explosión crítica vistosa (45 s) y Makankosappo magenta'
     - '⚠️ Metabolismo Voraz: Consume 4 muslos de comida e induce Hambre II'
     - +1 Home
     - Título [GohanBeast]
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.62
-    push-cooldown: 6
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: GOHAN_BEAST
     particle: GOLDEN_KI
   ultrainstinto:
@@ -824,14 +818,14 @@ ranks:
     permissions:
     - playervaults.amount.15
     perks:
-    - 'Doctrina Egoísta Dominada: Carga de Ki (Shift) activa Evasión 100% por 5s'
+    - 'Doctrina Egoísta Dominada: Carga de Ki (Shift) activa Evasión total por 8 s (recarga 5 min)'
     - '⚠️ Fatiga Divina: El uso repetido desata colapso y daño muscular interno'
     - +3 Bóvedas (/pv 15)
     - Título [UltraInstinto]
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.64
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: MASTERED_ULTRA_INSTINCT
     particle: SILVER_DIVINE
   beerus:
@@ -840,17 +834,15 @@ ranks:
     division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ'
     cost: 220000
     icon: END_CRYSTAL
-    permissions:
-    - essentials.feed
+    permissions: []
     perks:
-    - 'Mega Instinto (Ultra Ego): Carga de Ki (Shift) aumenta daño según el dolor recibido (+60%)'
-    - 'Hakai Aura: Inmunidad a fuego/lava y 3.5 corazones de daño puro reflejado'
-    - Acceso a /feed
+    - 'Mega Instinto (Ultra Ego): Carga de Ki (Shift) aumenta algo el daño según el dolor recibido (45 s)'
+    - 'Hakai Aura: inmunidad al fuego y 1.5 corazones de daño reflejado'
     - Título [UltraEgo]
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.65
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: ULTRA_EGO
     particle: PURPLE_HAKAI
   whis:
@@ -859,17 +851,15 @@ ranks:
     division: 'ᴅɪᴠɪsɪᴏ́ɴ ᴠ · ᴛʀᴀsᴄᴇɴᴅᴇɴᴄɪᴀ sᴜᴘʀᴇᴍᴀ'
     cost: 240000
     icon: ELYTRA
-    permissions:
-    - essentials.fly
+    permissions: []
     perks:
-    - 'Espada de Haz de Luz (Vegetto): Shift + Clic derecho dispara haz perforante a 14 bloques'
+    - 'Espada de Haz de Luz (Vegetto): Shift + Clic derecho dispara haz perforante a 14 bloques (recarga larga)'
     - 'Guía Angelical: Halo orbital de ángel y paz absoluta'
-    - Acceso a /fly
     - Título [Whis/Vegetto]
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.66
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: VEGETTO_SPIRIT_SWORD
     particle: SILVER_DIVINE
   zeno:
@@ -886,8 +876,8 @@ ranks:
     - Título [Zeno]
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.68
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: ULTRA_INSTINCT
     particle: SUPREME_GOD
   kamisama:
@@ -897,18 +887,17 @@ ranks:
     cost: 260000
     icon: TOTEM_OF_UNDYING
     permissions:
-    - essentials.god
     - playervaults.amount.20
     perks:
     - CIMA ABSOLUTA DE DRAKESRANKUP
     - Corona Divina Suprema de Oro Puro
-    - Presencia Divina Inmortal
+    - Presencia Divina
     - +5 Bóvedas (/pv 20)
     - Título Supremo [KamiSama]
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.69
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: KAMI_DIVINE
     particle: SUPREME_GOD
   yuji_itadori:
@@ -926,8 +915,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.7
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: BLACK_FLASH
     particle: CRIMSON_FLASH
   megumi_fushiguro:
@@ -945,8 +934,8 @@ ranks:
     - '+1 Bóveda (/pv 21)'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.71
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: SHADOW_EXTRACTION
     particle: SHADOW_AURA
   nobara_kugisaki:
@@ -964,8 +953,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.73
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: CURSED_FLAME
     particle: ORANGE_FLAME
   maki_zenin:
@@ -983,8 +972,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.74
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: FEATHER_STEP
     particle: GREEN_SPEED
   aoi_todo:
@@ -1002,8 +991,8 @@ ranks:
     - '+1 Bóveda (/pv 22)'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.75
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: BOOGIE_WOOGIE
     particle: PURPLE_TELEPORT
   nanami_kento:
@@ -1021,8 +1010,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.76
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: BLACK_FLASH
     particle: YELLOW_SPARK
   suguru_geto:
@@ -1040,8 +1029,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.77
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: CURSED_FLAME
     particle: DARK_VORTEX
   yuta_okkotsu:
@@ -1059,8 +1048,8 @@ ranks:
     - '+1 Bóveda (/pv 23)'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.79
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: MUGEN_DEFENSE
     particle: CYAN_RING
   ryomen_sukuna:
@@ -1077,8 +1066,8 @@ ranks:
     - 'Expansión: Relicario Maldito'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.8
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: DISMANTLE_CLEAVE
     particle: BLOOD_SLASH
   satoru_gojo:
@@ -1090,13 +1079,13 @@ ranks:
     permissions:
     - drakesrankup.tier.60
     perks:
-    - 'Los Seis Ojos & Infinito Ilimitado'
+    - 'Los Seis Ojos & Infinito reforzado'
     - 'Hollow Purple (Púrpura Devastador)'
-    - 'Vacío Infinito Infranqueable'
+    - 'Vacío Infinito reforzado'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.81
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: HOLLOW_PURPLE
     particle: HOLLOW_PURPLE_AURA
   renji_abarai:
@@ -1114,8 +1103,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.82
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: SANTORYU_ZORO
     particle: RED_SNAKE
   rukia_kuchiki:
@@ -1133,8 +1122,8 @@ ranks:
     - '+1 Bóveda (/pv 24)'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.84
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: FEATHER_STEP
     particle: WHITE_FROST
   byakuya_kuchiki:
@@ -1152,8 +1141,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.85
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: DISMANTLE_CLEAVE
     particle: CHERRY_PETALS
   kenpachi_zaraki:
@@ -1170,8 +1159,8 @@ ranks:
     - 'Modo Berserker Bankai'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.86
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: BROLY_LSSJ
     particle: YELLOW_BEAST
   shunsui_kyoraku:
@@ -1189,8 +1178,8 @@ ranks:
     - '+1 Bóveda (/pv 25)'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.88
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: BOOGIE_WOOGIE
     particle: BLACK_THREAD
   ulquiorra_cifer:
@@ -1208,8 +1197,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.89
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: SPHERE_OF_DESTRUCTION
     particle: GREEN_CERO
   sosuke_aizen:
@@ -1226,8 +1215,8 @@ ranks:
     - 'Soberano de Las Noches'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.9
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: KYOKA_SUIGETSU
     particle: PURPLE_ILLUSION
   yamamoto_genryusai:
@@ -1244,8 +1233,8 @@ ranks:
     - 'Incinera materia y terreno salvaje'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.91
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: ZANKA_NO_TACHI
     particle: SOLAR_FIRE
   yhwach_almighty:
@@ -1263,8 +1252,8 @@ ranks:
     - '+1 Bóveda (/pv 26)'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.93
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: ULTRA_INSTINCT
     particle: GOLDEN_EYES
   ichigo_mugetsu:
@@ -1281,8 +1270,8 @@ ranks:
     - 'Poder más allá de las dimensiones'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.94
-    push-cooldown: 5
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: BANKAI_ZANGETSU
     particle: BLACK_GETSUGA
   aki_hayakawa:
@@ -1300,8 +1289,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.95
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: BLACK_FLASH
     particle: BLUE_FOX
   power_blood:
@@ -1319,8 +1308,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.96
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: CURSED_FLAME
     particle: BLOOD_BURST
   makima_control:
@@ -1338,8 +1327,8 @@ ranks:
     - '+1 Bóveda (/pv 27)'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.98
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: KYOKA_SUIGETSU
     particle: YELLOW_CHAINS
   denji_chainsaw:
@@ -1356,8 +1345,8 @@ ranks:
     - 'Terror del Infierno'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 1.99
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: CHAINSAW_DEVIL
     particle: CHAINSAW_SPARKS
   cha_hae_in:
@@ -1375,8 +1364,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.0
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: ELECTRIC_SPEED
     particle: LIGHT_TRAIL
   beru_shadow:
@@ -1394,8 +1383,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.01
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: SERIOUS_PUNCH
     particle: PURPLE_POISON
   igris_commander:
@@ -1413,8 +1402,8 @@ ranks:
     - '+1 Bóveda (/pv 28)'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.02
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: SANTORYU_ZORO
     particle: RED_LIGHTNING
   bellion_shadow:
@@ -1432,8 +1421,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.04
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: DISMANTLE_CLEAVE
     particle: SHADOW_BLADE
   sung_arise:
@@ -1447,12 +1436,12 @@ ranks:
     - drakesrankup.tier.79
     perks:
     - 'Comando ¡Levántate! (Arise)'
-    - 'Extracción y control ilimitado de sombras'
+    - 'Extracción y control de sombras'
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.05
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: SHADOW_MONARCH_ARMY
     particle: BLUE_ARISE
   shadow_monarch_ashborn:
@@ -1469,8 +1458,8 @@ ranks:
     - 'Inmunidad a caídas y fatiga'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.06
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: SHADOW_MONARCH_ARMY
     particle: MONARCH_AURA
   killua_godspeed:
@@ -1488,8 +1477,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.08
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: ELECTRIC_SPEED
     particle: CYAN_LIGHTNING
   gon_adulto:
@@ -1507,8 +1496,8 @@ ranks:
     - '+1 Bóveda (/pv 29)'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.09
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: JAJANKEN_ROCK
     particle: GOLDEN_SMASH
   netero_guanyin:
@@ -1526,8 +1515,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.1
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: ZERO_HAND_GUANYIN
     particle: GUANYIN_AURA
   meruem_postrose:
@@ -1545,8 +1534,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.11
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: ULTRA_INSTINCT
     particle: EMERALD_PHOTON
   minato_hiraishin:
@@ -1564,8 +1553,8 @@ ranks:
     - '+1 Bóveda (/pv 30)'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.12
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: HIRAISHIN_TELEPORT
     particle: YELLOW_FLASH
   itachi_susanoo:
@@ -1582,8 +1571,8 @@ ranks:
     - 'Escudo Yata & Espada Totsuka'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.14
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: AMATERASU_TSUKUYOMI
     particle: BLACK_FLAME
   madara_rikudo:
@@ -1597,11 +1586,11 @@ ranks:
     perks:
     - 'Jinchūriki del Diez Colas & Rinnegan'
     - 'Tengai Shinsei: Caída de Meteoros orbitales'
-    - 'Tsukuyomi Infinito'
+    - 'Tsukuyomi'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.15
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: TENGAI_SHINSEI
     particle: METEOR_SMOKE
   naruto_baryon:
@@ -1618,8 +1607,8 @@ ranks:
     - 'Velocidad absoluta'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.16
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: BARYON_MODE
     particle: ORANGE_TAILS
   luffy_gear5:
@@ -1636,8 +1625,8 @@ ranks:
     - 'Libertad de combate total'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.17
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: GEAR_FIVE_NIKA
     particle: WHITE_JOY
   shanks_kamisari:
@@ -1654,8 +1643,8 @@ ranks:
     - 'Presión que anula la visión de futuro'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.19
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: KAMISARI_HAKI
     particle: CONQUEROR_LIGHTNING
   jiren_universe11:
@@ -1673,8 +1662,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.2
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: SERIOUS_PUNCH
     particle: HEAT_WAVE
   gogeta_blue:
@@ -1691,8 +1680,8 @@ ranks:
     - 'Fuerza destructiva cósmica'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.21
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: STARDUST_BREAKER
     particle: STARDUST_RAINBOW
   vegito_blue:
@@ -1710,8 +1699,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.23
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: VEGETTO_SPIRIT_SWORD
     particle: BLUE_DIVINE_BURST
   bills_god:
@@ -1728,8 +1717,8 @@ ranks:
     - 'Vaporiza materia salvaje'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.24
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: SPHERE_OF_DESTRUCTION
     particle: HAKAI_PURPLE
   whis_angel:
@@ -1741,13 +1730,13 @@ ranks:
     permissions:
     - drakesrankup.tier.95
     perks:
-    - 'Gracia Angelical Inmortal'
+    - 'Gracia Angelical'
     - 'Doctrina Egoísta fluida permanente'
     - 'Retroceso temporal protector'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.25
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: ULTRA_INSTINCT
     particle: ANGEL_HALO
   daishinkan_sama:
@@ -1765,8 +1754,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.26
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: KAMI_DIVINE
     particle: CELESTIAL_SPHERES
   zalama_dragon:
@@ -1784,8 +1773,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.27
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: OMNI_CREATION_ERASE
     particle: GOLDEN_DRAGON_DUST
   toribot_creator:
@@ -1803,8 +1792,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.29
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: OMNI_CREATION_ERASE
     particle: CREATOR_PENCIL
   zeno_duo:
@@ -1822,8 +1811,8 @@ ranks:
     - '+1 Home'
     reward-commands: []
     kinetic-push: true
-    push-multiplier: 2.3
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: OMNI_CREATION_ERASE
     particle: DUAL_OMNI
   zeno_omni_supremo:
@@ -1845,7 +1834,7 @@ ranks:
     - 'drakesrankup kit %player%'
     - 'broadcast &6&lDRAKES RANKUP &8▶ &f¡El guerrero &e&l%player% &fha conquistado el universo alcanzando el &d&lTIER 100: ZENO OMNI-SUPREMO&f!'
     kinetic-push: true
-    push-multiplier: 2.31
-    push-cooldown: 4
+    push-multiplier: 1.5
+    push-cooldown: 12
     ability: OMNI_CREATION_ERASE
     particle: SUPREME_GOD

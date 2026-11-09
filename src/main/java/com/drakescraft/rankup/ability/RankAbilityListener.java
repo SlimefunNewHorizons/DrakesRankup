@@ -49,7 +49,7 @@ public class RankAbilityListener implements Listener {
             // Pasivas defensivas por daño ambiental
             if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
                 if (ability == AbilityType.FEATHER_STEP || rank.getTier() >= 5) {
-                    event.setDamage(event.getDamage() * 0.5);
+                    Balance.reduce(event, 0.75);
                 }
             }
 
@@ -57,17 +57,19 @@ public class RankAbilityListener implements Listener {
                     || event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK 
                     || event.getCause() == EntityDamageEvent.DamageCause.LAVA) {
                 if (ability == AbilityType.HAKAI_AURA || rank.getTier() >= 47 || ability == AbilityType.ZANKA_NO_TACHI) {
-                    event.setCancelled(true);
-                    player.setFireTicks(0);
+                    if (event.getCause() != EntityDamageEvent.DamageCause.LAVA) {
+                        event.setCancelled(true);
+                        player.setFireTicks(0);
+                    }
                 }
             }
 
             if (rank.getTier() >= 15) {
-                event.setDamage(event.getDamage() * 0.90);
+                Balance.reduce(event, 0.90);
             }
 
             if (ability == AbilityType.KYOKA_SUIGETSU || rank.getTier() >= 48) {
-                if (random.nextDouble() < 0.20) {
+                if (Balance.dodge(player, 0.05)) {
                     event.setCancelled(true);
                     try {
                         Location loc = player.getLocation();
@@ -80,7 +82,7 @@ public class RankAbilityListener implements Listener {
             }
 
             if (ability == AbilityType.ULTRA_INSTINCT || rank.getTier() >= 49) {
-                if (random.nextDouble() < 0.15) {
+                if (Balance.dodge(player, 0.05)) {
                     event.setCancelled(true);
                     try {
                         Location dloc = player.getLocation().add(0, 0.9, 0);
@@ -95,12 +97,12 @@ public class RankAbilityListener implements Listener {
 
             if (rank.getTier() >= 25) {
                 if (player.getWorld().isDayTime() && !player.getWorld().hasStorm()) {
-                    event.setDamage(event.getDamage() * 0.85);
+                    Balance.reduce(event, 0.92);
                 }
             }
 
             if (ability == AbilityType.WATER_GRACE || rank.getTier() >= 10) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 120, 0, false, false, false));
+                player.addPotionEffect(Balance.pe(PotionEffectType.DOLPHINS_GRACE, 120, 0, false, false, false));
             }
         }
     }
@@ -126,7 +128,7 @@ public class RankAbilityListener implements Listener {
             // Bonificador permanente por Rebirth: +3% por nivel
             int rebirths = plugin.getRankManager().getRebirthCount(player.getUniqueId());
             if (rebirths > 0) {
-                event.setDamage(event.getDamage() * (1.0 + rebirths * 0.03));
+                Balance.boost(event, 1.0 + rebirths * 0.03);
             }
 
             AbilityType ability = rank.getAbilityType();
@@ -134,7 +136,7 @@ public class RankAbilityListener implements Listener {
 
             if (ability == AbilityType.BLACK_FLASH || rank.getTier() >= 20) {
                 if (random.nextDouble() < 0.15) {
-                    event.setDamage(event.getDamage() * 1.5);
+                    Balance.boost(event, 1.5);
                     try {
                         Location loc = hitLoc.clone().add(0, 1.0, 0);
                         player.getWorld().spawnParticle(Particle.SQUID_INK, loc, 20, 0.3, 0.3, 0.3, 0.08);
@@ -154,7 +156,7 @@ public class RankAbilityListener implements Listener {
             // Habilidades Tiers 51 - 100
             if (ability == AbilityType.DISMANTLE_CLEAVE || rank.getTier() >= 58) {
                 if (random.nextDouble() < 0.20) {
-                    event.setDamage(event.getDamage() * 1.4);
+                    Balance.boost(event, 1.4);
                     try {
                         player.getWorld().spawnParticle(Particle.SWEEP_ATTACK, hitLoc.clone().add(0, 1.0, 0), 4, 0.3, 0.3, 0.3, 0);
                         player.getWorld().playSound(hitLoc, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 0.5f);
@@ -167,7 +169,7 @@ public class RankAbilityListener implements Listener {
 
             if (ability == AbilityType.HOLLOW_PURPLE || rank.getTier() >= 59) {
                 if (random.nextDouble() < 0.15) {
-                    event.setDamage(event.getDamage() * 1.6);
+                    Balance.boost(event, 1.6);
                     try {
                         player.getWorld().spawnParticle(Particle.DRAGON_BREATH, hitLoc.clone().add(0, 1.0, 0), 25, 0.5, 0.5, 0.5, 0.05);
                         player.getWorld().spawnParticle(Particle.FLASH, hitLoc.clone().add(0, 1.0, 0), 1);
@@ -181,17 +183,17 @@ public class RankAbilityListener implements Listener {
 
             if (ability == AbilityType.GURA_GURA_TREMOR || rank.getTier() >= 89) {
                 if (random.nextDouble() < 0.18) {
-                    event.setDamage(event.getDamage() * 1.5);
+                    Balance.boost(event, 1.5);
                     for (Entity nearby : hitLoc.getWorld().getNearbyEntities(hitLoc, 5.0, 3.0, 5.0)) {
                         if (!nearby.isValid() || !nearby.getLocation().isChunkLoaded()) continue;
                         if (nearby instanceof LivingEntity target && !nearby.equals(player)) {
                             try {
                                 target.setMetadata("DRAKES_ABILITY_DAMAGE", new FixedMetadataValue(plugin, true));
-                                target.damage(8.0, player);
+                                Balance.hit(player, target, 8.0);
                             } finally {
                                 target.removeMetadata("DRAKES_ABILITY_DAMAGE", plugin);
                             }
-                            target.setVelocity(target.getLocation().toVector().subtract(hitLoc.toVector()).normalize().multiply(1.3).setY(0.5));
+                            Balance.knock(target, target.getLocation().toVector().subtract(hitLoc.toVector()).normalize().multiply(1.3).setY(0.5));
                         }
                     }
                     try {
@@ -206,14 +208,14 @@ public class RankAbilityListener implements Listener {
 
             if (ability == AbilityType.CHAINSAW_DEVIL || rank.getTier() >= 71) {
                 try {
-                    player.setHealth(Math.min(player.getMaxHealth(), player.getHealth() + 2.0));
+                    if (Balance.dodge(player, 1.0)) player.setHealth(Math.min(player.getMaxHealth(), player.getHealth() + 1.0));
                     player.getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, player.getLocation().add(0, 1.0, 0), 3, 0.2, 0.2, 0.2, 0.02);
                     player.getWorld().playSound(hitLoc, Sound.ENTITY_MINECART_RIDING, 0.7f, 1.9f);
                 } catch (Exception ignored) {}
             }
 
             if (ability == AbilityType.BOOGIE_WOOGIE) {
-                if (random.nextDouble() < 0.15) {
+                if (event.getEntity() instanceof LivingEntity bwTarget && !(bwTarget instanceof Player) && !Balance.isBoss(bwTarget) && random.nextDouble() < 0.10) {
                     Location pLoc = player.getLocation().clone();
                     Location tLoc = event.getEntity().getLocation().clone();
                     player.teleport(tLoc);
@@ -240,8 +242,8 @@ public class RankAbilityListener implements Listener {
                 for (Entity nearby : player.getNearbyEntities(6.0, 3.0, 6.0)) {
                     if (!nearby.isValid() || !nearby.getLocation().isChunkLoaded()) continue;
                     if (nearby instanceof Monster monster) {
-                        monster.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 80, 1));
-                        monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 80, 1));
+                        monster.addPotionEffect(Balance.pe(PotionEffectType.SLOWNESS, 80, 1));
+                        monster.addPotionEffect(Balance.pe(PotionEffectType.WEAKNESS, 80, 1));
                     }
                 }
                 try {
@@ -253,8 +255,8 @@ public class RankAbilityListener implements Listener {
             if (ability == AbilityType.KAMI_DIVINE || rank.getTier() >= 50) {
                 if (event.getDamager() instanceof Monster monster) {
                     if (random.nextDouble() < 0.25) {
-                        monster.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 80, 2));
-                        monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 80, 2));
+                        monster.addPotionEffect(Balance.pe(PotionEffectType.SLOWNESS, 80, 2));
+                        monster.addPotionEffect(Balance.pe(PotionEffectType.WEAKNESS, 80, 2));
                         try {
                             player.getWorld().spawnParticle(Particle.FLASH, monster.getLocation().add(0, 1.0, 0), 1);
                             player.getWorld().playSound(monster.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 0.5f, 2.0f);
@@ -270,8 +272,8 @@ public class RankAbilityListener implements Listener {
                     long lastZenkai = zenkaiCooldowns.getOrDefault(player.getUniqueId(), 0L);
                     if (now - lastZenkai > 90_000L) {
                         zenkaiCooldowns.put(player.getUniqueId(), now);
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 160, 1));
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 160, 0));
+                        player.addPotionEffect(Balance.pe(PotionEffectType.REGENERATION, 160, 1));
+                        player.addPotionEffect(Balance.pe(PotionEffectType.STRENGTH, 160, 0));
                         try {
                             player.getWorld().spawnParticle(Particle.FLAME, player.getLocation().add(0, 1.0, 0), 30, 0.4, 0.5, 0.4, 0.1);
                             player.playSound(player.getLocation(), Sound.ENTITY_WITHER_SPAWN, 0.5f, 1.8f);
@@ -285,7 +287,7 @@ public class RankAbilityListener implements Listener {
                 if (event.getDamager() instanceof LivingEntity damager) {
                     try {
                         damager.setMetadata("DRAKES_ABILITY_DAMAGE", new FixedMetadataValue(plugin, true));
-                        damager.damage(3.0, player);
+                        Balance.hit(player, damager, 3.0);
                     } finally {
                         damager.removeMetadata("DRAKES_ABILITY_DAMAGE", plugin);
                     }
@@ -317,9 +319,9 @@ public class RankAbilityListener implements Listener {
                     shadowWolf.setOwner(killer);
                     shadowWolf.setCustomName("§8§l[Sombra de " + killer.getName() + "]");
                     shadowWolf.setCustomNameVisible(true);
-                    shadowWolf.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 500, 1));
-                    shadowWolf.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 500, 1));
-                    shadowWolf.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 500, 0));
+                    shadowWolf.addPotionEffect(Balance.pe(PotionEffectType.SPEED, 500, 1));
+                    shadowWolf.addPotionEffect(Balance.pe(PotionEffectType.RESISTANCE, 500, 1));
+                    shadowWolf.addPotionEffect(Balance.pe(PotionEffectType.STRENGTH, 500, 0));
 
                     loc.getWorld().spawnParticle(Particle.LARGE_SMOKE, loc.add(0, 0.5, 0), 25, 0.3, 0.3, 0.3, 0.05);
                     killer.playSound(loc, Sound.ENTITY_WITHER_SHOOT, 0.6f, 0.5f);

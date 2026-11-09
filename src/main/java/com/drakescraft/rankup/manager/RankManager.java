@@ -657,13 +657,11 @@ public class RankManager {
             player.sendTitle(title, sub, 10, 50, 10);
         }
 
-        if (plugin.getConfig().getBoolean("settings.sound.enabled", true)) {
-            try {
-                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.2f);
-            } catch (Exception ignored) {}
-        }
+        com.drakescraft.rankup.gui.RankupFx.celebrate(plugin, player, next, getNextRank(uuid), getFondosAscenso(player));
 
-        if (plugin.getConfig().getBoolean("settings.broadcast.enabled", true)) {
+        // Anuncio global solo en hitos (cada N rangos): con 100 rangos, cada ascenso llenaria el chat.
+        int every = Math.max(1, plugin.getConfig().getInt("settings.broadcast.every-tier", 5));
+        if (plugin.getConfig().getBoolean("settings.broadcast.enabled", true) && next.getTier() % every == 0) {
             List<String> broadcastLines = plugin.getConfig().getStringList("settings.broadcast.message");
             for (String line : broadcastLines) {
                 String formatted = ChatColor.translateAlternateColorCodes('&', line
@@ -754,9 +752,7 @@ public class RankManager {
 
         int ranksGained = targetTier - previousTier;
         player.sendMessage("§a§l¡ASCENSO MULTIPLE COMPLETADO! §eHas ascendido §6" + ranksGained + " §erangos hasta §b" + (finalRank != null ? finalRank.getDisplayName() : "") + "§e por un total de §a$" + MONEY_FORMAT.format(totalCost) + "§e.");
-        try {
-            player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1.0f, 1.0f);
-        } catch (Exception ignored) {}
+        com.drakescraft.rankup.gui.RankupFx.celebrate(plugin, player, finalRank, getNextRank(uuid), getFondosAscenso(player));
 
         return ranksGained;
     }

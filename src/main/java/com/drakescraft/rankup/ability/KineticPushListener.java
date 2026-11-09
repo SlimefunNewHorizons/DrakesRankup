@@ -61,7 +61,7 @@ public class KineticPushListener implements Listener {
 
         long now = System.currentTimeMillis();
         long lastUsed = cooldowns.getOrDefault(player.getUniqueId(), 0L);
-        long cdMillis = Math.max(1, rank.getPushCooldownSeconds()) * 1000L;
+        long cdMillis = Math.max(12, rank.getPushCooldownSeconds()) * 1000L;
         if (now - lastUsed >= cdMillis) {
             player.setAllowFlight(true);
         } else {
@@ -85,7 +85,7 @@ public class KineticPushListener implements Listener {
 
         long now = System.currentTimeMillis();
         long lastUsed = cooldowns.getOrDefault(player.getUniqueId(), 0L);
-        long cdMillis = Math.max(1, rank.getPushCooldownSeconds()) * 1000L;
+        long cdMillis = Math.max(12, rank.getPushCooldownSeconds()) * 1000L;
         if (now - lastUsed < cdMillis) {
             long remaining = Math.max(1, (cdMillis - (now - lastUsed)) / 1000L);
             event.setCancelled(true);
@@ -108,10 +108,10 @@ public class KineticPushListener implements Listener {
 
         // Safety expiration: remove fall protection after 15 seconds automatically
         UUID pId = player.getUniqueId();
-        plugin.getServer().getScheduler().runTaskLater(plugin, () -> fallProtection.remove(pId), 300L);
+        plugin.getServer().getScheduler().runTaskLater(plugin, () -> fallProtection.remove(pId), 120L);
 
         Vector direction = player.getLocation().getDirection().normalize();
-        double mult = rank.getPushMultiplier();
+        double mult = Math.min(1.5, rank.getPushMultiplier());
         if (mult <= 0.1) mult = 1.2;
 
         Vector velocity = direction.multiply(mult);

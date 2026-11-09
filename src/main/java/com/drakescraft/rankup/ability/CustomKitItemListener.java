@@ -95,12 +95,12 @@ public class CustomKitItemListener implements Listener {
             return;
         }
 
-        medusaCooldown.put(player.getUniqueId(), now + 45000L); // 45s cooldown
+        medusaCooldown.put(player.getUniqueId(), now + Balance.cd(45000L));
 
         // Apply Petrification: Slowness 100, Weakness, Blindness
-        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 160, 99, false, true, true));
-        target.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 160, 4, false, true, true));
-        target.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 0, false, true, true));
+        target.addPotionEffect(Balance.pe(PotionEffectType.SLOWNESS, 160, 99, false, true, true));
+        target.addPotionEffect(Balance.pe(PotionEffectType.WEAKNESS, 160, 4, false, true, true));
+        target.addPotionEffect(Balance.pe(PotionEffectType.BLINDNESS, 80, 0, false, true, true));
 
         Location tLoc = target.getLocation().add(0, 1.0, 0);
         try {
@@ -145,9 +145,9 @@ public class CustomKitItemListener implements Listener {
         player.removePotionEffect(PotionEffectType.MINING_FATIGUE);
 
         // Buffs
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 1));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 300, 1));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 300, 0));
+        player.addPotionEffect(Balance.pe(PotionEffectType.SPEED, 300, 1));
+        player.addPotionEffect(Balance.pe(PotionEffectType.HASTE, 300, 1));
+        player.addPotionEffect(Balance.pe(PotionEffectType.RESISTANCE, 300, 0));
 
         Location loc = player.getLocation();
         try {
@@ -188,7 +188,7 @@ public class CustomKitItemListener implements Listener {
                 maxHp = player.getAttribute(Attribute.MAX_HEALTH).getValue();
             }
         } catch (Throwable ignored) {}
-        player.setHealth(maxHp);
+        player.setHealth(Math.min(maxHp, player.getHealth() + maxHp * 0.5));
 
         // 100% Food & Saturation
         player.setFoodLevel(20);
@@ -228,7 +228,7 @@ public class CustomKitItemListener implements Listener {
         // 1. Katana Maldita Sukuna (15% chance to Black Flash)
         if (name.contains("Katana Maldita")) {
             if (Math.random() < 0.15) {
-                event.setDamage(event.getDamage() * 1.5);
+                Balance.boost(event, 1.5);
                 try {
                     Location loc = event.getEntity().getLocation().add(0, 1.0, 0);
                     attacker.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, loc, 15, 0.2, 0.3, 0.2, 0.05);
@@ -246,7 +246,7 @@ public class CustomKitItemListener implements Listener {
                     maxHp = attacker.getAttribute(Attribute.MAX_HEALTH).getValue();
                 }
             } catch (Throwable ignored) {}
-            attacker.setHealth(Math.min(maxHp, attacker.getHealth() + 2.0));
+            if (Balance.dodge(attacker, 1.0)) attacker.setHealth(Math.min(maxHp, attacker.getHealth() + 1.0));
             try {
                 Location loc = attacker.getLocation().add(0, 1.0, 0);
                 attacker.getWorld().spawnParticle(Particle.SQUID_INK, loc, 5, 0.2, 0.3, 0.2, 0.02);

@@ -71,7 +71,7 @@ public class SeriousPunchHandler implements Listener {
 
         // Saitama (Tier 41), Jiren (Tier 91), Tiers 50+, o habilidad SERIOUS_PUNCH
         if (rank.getAbilityType() == AbilityType.SERIOUS_PUNCH) return true;
-        if (rank.getTier() == 41 || rank.getTier() == 91 || rank.getTier() >= 50) return true;
+        if (rank.getTier() == 41 || rank.getTier() == 91) return true;
         if ("SAITAMA".equalsIgnoreCase(settings.getActiveTransformation()) || "SERIOUS_PUNCH".equalsIgnoreCase(settings.getActiveTransformation())) return true;
 
         return false;
@@ -86,7 +86,7 @@ public class SeriousPunchHandler implements Listener {
     private void applyCooldown(Player player) {
         int rebirths = plugin.getRankManager().getRebirthCount(player.getUniqueId());
         // Cooldown base 6 segundos, reducido por rebirths hasta 3 segundos
-        long cd = Math.max(3000L, 6000L - (rebirths * 80L));
+        long cd = (long) (Balance.cd(20000L) * Balance.cdr(rebirths));
         cooldowns.put(player.getUniqueId(), System.currentTimeMillis() + cd);
     }
 
@@ -165,13 +165,13 @@ public class SeriousPunchHandler implements Listener {
             List<BlockState> candidateBlocks = new ArrayList<>();
             Set<Location> visitedLocs = new HashSet<>();
 
-            double maxDistance = 34.0;
+            double maxDistance = 14.0;
             double step = 1.5;
 
             // Trazado del cono expansivo
             for (double d = 2.0; d <= maxDistance; d += step) {
                 Location center = origin.clone().add(dir.clone().multiply(d));
-                double radius = 1.8 + (d * 0.22); // Aumenta hasta ~9.2 bloques de ancho
+                double radius = 1.2 + (d * 0.10); // Aumenta hasta ~9.2 bloques de ancho
 
                 // Efectos visuales a lo largo del eje central
                 try {
@@ -204,7 +204,7 @@ public class SeriousPunchHandler implements Listener {
                                 continue; // Protegido por claims, o bedrock, portal, contenedor
                             }
 
-                            if (!b.getType().isAir()) {
+                            if (!b.getType().isAir() && candidateBlocks.size() < 120) {
                                 candidateBlocks.add(b.getState());
                             }
                         }
@@ -221,7 +221,7 @@ public class SeriousPunchHandler implements Listener {
                     .withDamageLocation(origin)
                     .build();
 
-            for (Entity e : world.getNearbyEntities(origin.clone().add(dir.clone().multiply(16.0)), 22.0, 16.0, 22.0)) {
+            for (Entity e : world.getNearbyEntities(origin.clone().add(dir.clone().multiply(7.0)), 9.0, 6.0, 9.0)) {
                 if (e.equals(player)) continue;
                 if (!e.isValid() || !e.getLocation().isChunkLoaded()) continue;
                 if (e instanceof Tameable t && player.getUniqueId().equals(t.getOwnerUniqueId())) continue;
@@ -244,30 +244,16 @@ public class SeriousPunchHandler implements Listener {
 
                         // 2. Daño Verdadero (Sonic Boom ignora armadura y encantamientos vanilla)
                         double prevHealth = living.getHealth();
-                        double calculatedDamage = 75.0 + (rebirths * 5.0) + (prevHealth * 0.35);
+                        double calculatedDamage = 12.0;
 
-                        try {
-                            living.setMetadata("DRAKES_ABILITY_DAMAGE", new FixedMetadataValue(plugin, true));
-                            living.damage(calculatedDamage, sonicSource);
-                        } finally {
-                            living.removeMetadata("DRAKES_ABILITY_DAMAGE", plugin);
-                        }
-
-                        // 3. Suelo de Daño Verdadero Garantizado (Anti-Resistance / Anti-Infinity god effects)
-                        double damageDone = prevHealth - living.getHealth();
-                        double minGuaranteedDamage = 40.0 + (rebirths * 3.5); // 20+ corazones mínimos garantizados
-                        if (damageDone < minGuaranteedDamage && !living.isDead()) {
-                            double remainingHp = Math.max(1.0, living.getHealth() - (minGuaranteedDamage - damageDone));
-                            living.setHealth(remainingHp);
-                        }
+                        Balance.hit(player, living, calculatedDamage);
 
                         // 4. Efectos de aturdimiento de onda expansiva
-                        living.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 60, 0, false, false, false));
-                        living.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 80, 2, false, false, false));
+                        living.addPotionEffect(Balance.pe(PotionEffectType.BLINDNESS, 60, 0, false, false, false));
+                        living.addPotionEffect(Balance.pe(PotionEffectType.SLOWNESS, 80, 2, false, false, false));
 
                         // 5. Impulso cinético violento
-                        Vector launch = dir.clone().multiply(3.2).setY(0.80);
-                        living.setVelocity(launch);
+                        Balance.knock(living, dir.clone().multiply(1.0).setY(0.4));
 
                         try {
                             world.spawnParticle(Particle.EXPLOSION_EMITTER, living.getLocation().add(0, 1.0, 0), 2);

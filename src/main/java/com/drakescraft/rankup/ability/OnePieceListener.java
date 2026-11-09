@@ -159,8 +159,8 @@ public class OnePieceListener implements Listener {
         }
 
         int rebirths = plugin.getRankManager().getRebirthCount(uuid);
-        double cdr = 1.0 - Math.min(0.5, rebirths * 0.01);
-        santoryuCooldown.put(uuid, now + (long)(8000L * cdr));
+        double cdr = Balance.cdr(rebirths);
+        santoryuCooldown.put(uuid, now + (long)(Balance.cd(8000L) * cdr));
 
         Location eye = player.getEyeLocation();
         Vector dir = eye.getDirection().normalize();
@@ -189,9 +189,9 @@ public class OnePieceListener implements Listener {
                     hitList.add(entity);
                     try {
                         double dmg = 12.0 * (1.0 + rebirths * 0.03);
-                        entity.damage(dmg, player);
+                        Balance.hit(player, entity, dmg);
                         Vector knock = dir.clone().multiply(0.85).setY(0.28);
-                        entity.setVelocity(knock);
+                        Balance.knock(entity, knock);
                     } catch (Exception ignored) {}
                 }
             }
@@ -245,20 +245,20 @@ public class OnePieceListener implements Listener {
         }
 
         int rebirths = plugin.getRankManager().getRebirthCount(uuid);
-        double cdr = 1.0 - Math.min(0.5, rebirths * 0.01);
-        gear4Cooldown.put(uuid, now + (long)(60000L * cdr));
-        activeGear4.put(uuid, now + 240000L); // 4 MINUTOS (240s)
+        double cdr = Balance.cdr(rebirths);
+        gear4Cooldown.put(uuid, now + (long)(Balance.formCooldownMs() * cdr));
+        activeGear4.put(uuid, now + Balance.formMs());
 
         try {
             var attr = player.getAttribute(Attribute.SCALE);
             if (attr != null) attr.setBaseValue(1.35); // Inflado Bounceman
         } catch (Throwable ignored) {}
 
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 4800, 2));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 4800, 1));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 4800, 1));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 4800, 1));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 4800, 0));
+        player.addPotionEffect(Balance.pe(PotionEffectType.SPEED, 4800, 2));
+        player.addPotionEffect(Balance.pe(PotionEffectType.JUMP_BOOST, 4800, 1));
+        player.addPotionEffect(Balance.pe(PotionEffectType.STRENGTH, 4800, 1));
+        player.addPotionEffect(Balance.pe(PotionEffectType.RESISTANCE, 4800, 1));
+        player.addPotionEffect(Balance.pe(PotionEffectType.REGENERATION, 4800, 0));
 
         Location loc = player.getLocation();
         try {
@@ -273,7 +273,7 @@ public class OnePieceListener implements Listener {
         } catch (Exception ignored) {}
 
         player.sendTitle("§4§lGEAR FOURTH: BOUNCEMAN", "§cColossal Armament Haki + continuous elastic bounce!", 5, 50, 10);
-        player.sendActionBar(Component.text("§4⚡ GEAR 4 BOUNCEMAN ACTIVE! Automatic bounces, Speed III and Strength II for 4 minutes"));
+        player.sendActionBar(Component.text("§4⚡ GEAR 4 BOUNCEMAN ACTIVE! Automatic bounces, Speed II and Strength I for 45 seconds"));
 
         plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
             activeGear4.remove(uuid);
@@ -286,7 +286,7 @@ public class OnePieceListener implements Listener {
                 player.removePotionEffect(PotionEffectType.REGENERATION);
                 player.sendMessage("§4[Rankup] El Gear 4 ha concluido: el haki consumido se disipa.");
             }
-        }, 4800L);
+        }, Balance.formTicks());
     }
 
     // ==========================================
@@ -302,15 +302,15 @@ public class OnePieceListener implements Listener {
         }
 
         int rebirths = plugin.getRankManager().getRebirthCount(uuid);
-        double cdr = 1.0 - Math.min(0.5, rebirths * 0.01);
-        gear5Cooldown.put(uuid, now + (long)(60000L * cdr));
-        activeGear5.put(uuid, now + 300000L); // 5 MINUTOS (300s)
+        double cdr = Balance.cdr(rebirths);
+        gear5Cooldown.put(uuid, now + (long)(Balance.formCooldownMs() * cdr));
+        activeGear5.put(uuid, now + Balance.formMs());
 
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 6000, 2));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 6000, 2));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 6000, 2));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 6000, 1));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 6000, 1));
+        player.addPotionEffect(Balance.pe(PotionEffectType.SPEED, 6000, 2));
+        player.addPotionEffect(Balance.pe(PotionEffectType.JUMP_BOOST, 6000, 2));
+        player.addPotionEffect(Balance.pe(PotionEffectType.STRENGTH, 6000, 2));
+        player.addPotionEffect(Balance.pe(PotionEffectType.RESISTANCE, 6000, 1));
+        player.addPotionEffect(Balance.pe(PotionEffectType.REGENERATION, 6000, 1));
 
         Location loc = player.getLocation();
         try {
@@ -322,8 +322,8 @@ public class OnePieceListener implements Listener {
             loc.getWorld().playSound(loc, Sound.BLOCK_BEACON_ACTIVATE, 1.0f, 1.6f);
         } catch (Exception ignored) {}
 
-        player.sendTitle("§f§l☀ SUN GOD NIKA ︱ GEAR 5", "§e¡Los Tambores de la Liberación resuenan! (5m)", 5, 50, 15);
-        player.sendActionBar(Component.text("§f☀ ¡JAJAJAJA! ¡ESTE ES EL GUERRERO DE LA LIBERACIÓN: GEAR 5! §e(5 minutos)"));
+        player.sendTitle("§f§l☀ SUN GOD NIKA ︱ GEAR 5", "§e¡Los Tambores de la Liberación resuenan! (45s)", 5, 50, 15);
+        player.sendActionBar(Component.text("§f☀ ¡JAJAJAJA! ¡ESTE ES EL GUERRERO DE LA LIBERACIÓN: GEAR 5! §e(45 s)"));
 
         plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
             activeGear5.remove(uuid);
@@ -335,7 +335,7 @@ public class OnePieceListener implements Listener {
                 player.removePotionEffect(PotionEffectType.REGENERATION);
                 player.sendMessage("§f[Rankup] El Gear 5 se apaga: el Guerrero de la Liberación descansa.");
             }
-        }, 6000L);
+        }, Balance.formTicks());
     }
 
     private void startJoyboyHeartbeatTask() {
@@ -380,8 +380,8 @@ public class OnePieceListener implements Listener {
                 || "GOMU_GOMU".equalsIgnoreCase(equipped) || "MERA_MERA".equalsIgnoreCase(equipped);
 
         if (hasFruit && (player.isInWater() || player.getLocation().getBlock().getType() == Material.WATER)) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 2, false, false));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 40, 1, false, false));
+            player.addPotionEffect(Balance.pe(PotionEffectType.SLOWNESS, 40, 2, false, false));
+            player.addPotionEffect(Balance.pe(PotionEffectType.WEAKNESS, 40, 1, false, false));
             return;
         }
 
@@ -413,6 +413,7 @@ public class OnePieceListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRubberFallBounce(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
+        if (!plugin.isWorldAllowed(player.getWorld())) return;
         if (event.getCause() != EntityDamageEvent.DamageCause.FALL) return;
         UUID uuid = player.getUniqueId();
 
@@ -442,9 +443,9 @@ public class OnePieceListener implements Listener {
 
             for (Entity e : player.getNearbyEntities(6.0, 3.5, 6.0)) {
                 if (e instanceof LivingEntity target && e != player && target.isValid() && target.getLocation().isChunkLoaded()) {
-                    target.damage(baseDamage, player);
+                    Balance.hit(player, target, baseDamage);
                     Vector knock = target.getLocation().toVector().subtract(loc.toVector()).normalize().multiply(1.5).setY(0.5);
-                    target.setVelocity(knock);
+                    Balance.knock(target, knock);
                 }
             }
             if (plugin.getProtectionGate() != null) {
@@ -470,7 +471,7 @@ public class OnePieceListener implements Listener {
                     // Bajrang Gun: Puño Colosal
                     Long cd = fruitSkillCooldown.get(uuid);
                     if (cd != null && now < cd) return;
-                    fruitSkillCooldown.put(uuid, now + 10000L); // 10s CD
+                    fruitSkillCooldown.put(uuid, now + Balance.cd(10000L)); // 10s CD
 
                     Location eye = player.getEyeLocation();
                     Vector dir = eye.getDirection().normalize();
@@ -486,8 +487,8 @@ public class OnePieceListener implements Listener {
                     player.sendTitle("§f§lBAJRANG GUN", "§e¡Puño Colosal de la Liberación!", 2, 35, 10);
                     for (Entity e : player.getNearbyEntities(10.0, 5.0, 10.0)) {
                         if (e instanceof LivingEntity target && e != player && target.isValid() && target.getLocation().isChunkLoaded()) {
-                            target.damage(28.0, player);
-                            target.setVelocity(dir.clone().multiply(2.2).setY(0.8));
+                            Balance.hit(player, target, 28.0);
+                            Balance.knock(target, dir.clone().multiply(2.2).setY(0.8));
                         }
                     }
                     if (plugin.getProtectionGate() != null) {
@@ -497,7 +498,7 @@ public class OnePieceListener implements Listener {
                     // Kaminari: Lanza un rayo eléctrico
                     Long cd = fruitSkillCooldown.get(uuid);
                     if (cd != null && now < cd) return;
-                    fruitSkillCooldown.put(uuid, now + 4000L); // 4s CD
+                    fruitSkillCooldown.put(uuid, now + Balance.cd(4000L)); // 4s CD
 
                     Location loc = player.getLocation().add(0, 3, 0);
                     loc.getWorld().strikeLightningEffect(loc);
@@ -511,7 +512,7 @@ public class OnePieceListener implements Listener {
                         if (!p.getWorld().isChunkLoaded(p.getBlockX() >> 4, p.getBlockZ() >> 4)) break;
                         for (LivingEntity target : p.getWorld().getNearbyLivingEntities(p, 1.5)) {
                             if (target != player && target.isValid() && target.getLocation().isChunkLoaded()) {
-                                target.damage(16.0, player);
+                                Balance.hit(player, target, 16.0);
                                 target.getWorld().strikeLightningEffect(target.getLocation());
                             }
                         }
@@ -531,7 +532,7 @@ public class OnePieceListener implements Listener {
 
                 if (player.isSneaking()) {
                     // Dai Enkai: Entei (Emperador de las Llamas)
-                    fruitSkillCooldown.put(uuid, now + 12000L); // 12s CD
+                    fruitSkillCooldown.put(uuid, now + Balance.cd(12000L)); // 12s CD
                     Location eye = player.getEyeLocation();
                     Vector dir = eye.getDirection().normalize();
                     Location target = eye.clone().add(dir.multiply(14.0));
@@ -547,7 +548,7 @@ public class OnePieceListener implements Listener {
                     for (Entity e : player.getNearbyEntities(12.0, 6.0, 12.0)) {
                         if (e instanceof LivingEntity vic && e != player && vic.isValid() && vic.getLocation().isChunkLoaded()) {
                             vic.setFireTicks(160);
-                            vic.damage(24.0, player);
+                            Balance.hit(player, vic, 24.0);
                         }
                     }
                     if (plugin.getProtectionGate() != null) {
@@ -555,7 +556,7 @@ public class OnePieceListener implements Listener {
                     }
                 } else {
                     // Hiken: Puño de Fuego
-                    fruitSkillCooldown.put(uuid, now + 4000L); // 4s CD
+                    fruitSkillCooldown.put(uuid, now + Balance.cd(4000L)); // 4s CD
                     Vector dir = player.getEyeLocation().getDirection().normalize();
 
                     for (double d = 1.0; d <= 18.0; d += 0.7) {
@@ -567,7 +568,7 @@ public class OnePieceListener implements Listener {
                         for (LivingEntity vic : p.getWorld().getNearbyLivingEntities(p, 1.6)) {
                             if (vic != player && vic.isValid() && vic.getLocation().isChunkLoaded()) {
                                 vic.setFireTicks(100);
-                                vic.damage(14.0, player);
+                                Balance.hit(player, vic, 14.0);
                             }
                         }
                     }
@@ -588,7 +589,7 @@ public class OnePieceListener implements Listener {
 
                     Entity target = getTargetEntity(player, 25.0);
                     if (target instanceof LivingEntity livingTarget) {
-                        fruitSkillCooldown.put(uuid, now + 5000L);
+                        fruitSkillCooldown.put(uuid, now + Balance.cd(5000L));
                         Location pLoc = player.getLocation();
                         Location tLoc = livingTarget.getLocation();
 
@@ -623,7 +624,7 @@ public class OnePieceListener implements Listener {
                     // Salto a la velocidad de la luz (Yata no Kagami)
                     Long cd = fruitSkillCooldown.get(uuid);
                     if (cd != null && now < cd) return;
-                    fruitSkillCooldown.put(uuid, now + 6000L); // 6s CD
+                    fruitSkillCooldown.put(uuid, now + Balance.cd(6000L)); // 6s CD
 
                     Vector dir = player.getEyeLocation().getDirection().normalize();
                     Location dest = player.getLocation().add(dir.clone().multiply(30.0));
@@ -650,7 +651,7 @@ public class OnePieceListener implements Listener {
             if (event.getAction() == Action.LEFT_CLICK_AIR) {
                 Long cd = fruitSkillCooldown.get(uuid);
                 if (cd != null && now < cd) return;
-                fruitSkillCooldown.put(uuid, now + 7000L); // 7s CD
+                fruitSkillCooldown.put(uuid, now + Balance.cd(7000L)); // 7s CD
 
                 Location eye = player.getEyeLocation();
                 Vector dir = eye.getDirection().normalize();
@@ -665,8 +666,8 @@ public class OnePieceListener implements Listener {
 
                 for (Entity e : player.getNearbyEntities(12.0, 5.0, 12.0)) {
                     if (e instanceof LivingEntity target && e != player && target.isValid() && target.getLocation().isChunkLoaded()) {
-                        target.damage(22.0, player);
-                        target.setVelocity(new Vector(0, 1.2, 0).add(dir.clone().multiply(1.4)));
+                        Balance.hit(player, target, 22.0);
+                        Balance.knock(target, new Vector(0, 1.2, 0).add(dir.clone().multiply(1.4)));
                     }
                 }
                 player.sendTitle("§f§lGURA GURA: SHIMA YURASHI", "§7¡El aire se agrieta en pedazos!", 2, 30, 8);
@@ -708,8 +709,8 @@ public class OnePieceListener implements Listener {
         }
 
         int rebirths = plugin.getRankManager().getRebirthCount(uuid);
-        double cdr = 1.0 - Math.min(0.5, rebirths * 0.01);
-        conquerorCooldown.put(uuid, now + (long)(30000L * cdr));
+        double cdr = Balance.cdr(rebirths);
+        conquerorCooldown.put(uuid, now + (long)(Balance.cd(30000L) * cdr));
 
         Location loc = player.getLocation();
         try {
@@ -726,15 +727,15 @@ public class OnePieceListener implements Listener {
             if (e instanceof LivingEntity target && e != player && target.isValid() && target.getLocation().isChunkLoaded()) {
                 knocked++;
                 if (target instanceof Monster) {
-                    if (target.getHealth() <= 30.0) {
-                        target.damage(999.0, player); // Desmayo/muerte instantánea para débiles
+                    if (target.getHealth() <= 30.0 && !Balance.isBoss(target)) {
+                        Balance.hit(player, target, 6.0); // aturde: ya no mata de un golpe
                     } else {
-                        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 140, 3));
-                        target.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 140, 2));
+                        target.addPotionEffect(Balance.pe(PotionEffectType.SLOWNESS, 140, 3));
+                        target.addPotionEffect(Balance.pe(PotionEffectType.WEAKNESS, 140, 2));
                     }
                 } else if (target instanceof Player victim) {
-                    victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 100, 2));
-                    victim.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 60, 0));
+                    victim.addPotionEffect(Balance.pe(PotionEffectType.SLOWNESS, 100, 2));
+                    victim.addPotionEffect(Balance.pe(PotionEffectType.BLINDNESS, 60, 0));
                     victim.sendTitle("§4§l¡VOLUNTAD DEL CONQUISTADOR!", "§7Abrumado por el Haki de " + player.getName(), 5, 30, 10);
                 }
             }
@@ -750,6 +751,7 @@ public class OnePieceListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onHakiCombatDefend(EntityDamageByEntityEvent event) {
         if (!(event.getEntity() instanceof Player defender)) return;
+        if (!plugin.isWorldAllowed(defender.getWorld())) return;
         UUID uuid = defender.getUniqueId();
         Rank rank = plugin.getRankManager().getPlayerRank(uuid);
         int tier = (rank != null) ? rank.getTier() : 0;
@@ -760,7 +762,7 @@ public class OnePieceListener implements Listener {
         boolean hasObservation = tier >= 28 || "HAKI".equalsIgnoreCase(equipped) || isGear5Active(uuid)
                 || (rank != null && rank.getAbilityType() == AbilityType.KENBUNSHOKU_HAKI);
 
-        if (hasObservation && Math.random() < 0.30) {
+        if (hasObservation && Balance.dodge(defender, 0.06)) {
             event.setCancelled(true);
             try {
                 Location dloc = defender.getLocation();
@@ -776,7 +778,7 @@ public class OnePieceListener implements Listener {
                 || (rank != null && rank.getAbilityType() == AbilityType.BUSOSHOKU_HAKI);
 
         if (hasArmament) {
-            event.setDamage(event.getDamage() * 0.75);
+            Balance.reduce(event, 0.75);
             try {
                 defender.getWorld().spawnParticle(Particle.SQUID_INK, defender.getLocation().add(0, 1.0, 0), 4, 0.2, 0.3, 0.2, 0.02);
             } catch (Exception ignored) {}
@@ -795,11 +797,11 @@ public class OnePieceListener implements Listener {
 
         // Bonificaciones de transformación
         if (isGear4Active(uuid)) {
-            event.setDamage(event.getDamage() * 1.6);
+            Balance.boost(event, 1.6);
         } else if (isGear5Active(uuid)) {
-            event.setDamage(event.getDamage() * 1.75);
+            Balance.boost(event, 1.75);
         } else if (isGear3Active(uuid)) {
-            event.setDamage(event.getDamage() * 1.5);
+            Balance.boost(event, 1.5);
         }
 
         // Haki de Armamento (Ofensivo: +45% daño físico)
@@ -807,7 +809,7 @@ public class OnePieceListener implements Listener {
                 || (rank != null && rank.getAbilityType() == AbilityType.BUSOSHOKU_HAKI);
 
         if (hasArmament) {
-            event.setDamage(event.getDamage() * 1.45);
+            Balance.boost(event, 1.45);
             try {
                 Location tLoc = event.getEntity().getLocation().add(0, 1.0, 0);
                 attacker.getWorld().spawnParticle(Particle.SQUID_INK, tLoc, 8, 0.25, 0.35, 0.25, 0.03);

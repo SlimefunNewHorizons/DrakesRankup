@@ -336,8 +336,8 @@ public class DragonBallListener implements Listener {
         UUID uuid = player.getUniqueId();
         long now = System.currentTimeMillis();
         int rebirths = plugin.getRankManager().getRebirthCount(uuid);
-        double cdr = 1.0 - Math.min(0.5, rebirths * 0.01);
-        cooldowns.put(uuid, now + (long)((cdSeconds * 1000L) * cdr));
+        double cdr = Balance.cdr(rebirths);
+        cooldowns.put(uuid, now + (long)(Math.max(cdSeconds * 1000L, type.equals("MUI") ? 300000L : Balance.formCooldownMs()) * cdr));
 
         Location loc = player.getLocation();
 
@@ -347,14 +347,14 @@ public class DragonBallListener implements Listener {
         } catch (Exception ignored) {}
 
         if (type.equals("SSJ_2")) {
-            activeSSJ2.put(uuid, now + 300000L); // 5 minutes
+            activeSSJ2.put(uuid, now + Balance.formMs());
             playAwakeningBurst(player, Color.fromRGB(255, 230, 40), Color.fromRGB(255, 255, 100), Particle.ELECTRIC_SPARK, Sound.ENTITY_LIGHTNING_BOLT_THUNDER);
-            player.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 6000, 1));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 6000, 1));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 6000, 1));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 6000, 0));
+            player.addPotionEffect(Balance.pe(PotionEffectType.STRENGTH, 6000, 1));
+            player.addPotionEffect(Balance.pe(PotionEffectType.SPEED, 6000, 1));
+            player.addPotionEffect(Balance.pe(PotionEffectType.JUMP_BOOST, 6000, 1));
+            player.addPotionEffect(Balance.pe(PotionEffectType.RESISTANCE, 6000, 0));
             player.sendTitle("§e§lSUPER SAIYAJIN 2", "§6Bio-electric arcs and colossal strength!", 5, 50, 10);
-            player.sendActionBar(Component.text("§e⚡ SSJ2 ACTIVE! Bio-electric arcs, Strength II & Speed II for 5 minutes"));
+            player.sendActionBar(Component.text("§e⚡ SSJ2 ACTIVE! Bio-electric arcs, Strength I & Speed II for 45 seconds"));
 
             plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
                 activeSSJ2.remove(uuid);
@@ -365,13 +365,13 @@ public class DragonBallListener implements Listener {
                     player.removePotionEffect(PotionEffectType.RESISTANCE);
                     player.sendMessage("§e[Rankup] Super Saiyajin 2 has ended.");
                 }
-            }, 6000L);
+            }, Balance.formTicks());
 
         } else if (type.equals("MUI")) {
-            activeMUI.put(uuid, now + 60000L); // 60 seconds
+            activeMUI.put(uuid, now + 8000L); // esquiva total solo 8 s
             playMuiActivationFx(player);
             player.sendTitle("§f§lULTRA INSTINCT", "§bMastered Ultra Instinct activated", 5, 40, 5);
-            player.sendActionBar(Component.text("§f⚡ TOTAL EVASION ACTIVE FOR 60 SECONDS!"));
+            player.sendActionBar(Component.text("§f⚡ TOTAL EVASION ACTIVE FOR 8 SECONDS!"));
 
             List<Long> history = muiUsageHistory.computeIfAbsent(uuid, k -> new ArrayList<>());
             history.removeIf(t -> now - t > 120_000L);
@@ -388,31 +388,31 @@ public class DragonBallListener implements Listener {
                         player.sendMessage("§7[Rankup] Ultra Instinct has ended.");
                     }
                 }
-            }, 1200L);
+            }, 160L);
 
         } else if (type.equals("ULTRA_EGO")) {
-            activeUltraEgo.put(uuid, now + 300000L); // 5 minutes
+            activeUltraEgo.put(uuid, now + Balance.formMs());
             playAwakeningBurst(player, Color.fromRGB(160,60,220), Color.fromRGB(90,20,140), Particle.WITCH, Sound.ENTITY_ELDER_GUARDIAN_CURSE);
             player.sendTitle("§5§lMEGA INSTINCT (ULTRA EGO)", "§dDamage taken increases your destructive power", 5, 40, 5);
-            player.sendActionBar(Component.text("§5⚡ HAKAI AURA ACTIVE FOR 5 MINUTES!"));
+            player.sendActionBar(Component.text("§5⚡ HAKAI AURA ACTIVE FOR 45 SECONDS!"));
 
             plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
                 activeUltraEgo.remove(uuid);
                 if (player.isOnline()) {
                     player.sendMessage("§5[Rankup] Mega Instinct has faded.");
                 }
-            }, 6000L);
+            }, Balance.formTicks());
 
         } else if (type.equals("GOHAN_BEAST")) {
-            activeGohanBeast.put(uuid, now + 300000L); // 5 minutes
+            activeGohanBeast.put(uuid, now + Balance.formMs());
             playAwakeningBurst(player, Color.fromRGB(245,245,255), Color.fromRGB(230,70,160), Particle.ELECTRIC_SPARK, Sound.ENTITY_RAVAGER_ROAR);
             player.sendTitle("§d§lGOHAN BEAST", "§fUnleashed fury! Maximum critical burst", 5, 40, 5);
-            player.sendActionBar(Component.text("§d⚡ +75% CRITICAL BURST ACTIVE FOR 5 MINUTES!"));
+            player.sendActionBar(Component.text("§d⚡ +75% CRITICAL BURST ACTIVE FOR 45 SECONDS!"));
 
             // Negative side effect: severe metabolic hunger burn
             try {
                 player.setFoodLevel(Math.max(2, player.getFoodLevel() - 8));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 200, 1));
+                player.addPotionEffect(Balance.pe(PotionEffectType.HUNGER, 200, 1));
             } catch (Exception ignored) {}
             player.sendMessage("§c[Gohan Beast] §7The beastly effort drained your vitality (Hunger increased).");
 
@@ -424,10 +424,10 @@ public class DragonBallListener implements Listener {
             }, 400L);
 
         } else if (type.equals("BROLY_LSSJ")) {
-            activeBroly.put(uuid, now + 300000L); // 5 minutes
+            activeBroly.put(uuid, now + Balance.formMs());
             playAwakeningBurst(player, Color.fromRGB(120,230,80), Color.fromRGB(60,150,40), Particle.HAPPY_VILLAGER, Sound.ENTITY_WARDEN_ROAR);
-            player.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 6000, 1)); // Fuerza II (berserker equilibrado)
-            player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 6000, 1)); // Resistance II
+            player.addPotionEffect(Balance.pe(PotionEffectType.STRENGTH, 6000, 1)); // Fuerza II (berserker equilibrado)
+            player.addPotionEffect(Balance.pe(PotionEffectType.RESISTANCE, 6000, 1)); // Resistance II
             player.sendTitle("§a§lBROLY BERSERKER (LSSJ)", "§2Uncontrollable destructive fury", 5, 40, 5);
             player.sendActionBar(Component.text("§a⚡ STRENGTH III & RESISTANCE II ACTIVE!"));
 
@@ -439,17 +439,17 @@ public class DragonBallListener implements Listener {
                     player.removePotionEffect(PotionEffectType.STRENGTH);
                     player.removePotionEffect(PotionEffectType.RESISTANCE);
                     // Negative side effect: Slowness post-rage
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 120, 0));
+                    player.addPotionEffect(Balance.pe(PotionEffectType.SLOWNESS, 120, 0));
                     player.sendMessage("§c[Broly LSSJ] §7Berserker rage fades: you suffer muscle fatigue (Slowness).");
                 }
             }, 400L);
 
         } else if (type.equals("SSJ_BLUE")) {
-            activeSSJBlue.put(uuid, now + 300000L);
+            activeSSJBlue.put(uuid, now + Balance.formMs());
             playAwakeningBurst(player, Color.fromRGB(70,150,255), Color.fromRGB(150,230,255), Particle.SOUL_FIRE_FLAME, Sound.ENTITY_ENDER_DRAGON_GROWL);
-            player.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 6000, 1));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 6000, 1));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 6000, 0)); // Resistencia I: temple divino
+            player.addPotionEffect(Balance.pe(PotionEffectType.STRENGTH, 6000, 1));
+            player.addPotionEffect(Balance.pe(PotionEffectType.SPEED, 6000, 1));
+            player.addPotionEffect(Balance.pe(PotionEffectType.RESISTANCE, 6000, 0)); // Resistencia I: temple divino
             player.sendTitle("§9§lSUPER SAIYAN BLUE", "§bStrength, speed and divine resolve", 5, 40, 5);
             player.sendActionBar(Component.text("§9⚡ Strength I · Speed II · Resistance I for 20s!"));
 
@@ -459,17 +459,17 @@ public class DragonBallListener implements Listener {
                     player.removePotionEffect(PotionEffectType.STRENGTH);
                     player.removePotionEffect(PotionEffectType.SPEED);
                     player.removePotionEffect(PotionEffectType.RESISTANCE);
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 80, 0)); // coste: ki agotado
+                    player.addPotionEffect(Balance.pe(PotionEffectType.SLOWNESS, 80, 0)); // coste: ki agotado
                     player.sendMessage("§9[Rankup] Super Saiyan Blue fades: ki exhausted (Slowness).");
                 }
             }, 400L);
 
         } else if (type.equals("SSJ_GOD")) {
-            activeSSJGod.put(uuid, now + 300000L);
+            activeSSJGod.put(uuid, now + Balance.formMs());
             playAwakeningBurst(player, Color.fromRGB(255,80,80), Color.fromRGB(255,200,90), Particle.FLAME, Sound.ENTITY_LIGHTNING_BOLT_THUNDER);
-            player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 6000, 1));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 6000, 0));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 6000, 1));
+            player.addPotionEffect(Balance.pe(PotionEffectType.REGENERATION, 6000, 1));
+            player.addPotionEffect(Balance.pe(PotionEffectType.SPEED, 6000, 0));
+            player.addPotionEffect(Balance.pe(PotionEffectType.ABSORPTION, 6000, 1));
             player.sendTitle("§c§lSUPER SAIYAJIN GOD", "§eDivine ki of healing and grace", 5, 40, 5);
             player.sendActionBar(Component.text("§c⚡ Regeneration II · Absorption · Speed for 35s!"));
 
@@ -481,15 +481,15 @@ public class DragonBallListener implements Listener {
                     player.removePotionEffect(PotionEffectType.ABSORPTION);
                     player.sendMessage("§c[Rankup] Super Saiyajin God's divine ki has faded.");
                 }
-            }, 700L);
+            }, Balance.formTicks());
         } else if (type.equals("KAIOKEN")) {
-            activeKaioken.put(uuid, now + 300000L); // 5 minutes
+            activeKaioken.put(uuid, now + Balance.formMs());
             playAwakeningBurst(player, Color.fromRGB(255,20,30), Color.fromRGB(180,10,10), Particle.FLAME, Sound.ENTITY_WARDEN_HEARTBEAT);
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 6000, 2));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 6000, 1));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 6000, 1));
+            player.addPotionEffect(Balance.pe(PotionEffectType.SPEED, 6000, 2));
+            player.addPotionEffect(Balance.pe(PotionEffectType.STRENGTH, 6000, 1));
+            player.addPotionEffect(Balance.pe(PotionEffectType.JUMP_BOOST, 6000, 1));
             player.sendTitle("§c§lKAIO-KEN AWAKENED!", "§4Divine power multiplier x20", 5, 45, 10);
-            player.sendActionBar(Component.text("§c⚡ KAIO-KEN ACTIVE! Speed III · Strength II · Free flight (35s)"));
+            player.sendActionBar(Component.text("§c⚡ KAIO-KEN ACTIVE! Speed II · Strength I (45s)"));
 
             // Drenaje gradual de vitalidad por sobreesfuerzo cardiaco
             new BukkitRunnable() {
@@ -522,14 +522,14 @@ public class DragonBallListener implements Listener {
                     player.removePotionEffect(PotionEffectType.SPEED);
                     player.removePotionEffect(PotionEffectType.STRENGTH);
                     player.removePotionEffect(PotionEffectType.JUMP_BOOST);
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 100, 0));
+                    player.addPotionEffect(Balance.pe(PotionEffectType.SLOWNESS, 100, 0));
                     player.sendMessage("§c[Rankup] Kaio-ken has ended: your muscles can rest.");
                 }
-            }, 700L);
+            }, Balance.formTicks());
         }
 
         // Conceder vuelo libre de 15 segundos a toda transformación
-        grantTransformationFlight(player, 15);
+        grantTransformationFlight(player, Balance.flightSeconds(15));
     }
 
     private void applyMuiFatigue(Player player) {
@@ -544,8 +544,8 @@ public class DragonBallListener implements Listener {
         // Desgaste de hasta 4 corazones, pero NUNCA letal (deja minimo medio corazon).
         double desgaste = Math.min(8.0, Math.max(0.0, player.getHealth() - 1.0));
         if (desgaste > 0) player.damage(desgaste);
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 100, 2)); // Level III for 5s
-        player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 50, 0)); // 2.5s
+        player.addPotionEffect(Balance.pe(PotionEffectType.SLOWNESS, 100, 2)); // Level III for 5s
+        player.addPotionEffect(Balance.pe(PotionEffectType.BLINDNESS, 50, 0)); // 2.5s
 
         player.sendTitle("§c§lYOUR BODY HAS REACHED ITS LIMIT!", "§eDivine strain tore through your muscles", 10, 60, 15);
         player.sendMessage("§c§lYOUR BODY HAS REACHED ITS LIMIT! §7Ultra Instinct strain exceeds a mortal's limit.");
@@ -582,7 +582,7 @@ public class DragonBallListener implements Listener {
             return;
         }
 
-        spiritSwordCooldown.put(uuid, now + 12000L); // 12s cooldown
+        spiritSwordCooldown.put(uuid, now + Balance.cd(12000L));
 
         // Launch piercing beam of light
         Location eye = player.getEyeLocation();
@@ -608,7 +608,7 @@ public class DragonBallListener implements Listener {
                 if (!damaged.contains(entity)) {
                     damaged.add(entity);
                     try {
-                        entity.damage(14.0, player); // 7 hearts piercing damage
+                        Balance.hit(player, entity, 14.0); // 7 hearts piercing damage
                         entity.getWorld().spawnParticle(Particle.FLASH, entity.getLocation().add(0, 1.0, 0), 1);
                     } catch (Exception ignored) {}
                 }
@@ -652,7 +652,7 @@ public class DragonBallListener implements Listener {
             return;
         }
 
-        hakaiCooldown.put(uuid, now + 35000L); // 35s cooldown
+        hakaiCooldown.put(uuid, now + Balance.cd(35000L));
 
         Location eye = player.getEyeLocation();
         Vector dir = eye.getDirection().normalize();
@@ -685,13 +685,13 @@ public class DragonBallListener implements Listener {
 
                         if (entity instanceof Player victim) {
                             // PvP balance: NO instakill a jugadores (14.0 dano = 7 corazones + oscuridad)
-                            victim.damage(14.0, player);
-                            victim.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 80, 0));
-                            victim.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 80, 1));
+                            Balance.hit(player, victim, 14.0);
+                            victim.addPotionEffect(Balance.pe(PotionEffectType.DARKNESS, 80, 0));
+                            victim.addPotionEffect(Balance.pe(PotionEffectType.WITHER, 80, 1));
                             victim.sendMessage("§5§l¡HAKAI! §7Has sido alcanzado por la energia destructora de un Dios.");
                         } else {
                             // Mobs y jefes: Desintegracion colosal
-                            entity.damage(50.0, player);
+                            Balance.hit(player, entity, 14.0);
                         }
                     } catch (Exception ignored) {}
                 }
@@ -699,7 +699,7 @@ public class DragonBallListener implements Listener {
         }
 
         player.sendTitle("§5§l¡HAKAI!", "§dEnergia de la Destruccion desatada", 0, 25, 10);
-        player.sendActionBar(Component.text("§5⚡ ¡HAKAI DEPREDADOR DESATADO! §7(Recarga: 35s)"));
+        player.sendActionBar(Component.text("§5⚡ ¡HAKAI DEPREDADOR DESATADO! §7(Recarga larga)"));
     }
 
     // ==========================================
@@ -733,7 +733,7 @@ public class DragonBallListener implements Listener {
             return;
         }
 
-        zenoEraseCooldown.put(uuid, now + 90000L); // 90s cooldown
+        zenoEraseCooldown.put(uuid, now + Balance.cd(90000L));
         event.setCancelled(true);
 
         Location center = player.getLocation();
@@ -746,20 +746,21 @@ public class DragonBallListener implements Listener {
         } catch (Exception ignored) {}
 
         int erased = 0;
-        for (LivingEntity target : center.getWorld().getNearbyLivingEntities(center, 16.0)) {
+        for (LivingEntity target : center.getWorld().getNearbyLivingEntities(center, 10.0)) {
+            if (erased >= 12) break;
+            if (Balance.isBoss(target) || target.customName() != null) continue;
             if (target instanceof Monster || target instanceof Phantom
                     || target instanceof Slime || target instanceof Ghast) {
                 Location tLoc = target.getLocation();
                 try {
                     tLoc.getWorld().spawnParticle(Particle.POOF, tLoc.add(0, 0.5, 0), 15, 0.3, 0.3, 0.3, 0.05);
                 } catch (Exception ignored) {}
-                target.remove();
-                erased++;
+                if (Balance.hit(player, target, 14.0)) erased++;
             }
         }
 
         player.sendTitle("§b§l¡BORRADO OMNI-UNIVERSAL!", "§f" + erased + " entidades hostiles desvanecidas de la existencia", 5, 40, 15);
-        player.sendActionBar(Component.text("§b⚡ ¡BORRADO DE ZENO-SAMA! §e" + erased + " mobs erradicados §7(Recarga: 90s)"));
+        player.sendActionBar(Component.text("§b⚡ ¡BORRADO DE ZENO-SAMA! §e" + erased + " mobs erradicados §7(Recarga larga)"));
     }
 
     // ==========================================
@@ -816,18 +817,18 @@ public class DragonBallListener implements Listener {
         // NUNCA supera 20 segundos de recarga
         int effectiveTier = Math.min(100, Math.max(15, tier));
         double tRatio = (effectiveTier - 15) / 85.0;
-        double rawCdSec = 20.0 - (tRatio * 18.0);
+        double rawCdSec = 60.0 - (tRatio * 30.0);
         int rebirths = plugin.getRankManager().getRebirthCount(uuid);
         double cdr = 1.0 - Math.min(0.50, rebirths * 0.01);
-        long cdMillis = Math.max(2000L, (long)(rawCdSec * cdr * 1000L));
+        long cdMillis = Math.max(30000L, (long)(rawCdSec * cdr * 1000L));
 
         kiFlightCooldown.put(uuid, now + cdMillis);
-        kiFlightImmunity.put(uuid, now + 15000L); // 15s de inmunidad total a caídas
+        kiFlightImmunity.put(uuid, now + 6000L); // 6s de inmunidad a caidas
 
         // Lanzamiento sónico direccional a donde mira (~80 a 100 bloques de distancia)
         Vector dir = player.getLocation().getDirection().normalize();
         double yLaunch = Math.max(0.42, dir.getY() * 1.15 + 0.35);
-        Vector launch = dir.clone().multiply(3.75).setY(yLaunch);
+        Vector launch = dir.clone().multiply(1.6).setY(Math.min(yLaunch, 0.7));
         player.setVelocity(launch);
         player.setFallDistance(0);
 
@@ -842,13 +843,12 @@ public class DragonBallListener implements Listener {
             loc.getWorld().playSound(loc, Sound.ENTITY_GENERIC_EXPLODE, 0.8f, 1.8f);
         } catch (Exception ignored) {}
 
-        player.sendTitle("§b§lSUPER SONIC BOOST!", "§e100-block aerial propulsion", 5, 25, 10);
+        player.sendTitle("§b§lSUPER SONIC BOOST!", "§eShort aerial dash", 5, 25, 10);
         player.sendActionBar(Component.text(String.format("§b⚡ SUPER SONIC BOOST! §7(Cooldown: §e%.1fs§7)", cdMillis / 1000.0)));
 
-        // Conceder aprox 10 segundos de vuelo controlado aerodinámico y propulsión sónica
-        player.setAllowFlight(true);
-        player.setFlying(true);
-        player.setFlySpeed(0.18f);
+        // Solo un impulso: sin vuelo sostenido (el vuelo es de las tiendas VIP/Titan)
+        player.setAllowFlight(false);
+        player.setFlying(false);
 
         new BukkitRunnable() {
             int ticks = 0;
@@ -870,14 +870,14 @@ public class DragonBallListener implements Listener {
                     } catch (Exception ignored) {}
                 }
 
-                if (ticks >= 200 || !settings.isKiFlightEnabled() || !settings.isAbilitiesEnabled()) { // 10s o cancelacion por toggle
+                if (ticks >= 30 || !settings.isKiFlightEnabled() || !settings.isAbilitiesEnabled()) { // 10s o cancelacion por toggle
                     cancel();
                     if (player.isOnline()) {
                         player.setFlySpeed(0.10f); // Restaurar velocidad por defecto
                         if (!plugin.hasExternalFlight(player) && player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
                             player.setFlying(false);
                             player.setAllowFlight(false);
-                            player.sendMessage("§e[Sonic Boost] §7Sonic propulsion ended. Normal flight restored.");
+                            
                         }
                     }
                 }
@@ -1066,7 +1066,7 @@ public class DragonBallListener implements Listener {
         if (event.getDamager() instanceof Player attacker) {
             if (!plugin.isWorldAllowed(attacker.getWorld())) return;
             if (isGohanBeastActive(attacker.getUniqueId())) {
-                event.setDamage(event.getDamage() * 1.75);
+                Balance.boost(event, 1.75);
                 try {
                     Location loc = event.getEntity().getLocation().add(0, 1.0, 0);
                     attacker.getWorld().spawnParticle(Particle.CRIMSON_SPORE, loc, 25, 0.3, 0.5, 0.3, 0.1);
@@ -1088,7 +1088,7 @@ public class DragonBallListener implements Listener {
 
                 double missingFraction = Math.max(0.0, Math.min(0.9, (maxHp - attacker.getHealth()) / maxHp));
                 double multiplier = 1.0 + (missingFraction * 0.60); // up to +60% damage
-                event.setDamage(event.getDamage() * multiplier);
+                Balance.boost(event, multiplier);
 
                 try {
                     Location loc = event.getEntity().getLocation().add(0, 1.0, 0);
@@ -1109,7 +1109,7 @@ public class DragonBallListener implements Listener {
             if (isUltraEgoActive(victim.getUniqueId())) {
                 if (event.getDamager() instanceof LivingEntity damager) {
                     try {
-                        damager.damage(3.5, victim);
+                        Balance.hit(victim, damager, 3.5);
                         Location loc = damager.getLocation().add(0, 1.0, 0);
                         damager.getWorld().spawnParticle(Particle.WITCH, loc, 15, 0.2, 0.3, 0.2, 0.05);
                     } catch (Exception ignored) {}
@@ -1253,7 +1253,7 @@ public class DragonBallListener implements Listener {
     }
 
     public void grantTransformationFlight(Player player, int seconds) {
-        if (player == null || !player.isOnline()) return;
+        if (player == null || !player.isOnline() || seconds <= 0) return;
         UUID uuid = player.getUniqueId();
         if (!player.getAllowFlight()) {
             player.setAllowFlight(true);

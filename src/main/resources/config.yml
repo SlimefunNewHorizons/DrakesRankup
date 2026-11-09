@@ -22,6 +22,7 @@ settings:
   # Anuncios en el Chat de Minecraft (Broadcast global)
   broadcast:
     enabled: true
+    every-tier: 5   # anuncio global solo en hitos; los demas ascensos son locales (titulo, barra, particulas)
     message:
       - "&8&m--------------------------------------------------"
       - " &e&lDRAKES RANKUP &8✦ &6HISTORIC ASCENT!"
@@ -99,16 +100,44 @@ messages:
 gojo:
   infinity:
     min-tier: 19
-    base-chance: 0.15   # prob. de detener un proyectil en el tier minimo
-    per-tier: 0.01      # +1% por tier
-    max-chance: 0.60    # los golpes cuerpo a cuerpo usan la mitad
+    base-chance: 0.08   # prob. de detener un proyectil en el tier minimo
+    per-tier: 0.003
+    max-chance: 0.25    # los golpes cuerpo a cuerpo usan la mitad
   domain:
-    cooldown-seconds: 90
-    duration-seconds: 8
-    radius: 12
-    supreme-tier: 60    # x1.5 de radio y duracion
+    cooldown-seconds: 180
+    duration-seconds: 6
+    radius: 8
+    supreme-tier: 60    # x1.25 de radio y duracion
     vacio: { min-tier: 19 }
-    santuario: { min-tier: 20, damage: 3.0 }
+    santuario: { min-tier: 20, damage: 1.5 }   # por pulso (cada 0.5 s); no afecta a jugadores ni jefes
+
+# TECHO DE PODER de los rangos (ver ability/Balance.java). Los rangos VIP/Titan de la tienda mandan:
+# Zeus/Thor = Fuerza II + Resistencia II + Velocidad IV por armadura; Titan Caos = UltraGod 45 s / 30 min,
+# armadura Prot 40 y arma +10 de dano. Aqui nada pasa de Fuerza I / Resistencia I / Velocidad II.
+balance:
+  pve-hit-cap: 14            # dano maximo por golpe de habilidad a mobs
+  pve-window-cap: 28         # dano de habilidad maximo a un mismo mob cada 5 s
+  boss-health: 100           # vida maxima desde la que un mob cuenta como jefe
+  boss-hit-cap: 6
+  boss-window-cap: 12
+  pvp-hit-cap: 4             # contra jugadores (respeta claims, ni creativo ni espectador)
+  pvp-window-cap: 6
+  knockback: 1.0
+  pvp-knockback: 0.5         # a jefes no se les empuja
+  bonus-scale: 0.4           # los multiplicadores de dano de rango solo aplican el 40 %
+  pve-bonus-cap: 4           # dano extra maximo por golpe (suma de todas las fuentes)
+  pvp-bonus-cap: 1.5
+  boss-bonus-cap: 2
+  min-single-mitigation: 0.92   # ninguna pasiva reduce mas de 8 % por separado
+  min-total-mitigation: 0.85    # tope total -15 %
+  dodge-max-chance: 0.06
+  dodge-cooldown-seconds: 12
+  cooldown-multiplier: 2.5   # sobre los cooldowns codificados de las habilidades activas
+  min-cooldown-seconds: 10
+  rebirth-cdr-max: 0.2
+  form-seconds: 45           # duracion de las transformaciones (antes 240-300 s)
+  form-cooldown-seconds: 240
+  transformation-flight-seconds: 0   # sin vuelo gratis: el vuelo es de la tienda
 
 # Herobrine publico (/herobrine)
 herobrine:

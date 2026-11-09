@@ -96,18 +96,18 @@ public class SpecialAbilitiesListener implements Listener {
         }
 
         int rebirths = plugin.getRankManager().getRebirthCount(uuid);
-        double cdr = 1.0 - Math.min(0.5, rebirths * 0.01);
-        magnetCooldown.put(uuid, now + (long)(8000L * cdr)); // 8s cooldown
+        double cdr = Balance.cdr(rebirths);
+        magnetCooldown.put(uuid, now + (long)(Balance.cd(8000L) * cdr));
 
         Location pLoc = player.getLocation();
 
-        player.sendTitle("§b§lMAGNETIC VORTEX", "§7Mass attraction deployed (200 blocks)", 5, 30, 10);
+        player.sendTitle("§b§lMAGNETIC VORTEX", "§7Mass attraction deployed (30 blocks)", 5, 30, 10);
         player.sendActionBar(Component.text("§b🧲 VORTEX ACTIVE! Pulling all nearby item stacks."));
         player.playSound(pLoc, Sound.BLOCK_BEACON_ACTIVATE, 1.2f, 1.6f);
         player.playSound(pLoc, Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 1.2f, 0.8f);
 
         int attractedCount = 0;
-        double radius = 200.0;
+        double radius = 30.0;
         for (Entity e : player.getNearbyEntities(radius, radius, radius)) {
             if (e instanceof Item item && item.isValid() && !item.isDead() && item.getLocation().isChunkLoaded()) {
                 Vector dir = pLoc.toVector().subtract(item.getLocation().toVector());
@@ -128,6 +128,7 @@ public class SpecialAbilitiesListener implements Listener {
         if (event.getAction() != Action.LEFT_CLICK_AIR && event.getAction() != Action.LEFT_CLICK_BLOCK) return;
         Player player = event.getPlayer();
         if (!player.isSneaking()) return;
+        if (!plugin.isWorldAllowed(player.getWorld())) return;
 
         Rank rank = plugin.getRankManager().getPlayerRank(player.getUniqueId());
         if (rank == null) return;
@@ -155,9 +156,9 @@ public class SpecialAbilitiesListener implements Listener {
             player.sendActionBar(Component.text("§c✖ Filos Danzantes (Espadas Voladoras) desvanecidos."));
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 1.0f, 1.2f);
         } else {
-            activeDancingBlades.put(uuid, now + 300000L); // 5 minutos de uso
+            activeDancingBlades.put(uuid, now + Balance.formMs());
             spawnBladesForPlayer(player);
-            player.sendTitle("§c§lFILOS DANZANTES", "§7Arsenal de espadas flotantes desplegado (5m)", 5, 40, 10);
+            player.sendTitle("§c§lFILOS DANZANTES", "§7Arsenal de espadas flotantes desplegado (45s)", 5, 40, 10);
             player.sendActionBar(Component.text("§c⚔ ¡ESPADAS ESPECTRALES ACTIVAS! Orbitando y aniquilando hostiles."));
             player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.0f, 1.5f);
             player.playSound(player.getLocation(), Sound.ITEM_TRIDENT_RETURN, 1.0f, 1.2f);
@@ -339,15 +340,15 @@ public class SpecialAbilitiesListener implements Listener {
 
                     Location pLoc = player.getLocation();
                     ItemStack hand = player.getInventory().getItemInMainHand();
-                    double baseDamage = 16.0;
+                    double baseDamage = 4.0;
                     if (hand.getType().name().endsWith("_SWORD") || hand.getType().name().endsWith("_AXE")) {
-                        baseDamage = 26.0;
+                        baseDamage = 6.0;
                     }
                     int rebirths = plugin.getRankManager().getRebirthCount(uuid);
                     double finalDamage = baseDamage * (1.0 + rebirths * 0.04);
 
                     int attacked = 0;
-                    for (Entity entity : player.getNearbyEntities(11.0, 5.0, 11.0)) {
+                    for (Entity entity : player.getNearbyEntities(6.0, 3.0, 6.0)) {
                         if (!entity.isValid() || !entity.getLocation().isChunkLoaded()) continue;
                         if (isHostileTarget(entity)) {
                             LivingEntity target = (LivingEntity) entity;
@@ -356,7 +357,7 @@ public class SpecialAbilitiesListener implements Listener {
                             // MARCAR METADATA PARA EVITAR BUCLES RECURSIVOS (Saitama, Gura Gura, etc.)
                             try {
                                 target.setMetadata(ABILITY_DAMAGE_META, new FixedMetadataValue(plugin, true));
-                                target.damage(finalDamage, player);
+                                Balance.hit(player, target, finalDamage);
                             } finally {
                                 target.removeMetadata(ABILITY_DAMAGE_META, plugin);
                             }
@@ -369,7 +370,7 @@ public class SpecialAbilitiesListener implements Listener {
                             } catch (Exception ignored) {}
 
                             attacked++;
-                            if (attacked >= 5) break;
+                            if (attacked >= 3) break;
                         }
                     }
 
@@ -380,7 +381,7 @@ public class SpecialAbilitiesListener implements Listener {
                     }
                 }
             }
-        }.runTaskTimer(plugin, 10L, 10L);
+        }.runTaskTimer(plugin, 10L, 30L);
     }
 
     private boolean isHostileTarget(Entity e) {
