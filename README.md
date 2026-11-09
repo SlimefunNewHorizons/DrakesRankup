@@ -1,103 +1,90 @@
-<div align= center>
+<div align="center">
 
-![DrakesRankup](banner.svg)
+  <img src="https://raw.githubusercontent.com/SlimefunNewHorizons/DrakesRankup/main/banner.svg" alt="DrakesRankup Banner" width="920" />
 
-# ⛩️ DrakesRankup
+# ⚡ DrakesRankup — Drake Edition
 
-**Sistema de progresión por rangos anime/shōnen, auras, poderes y sumidero económico de late-game para DrakesCraft.**
+**Modular Rank Progression, Dynamic Requirements Engine & Multi-Tier Rewards**
 
-Paper 1.21.11 · Java 21 · LuckPerms · Essentials · Slimefun
+<p>
+  <a href="https://github.com/SlimefunNewHorizons/DrakesRankup"><img src="https://img.shields.io/badge/GitHub-DrakesRankup-181717?style=for-the-badge&logo=github" alt="GitHub"/></a>
+  <img src="https://img.shields.io/badge/Slimefun4-Drake_Edition-22C55E?style=for-the-badge&logo=curseforge&logoColor=white" alt="Slimefun4"/>
+  <img src="https://img.shields.io/badge/Paper-1.21.11-38BDF8?style=for-the-badge&logo=minecraft&logoColor=white" alt="Paper 1.21.11"/>
+  <img src="https://img.shields.io/badge/Java-21-F89820?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 21"/>
+</p>
+
+[🇬🇧 **English**](README.md) · [🇪🇸 **Español**](README_ES.md)
+
+</div>
+
+> ### 🏰 Join the Official DrakesCraft Community!
+> 
+> * 🎮 **Server IP**: `mc.drakescraft.cl` *(Java 1.21.11 & Bedrock Port 25565 / 19132)*
+> * 💬 **Official Discord**: [discord.gg/drakescraft](https://discord.gg/rv3vtXZTk7) — *Check out `#general-english`!*
+> * 🌐 **Website & Guides**: [web.drakescraft.cl](https://web.drakescraft.cl) — 🛒 **Store**: [web.drakescraft.cl/store](https://web.drakescraft.cl/store.html)
+> 
+> *Play with this addon alongside 80+ optimized expansions live on our technical survival network!*
+
+---
+
+## 📖 What is DrakesRankup?
+
+DrakesRankup drives player progression with customizable rank requirements (Dracmas, playtime, block breaks, Slimefun researches) and automated perk unlocking.
+
+---
+
+## ⚙️ Key Features & Systems
+
+* 🏆 **Flexible Requirements**: Combine economy costs, playtime thresholds, and Slimefun researches into rank criteria.
+* 📋 **Intuitive GUI Ladder**: Visual `/rankup` and `/ranks` interfaces showing current progress percentages.
+* 🎁 **Automated Tier Rewards**: Grant commands, permissions, vault pages, and crate keys upon ranking up.
+
+---
+
+## 📋 Technical Compatibility
+
+| Parameter | Requirement |
+|---|---|
+| **Server Software** | Paper / Purpur / Folia **1.21.11** |
+| **Java Runtime** | **Java 21** LTS |
+| **Required Core** | [Slimefun4-Drake](https://github.com/SlimefunNewHorizons/Slimefun4-Drake) |
+| **Architecture** | 100% Server-Side (Vanilla Minecraft clients can join without installing client mods) |
+
+---
+
+## 📥 Installation
+
+1. Download the latest release `.jar` from the [Releases](https://github.com/SlimefunNewHorizons/DrakesRankup/releases) tab or [Modrinth](https://modrinth.com/organization/drakescraft-labs).
+2. Place the `.jar` into your server's `plugins/` directory alongside `Slimefun4-Drake.jar`.
+3. Start or restart your server. Recipes and machines will appear automatically in the Slimefun guide (`/sf guide`).
+
+---
+
+## 🛠️ Building from Source
+
+```bash
+git clone https://github.com/SlimefunNewHorizons/DrakesRankup.git
+cd DrakesRankup
+mvn clean package -DskipTests
+```
+
+The compiled artifact will be located under `target/DrakesRankup.jar`.
+
+---
+
+<div align="center">
+
+**Developed and Maintained by [DrakesCraft Labs](https://github.com/SlimefunNewHorizons)**  
+Licensed under **MIT**.
 
 </div>
 
 ---
 
-## Qué hace
+## 📄 License & Upstream Attribution
 
-DrakesRankup es la escalera de progresión de largo plazo de DrakesCraft: **100 tiers (10 Divisiones)**
-de rango que el jugador sube pagando desde su economía, cada uno con **aura
-visual, habilidades y transformaciones** de temática anime. Está pensado como
-**sumidero económico**: da a los jugadores ricos algo en qué gastar sin romper el
-balance del servidor.
+This project is a sovereign fork maintained by [**JackStar6677-1**](https://github.com/JackStar6677-1) under [**DrakesCraft Labs**](https://github.com/SlimefunNewHorizons).
 
-Sólo opera en las modalidades personalizadas (**Slimefun, OneBlock, SkyBlock**);
-el **Clásico** queda excluido a propósito.
-
----
-
-## Características
-
-### Progresión (100 Tiers / 10 Divisiones)
-- **100 tiers** de rango con coste creciente y sincronización en tiempo real con LuckPerms.
-- **10 Divisiones (I a X)** navegables en GUI interactiva (/ranks o /rangos) con botones de cambio rápido entre Divisiones I-V y VI-X.
-- **Auto-reparación de rango al entrar**: si LuckPerms y el tier se desalinean
-  (incluso offline), se reconcilian solos.
-- **Bolsa de ascenso** sin tope para acumular pagos de los rangos que superan el
-  tope de dinero en mano.
-
-### Habilidades y Combate Épico
-- **Golpe Serio de Saitama (Buff True Damage)**:
-  - Onda sónica cinética devastadora (DamageType.SONIC_BOOM) que perfora armaduras infinitas (Infinity Armor), Protección vanilla y resistencias extremas.
-  - Rompeescudos integrado: inutiliza escudos rivales durante 8 segundos.
-  - Escalado de daño cinético con umbral mínimo de verdadero daño (True Damage Floor) basado en rebirths y vida máxima.
-  - Knockback masivo con partículas Warden Sonic Boom y efectos de aturdimiento (Slowness III y Blindness).
-- **Empuje cinético** (Shunpo): impulso direccional con doble salto y cooldown.
-- **Vuelo de Ki** (tier 31+): dash sónico con inmunidad a caída.
-- **Convivencia con el vuelo de rango**: si el jugador tiene fly legítimo
-  (Essentials, FlyingBubble, AngelGem o staff), las habilidades de impulso **no** secuestran su
-  vuelo. El doble salto vuela; no se convierte en dash.
-
-### Auras y efectos visuales
-- **Cobertura continua tier 1–100**, distribuida armónicamente en 10 divisiones. La densidad de partículas escala con el tier dentro de cada franja.
-- **Auras de transformación** para los poderes anime activos (MUI, Ultra Ego,
-  Gohan Beast, Broly, SSJ Blue/God…).
-- **Tres niveles de intensidad**: completo → reducido → apagado. El reducido
-  aligera a la mitad la densidad y el tráfico.
-
-### Staff
-- **Modo Ángel** (/angel): invulnerabilidad y aura de halo doble para
-  administración.
-
----
-
-## Comandos
-
-| Comando | Alias | Descripción |
-|---|---|---|
-| /rankup | 
-anks, 
-angos, subirrango | Abre la GUI con /ranks o /rangos, o gestiona ascensos. |
-| /rankup max [jugador] | — | Sube al nivel máximo posible según el saldo actual. |
-| /rankup particles | — | Cicla la intensidad del aura: completo → reducido → apagado. |
-| /rankup admin set <jugador> <tier\|max> | — | Fija el tier exacto (1–100) o máximo de un jugador *(admin)*. |
-| /rankup admin max <jugador> | — | Lleva a un jugador directamente al Tier 100 *(admin)*. |
-| /transform | 	ransformaciones, ki, poderes | GUI de transformaciones y poderes anime. |
-| /angel | zenosama, zeno, daishinkan | Modo staff de deidad *(permiso \drakesrankup.staff\)*. |
-
----
-
-## Permisos
-
-| Permiso | Para qué |
-|---|---|
-| drakesrankup.staff | Comandos de staff (/angel, gestión). |
-| drakesrankup.admin | Bypass total; gestión de tiers administrativos. |
-| ssentials.fly | Tratado como vuelo legítimo: las habilidades no lo secuestran. |
-
----
-
-## Build
-
-\\\ash
-mvn clean package
-\\\
-
-El artefacto sale en \	arget/DrakesRankup-v1.0.0.jar\. Autor: **JackStar6677-1**.
-
----
-
-## 📄 License & Intellectual Property
-
-Copyright © 2026 [**JackStar6677-1**](https://github.com/JackStar6677-1) · [**DrakesCraft Labs**](https://github.com/SlimefunNewHorizons). All Rights Reserved.
-
-This software is **Source-Available** for public inspection and technical audit. Redistribution, commercial repackaging, or unauthorized derivative distribution without explicit written permission from the author is strictly prohibited.
+- **Original Project:** Created by the upstream authors and the open-source community ([Upstream Repository](https://github.com/Slimefun)).
+- **DrakesCraft Optimizations:** Modernized for Paper/Purpur 1.21.11+, Java 21 LTS, high concurrency, asynchronous safety, and exploit/duplication prevention.
+- **License:** Distributed under the original **MIT** license terms. See the [LICENSE](LICENSE) file for complete details.
