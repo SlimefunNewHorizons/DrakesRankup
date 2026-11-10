@@ -114,6 +114,7 @@ public class DrakesRankupPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(seriousPunchHandler, this);
 
 
+        Bukkit.getPluginManager().registerEvents(new com.drakescraft.rankup.listener.ClasicoCommandGate(this), this);
         Bukkit.getPluginManager().registerEvents(new RankupGuiListener(), this);
         Bukkit.getPluginManager().registerEvents(new TransformationGuiListener(), this);
         Bukkit.getPluginManager().registerEvents(kineticPushListener, this);
