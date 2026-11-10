@@ -33,6 +33,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 
 import java.util.*;
@@ -254,7 +255,7 @@ public class DragonBallListener implements Listener {
             }
         }
 
-        if (staffUI && transName.equals("MUI")) cdSeconds = 8; // el staff lo usa para eventos y pruebas
+        if (staffUI && transName.equals("MUI")) cdSeconds = 600; // staff: 10 min, es un momento de impacto y no un spam
         final long cdFinal = cdSeconds;
         long now = System.currentTimeMillis();
         long nextReady = cooldowns.getOrDefault(uuid, 0L);
@@ -1194,6 +1195,8 @@ public class DragonBallListener implements Listener {
                             w.spawnParticle(Particle.END_ROD, loc.clone().add(0, dy, 0), 2, 0.1, 0, 0.1, 0.0);
                             w.spawnParticle(Particle.DUST_COLOR_TRANSITION, loc.clone().add(0, dy, 0), 2, 0.25, 0, 0.25, 0, PLATA_A_CELESTE);
                         }
+                        burstShards(loc, 14, false);
+                        w.spawnParticle(Particle.BLOCK, loc.clone().add(0, 0.5, 0), 50, 0.6, 0.7, 0.6, 1, Material.WHITE_STAINED_GLASS.createBlockData());
                         w.strikeLightningEffect(loc);
                         w.playSound(loc, Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1.0f, 1.6f);
                         w.playSound(loc, Sound.ITEM_TRIDENT_THUNDER, 0.9f, 1.9f);
@@ -1222,15 +1225,39 @@ public class DragonBallListener implements Listener {
     // chispas, ceniza blanca, brillo de ojos y un campanilleo suave.
     private void startMuiAura(Player player) {
         final UUID uuid = player.getUniqueId();
+        // Esquirlas de cristal (BlockDisplay) que orbitan; el cliente interpola el movimiento y casi no cuestan.
+        final List<BlockDisplay> shards = new ArrayList<>();
+        try {
+            for (int i = 0; i < 6; i++) shards.add(spawnAuraShard(player));
+        } catch (Exception ignored) {}
         new BukkitRunnable() {
             int t = 0;
             @Override
             public void run() {
-                if (!player.isOnline() || !isMuiActive(uuid)) { cancel(); return; }
+                if (!player.isOnline() || !isMuiActive(uuid)) {
+                    for (BlockDisplay d : shards) d.remove();
+                    cancel();
+                    return;
+                }
                 if (t < 20) { t++; return; } // deja respirar la animacion de despertar
                 Location loc = player.getLocation();
                 var w = player.getWorld();
                 try {
+                    for (int i = 0; i < shards.size(); i++) {
+                        BlockDisplay d = shards.get(i);
+                        if (!d.isValid()) continue;
+                        double a = t * 0.22 + (Math.PI * 2 / shards.size()) * i;
+                        double r = 1.15 + 0.12 * Math.sin(t * 0.15 + i);
+                        double h = 0.35 + (i % 3) * 0.6 + 0.18 * Math.sin(t * 0.2 + i * 1.7);
+                        d.teleport(loc.clone().add(Math.cos(a) * r, h, Math.sin(a) * r));
+                        d.setTransformation(new Transformation(
+                                new org.joml.Vector3f(-0.04f, -0.28f, -0.04f),
+                                new org.joml.AxisAngle4f((float) (t * 0.4 + i), 0.3f, 1f, 0.2f),
+                                new org.joml.Vector3f(0.08f, 0.56f, 0.08f),
+                                new org.joml.AxisAngle4f()));
+                        d.setInterpolationDelay(0);
+                        d.setInterpolationDuration(2);
+                    }
                     double phase = t * 0.5;
                     double yy = ((t % 30) / 30.0) * 2.2;
                     for (int s = 0; s < 3; s++) {
@@ -1252,15 +1279,124 @@ public class DragonBallListener implements Listener {
         }.runTaskTimer(plugin, 1L, 2L);
     }
 
+    private BlockDisplay spawnAuraShard(Player player) {
+        return player.getWorld().spawn(player.getLocation(), BlockDisplay.class, e -> {
+            e.setBlock(Material.WHITE_STAINED_GLASS.createBlockData());
+            e.setBrightness(new Display.Brightness(15, 15));
+            e.setGlowing(true);
+            e.setGlowColorOverride(Color.fromRGB(190, 225, 255));
+            e.setPersistent(false);
+            e.setViewRange(0.5f);
+            e.setTeleportDuration(2);
+            e.setInterpolationDuration(2);
+            e.setTransformation(new Transformation(new org.joml.Vector3f(-0.04f, -0.28f, -0.04f), new org.joml.AxisAngle4f(),
+                    new org.joml.Vector3f(0.08f, 0.56f, 0.08f), new org.joml.AxisAngle4f()));
+        });
+    }
+
+    // Silueta fantasma (2 BlockDisplay: cuerpo y cabeza) que se estrecha y desaparece en ~0.5 s.
+    private void spawnGhost(Location at) {
+        final var w = at.getWorld();
+        final BlockDisplay body = w.spawn(at, BlockDisplay.class, e -> ghostInit(e,
+                new org.joml.Vector3f(-0.27f, 0.0f, -0.15f), new org.joml.Vector3f(0.54f, 1.45f, 0.3f)));
+        final BlockDisplay head = w.spawn(at, BlockDisplay.class, e -> ghostInit(e,
+                new org.joml.Vector3f(-0.22f, 1.5f, -0.22f), new org.joml.Vector3f(0.44f, 0.44f, 0.44f)));
+        plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+            for (BlockDisplay d : new BlockDisplay[]{body, head}) {
+                if (!d.isValid()) continue;
+                Transformation tr = d.getTransformation();
+                d.setInterpolationDelay(0);
+                d.setInterpolationDuration(10);
+                d.setTransformation(new Transformation(
+                        new org.joml.Vector3f(tr.getTranslation()).add(tr.getScale().x() * 0.45f, 0f, tr.getScale().z() * 0.45f),
+                        tr.getLeftRotation(),
+                        new org.joml.Vector3f(tr.getScale().x() * 0.1f, tr.getScale().y(), tr.getScale().z() * 0.1f),
+                        tr.getRightRotation()));
+            }
+        }, 2L);
+        plugin.getServer().getScheduler().runTaskLater(plugin, () -> { body.remove(); head.remove(); }, 14L);
+    }
+
+    private void ghostInit(BlockDisplay e, org.joml.Vector3f translation, org.joml.Vector3f scale) {
+        e.setBlock(Material.LIGHT_BLUE_STAINED_GLASS.createBlockData());
+        e.setBrightness(new Display.Brightness(15, 15));
+        e.setGlowing(true);
+        e.setGlowColorOverride(Color.fromRGB(220, 235, 255));
+        e.setPersistent(false);
+        e.setViewRange(0.6f);
+        e.setTransformation(new Transformation(translation, new org.joml.AxisAngle4f(), scale, new org.joml.AxisAngle4f()));
+    }
+
     // Fin del estado: la aura se disipa subiendo en cenizas blancas.
     private void playMuiEndFx(Player player) {
         try {
             Location loc = player.getLocation();
             var w = player.getWorld();
-            w.spawnParticle(Particle.WHITE_ASH, loc.clone().add(0, 1.2, 0), 40, 0.5, 0.9, 0.5, 0.02);
-            w.spawnParticle(Particle.END_ROD, loc.clone().add(0, 1.0, 0), 12, 0.4, 0.8, 0.4, 0.04);
-            w.playSound(loc, Sound.BLOCK_BEACON_DEACTIVATE, 0.6f, 1.6f);
+            player.sendTitle("§7§lEl instinto se apaga", "§8tu cuerpo vuelve a ser tuyo", 5, 35, 15);
+            // cristales que revientan hacia afuera y caen, aura que colapsa, ceniza y grietas de sonido
+            burstShards(loc, 18, true);
+            w.spawnParticle(Particle.BLOCK, loc.clone().add(0, 0.9, 0), 70, 0.5, 0.9, 0.5, 0.15, Material.WHITE_STAINED_GLASS.createBlockData());
+            w.spawnParticle(Particle.WHITE_ASH, loc.clone().add(0, 1.2, 0), 60, 0.6, 1.0, 0.6, 0.02);
+            w.spawnParticle(Particle.END_ROD, loc.clone().add(0, 1.0, 0), 25, 0.5, 0.9, 0.5, 0.08);
+            w.spawnParticle(Particle.FLASH, loc.clone().add(0, 1.0, 0), 1, 0, 0, 0, 0, org.bukkit.Color.fromRGB(190, 215, 255));
+            for (int i = 0; i < 36; i++) {
+                double ang = (Math.PI * 2 / 36) * i;
+                w.spawnParticle(Particle.DUST_COLOR_TRANSITION, loc.clone().add(Math.cos(ang) * 0.4, 0.2, Math.sin(ang) * 0.4), 0, Math.cos(ang), 0.0, Math.sin(ang), 0.35, PLATA_A_CELESTE);
+            }
+            w.playSound(loc, Sound.BLOCK_BEACON_DEACTIVATE, 0.9f, 1.5f);
+            w.playSound(loc, Sound.BLOCK_GLASS_BREAK, 1.0f, 0.7f);
+            w.playSound(loc, Sound.BLOCK_AMETHYST_BLOCK_BREAK, 1.0f, 0.6f);
+            w.playSound(loc, Sound.ENTITY_ENDER_DRAGON_FLAP, 0.7f, 0.6f);
+            player.setVelocity(new Vector(0, 0.25, 0)); // pequeno tirón: el cuerpo "suelta" el estado
         } catch (Exception ignored) {}
+    }
+
+    // Cristales de plata (BlockDisplay con inclinaciones aleatorias, como el hielo de Stellarity).
+    // outward=false: brotan del suelo alrededor y se disuelven. outward=true: estallan hacia afuera, caen y se encogen.
+    private void burstShards(Location c, int count, boolean outward) {
+        var w = c.getWorld();
+        var rnd = java.util.concurrent.ThreadLocalRandom.current();
+        for (int i = 0; i < count; i++) {
+            double ang = rnd.nextDouble() * Math.PI * 2;
+            double rad = outward ? 0.3 : 1.4 + rnd.nextDouble() * 1.6;
+            final float sc = 0.2f + rnd.nextFloat() * 0.35f;
+            final org.joml.Quaternionf q = new org.joml.Quaternionf().rotateXYZ(rnd.nextFloat() * 3f, rnd.nextFloat() * 3f, rnd.nextFloat() * 3f);
+            final double dx = Math.cos(ang), dz = Math.sin(ang);
+            Location at = c.clone().add(dx * rad, outward ? 1.0 : 0.0, dz * rad);
+            final BlockDisplay d = w.spawn(at, BlockDisplay.class, e -> {
+                e.setBlock(Material.WHITE_STAINED_GLASS.createBlockData());
+                e.setBrightness(new Display.Brightness(15, 15));
+                e.setGlowing(true);
+                e.setGlowColorOverride(Color.fromRGB(205, 228, 255));
+                e.setPersistent(false);
+                e.setViewRange(0.6f);
+                e.setTransformation(new Transformation(new org.joml.Vector3f(0, 0, 0), q, new org.joml.Vector3f(outward ? sc : 0.01f, outward ? sc : 0.01f, outward ? sc : 0.01f), new org.joml.Quaternionf()));
+            });
+            final double reach = outward ? 2.5 + rnd.nextDouble() * 2.0 : 0;
+            plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+                if (!d.isValid()) return;
+                d.setInterpolationDelay(0);
+                if (outward) {
+                    d.setInterpolationDuration(14);
+                    d.setTransformation(new Transformation(new org.joml.Vector3f((float) (dx * reach), -1.1f, (float) (dz * reach)), q,
+                            new org.joml.Vector3f(0.01f, 0.01f, 0.01f), new org.joml.Quaternionf()));
+                } else {
+                    d.setInterpolationDuration(6);
+                    d.setTransformation(new Transformation(new org.joml.Vector3f(0, sc * 1.2f, 0), q,
+                            new org.joml.Vector3f(sc, sc * 2.4f, sc), new org.joml.Quaternionf()));
+                }
+            }, 1L);
+            if (!outward) {
+                plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+                    if (!d.isValid()) return;
+                    d.setInterpolationDelay(0);
+                    d.setInterpolationDuration(14);
+                    d.setTransformation(new Transformation(new org.joml.Vector3f(0, sc * 2.2f, 0), q,
+                            new org.joml.Vector3f(0.01f, 0.01f, 0.01f), new org.joml.Quaternionf()));
+                }, 30L);
+            }
+            plugin.getServer().getScheduler().runTaskLater(plugin, d::remove, outward ? 18L : 46L);
+        }
     }
 
     // Esquive: deja una silueta plateada en el sitio del golpe, una estela hasta la nueva posicion y un chasquido.
@@ -1289,6 +1425,7 @@ public class DragonBallListener implements Listener {
                     if (++n >= 6) cancel();
                 }
             }.runTaskTimer(plugin, 0L, 2L);
+            spawnGhost(from);
             // estela entre la posicion vieja y la nueva
             Vector dir = player.getLocation().toVector().subtract(from.toVector());
             double len = dir.length();
