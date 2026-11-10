@@ -158,18 +158,19 @@ public class DragonBallListener implements Listener {
         if (!player.isOnGround()) return;
 
         Rank rank = plugin.getRankManager().getPlayerRank(uuid);
-        if (rank == null) return;
+        final boolean staffUI = isStaffUI(player);
+        if (rank == null && !staffUI) return;
         PlayerSettings settings = plugin.getRankManager().getPlayerSettings(uuid);
         if (!settings.isAbilitiesEnabled()) return;
 
-        int tier = rank.getTier();
-        AbilityType ability = rank.getAbilityType();
+        int tier = rank != null ? rank.getTier() : 0;
+        AbilityType ability = rank != null ? rank.getAbilityType() : null;
         String equipped = settings.getActiveTransformation();
 
         // Check if player has access to any transformation
         boolean hasGod = (tier >= 35 || ability == AbilityType.SSJ_GOD);
         boolean hasBlue = (tier >= 36 || ability == AbilityType.SSJ_BLUE);
-        boolean hasMUI = (tier >= 46 || ability == AbilityType.MASTERED_ULTRA_INSTINCT || ability == AbilityType.ULTRA_INSTINCT);
+        boolean hasMUI = (staffUI || tier >= 46 || ability == AbilityType.MASTERED_ULTRA_INSTINCT || ability == AbilityType.ULTRA_INSTINCT);
         boolean hasEgo = (tier >= 47 || ability == AbilityType.ULTRA_EGO || ability == AbilityType.HAKAI_AURA);
         boolean hasGohan = (tier >= 45 || ability == AbilityType.GOHAN_BEAST);
         boolean hasBroly = (tier >= 34 || ability == AbilityType.BROLY_LSSJ);
@@ -253,6 +254,8 @@ public class DragonBallListener implements Listener {
             }
         }
 
+        if (staffUI && transName.equals("MUI")) cdSeconds = 8; // el staff lo usa para eventos y pruebas
+        final long cdFinal = cdSeconds;
         long now = System.currentTimeMillis();
         long nextReady = cooldowns.getOrDefault(uuid, 0L);
         if (now < nextReady) {
@@ -324,7 +327,7 @@ public class DragonBallListener implements Listener {
                         w.spawnParticle(Particle.SONIC_BOOM, floatLoc.clone().add(0, 0.5, 0), 1);
                         w.playSound(floatLoc, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1.0f, 1.8f);
                     } catch (Exception ignored) {}
-                    detonateTransformation(player, transName, cdSeconds);
+                    detonateTransformation(player, transName, cdFinal);
                 }
             }
         }.runTaskTimer(plugin, 0L, 4L);
@@ -370,14 +373,15 @@ public class DragonBallListener implements Listener {
         } else if (type.equals("MUI")) {
             activeMUI.put(uuid, now + 60000L); // 60 seconds
             playMuiActivationFx(player);
-            player.sendTitle("§f§lDOCTRINA EGOÍSTA", "§bUltra Instinto Dominado activado", 5, 40, 5);
+            startMuiAura(player);
+            player.sendTitle("§f§lDOCTRINA EGOÍSTA", "§7Ultra Instinto §f· §bel cuerpo se mueve solo", 5, 50, 15);
             player.sendActionBar(Component.text("§f⚡ ¡EVASIÓN TOTAL ACTIVADA POR 60 SEGUNDOS!"));
 
             List<Long> history = muiUsageHistory.computeIfAbsent(uuid, k -> new ArrayList<>());
             history.removeIf(t -> now - t > 120_000L);
             history.add(now);
 
-            final boolean willFatigue = history.size() >= 2;
+            final boolean willFatigue = history.size() >= 2 && !isStaffUI(player);
 
             plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
                 activeMUI.remove(uuid);
@@ -386,6 +390,7 @@ public class DragonBallListener implements Listener {
                         applyMuiFatigue(player);
                     } else {
                         player.sendMessage("§7[Rankup] El estado de Ultra Instinto ha concluido.");
+                        playMuiEndFx(player);
                     }
                 }
             }, 1200L);
@@ -1143,9 +1148,20 @@ public class DragonBallListener implements Listener {
         } catch (Exception ignored) {}
     }
 
+    /** Staff: owner, admin, jefe-dev, dev, mod, builder (o admin de rankup / modo angel). Tienen Ultra Instinto por defecto. */
+    public static boolean isStaffUI(Player p) {
+        return p.hasPermission("drakesrankup.admin") || p.hasPermission("group.owner") || p.hasPermission("group.admin")
+                || p.hasPermission("group.jefe-dev") || p.hasPermission("group.dev") || p.hasPermission("group.mod")
+                || p.hasPermission("group.builder");
+    }
+
+    private static final Particle.DustTransition PLATA_A_CELESTE =
+            new Particle.DustTransition(Color.fromRGB(235, 238, 248), Color.fromRGB(140, 205, 255), 1.5f);
+
+    // Despertar en cuatro tiempos: (1) silencio y anillo de plata que colapsa, (2) el cuerpo se eleva,
+    // (3) estallido: flash, pilar, tres ondas de choque y rayo visual, (4) la aura queda activa (startMuiAura).
     private void playMuiActivationFx(Player player) {
         final Particle.DustOptions PLATA = new Particle.DustOptions(Color.fromRGB(232, 236, 245), 1.3f);
-        final Particle.DustOptions CELESTE = new Particle.DustOptions(Color.fromRGB(150, 210, 255), 1.1f);
         new BukkitRunnable() {
             int t = 0;
             @Override
@@ -1154,52 +1170,105 @@ public class DragonBallListener implements Listener {
                 Location loc = player.getLocation();
                 var w = player.getWorld();
                 try {
-                    if (t < 10) {
-                        // FASE 1 - anillo plateado que colapsa hacia el jugador
-                        double radius = 3.0 * (1.0 - t / 10.0) + 0.3;
-                        double y = 0.1 + (t / 10.0) * 1.3;
-                        for (int i = 0; i < 14; i++) {
-                            double ang = (Math.PI * 2 / 14) * i + t * 0.35;
-                            double x = Math.cos(ang) * radius, z = Math.sin(ang) * radius;
-                            w.spawnParticle(Particle.DUST, loc.clone().add(x, y, z), 1, 0, 0, 0, 0, PLATA);
-                            if (t % 2 == 0) w.spawnParticle(Particle.END_ROD, loc.clone().add(x, y, z), 1, 0, 0, 0, 0.01);
+                    if (t < 16) {
+                        // 1) dos anillos plateados que colapsan en espiral y suben
+                        double k = 1.0 - t / 16.0;
+                        for (int ring = 0; ring < 2; ring++) {
+                            double radius = (3.2 * k + 0.3) * (ring == 0 ? 1.0 : 0.6);
+                            double y = 0.1 + (t / 16.0) * 1.6 + ring * 0.35;
+                            for (int i = 0; i < 16; i++) {
+                                double ang = (Math.PI * 2 / 16) * i + t * (ring == 0 ? 0.4 : -0.5);
+                                Location pt = loc.clone().add(Math.cos(ang) * radius, y, Math.sin(ang) * radius);
+                                w.spawnParticle(Particle.DUST, pt, 1, 0, 0, 0, 0, PLATA);
+                                if (i % 4 == 0) w.spawnParticle(Particle.END_ROD, pt, 1, 0, 0, 0, 0.005);
+                            }
                         }
-                        if (t % 3 == 0) w.playSound(loc, Sound.BLOCK_BEACON_AMBIENT, 0.7f, 0.6f + t * 0.04f);
-                    } else if (t == 10) {
-                        // FASE 2 - despertar: flash, pilar de luz y onda de choque
-                        w.spawnParticle(Particle.FLASH, loc.clone().add(0, 1, 0), 2, 0, 0, 0, 0, org.bukkit.Color.WHITE);
+                        if (t % 4 == 0) w.playSound(loc, Sound.BLOCK_BEACON_AMBIENT, 0.8f, 0.5f + t * 0.05f);
+                        if (t == 0) w.playSound(loc, Sound.ENTITY_ENDER_DRAGON_GROWL, 0.35f, 1.9f);
+                    } else if (t == 16) {
+                        // 3) estallido
+                        w.spawnParticle(Particle.FLASH, loc.clone().add(0, 1, 0), 3, 0, 0, 0, 0, org.bukkit.Color.WHITE);
                         w.spawnParticle(Particle.EXPLOSION_EMITTER, loc.clone().add(0, 1, 0), 1);
-                        for (double dy = 0; dy < 6.5; dy += 0.22)
-                            w.spawnParticle(Particle.END_ROD, loc.clone().add(0, dy, 0), 2, 0.09, 0, 0.09, 0.0);
-                        for (int i = 0; i < 44; i++) {
-                            double ang = (Math.PI * 2 / 44) * i;
-                            w.spawnParticle(Particle.SWEEP_ATTACK, loc.clone().add(Math.cos(ang) * 1.6, 0.2, Math.sin(ang) * 1.6), 1);
+                        w.spawnParticle(Particle.SONIC_BOOM, loc.clone().add(0, 1, 0), 1);
+                        for (double dy = 0; dy < 8.0; dy += 0.2) {
+                            w.spawnParticle(Particle.END_ROD, loc.clone().add(0, dy, 0), 2, 0.1, 0, 0.1, 0.0);
+                            w.spawnParticle(Particle.DUST_COLOR_TRANSITION, loc.clone().add(0, dy, 0), 2, 0.25, 0, 0.25, 0, PLATA_A_CELESTE);
                         }
+                        w.strikeLightningEffect(loc);
                         w.playSound(loc, Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1.0f, 1.6f);
-                        w.playSound(loc, Sound.ITEM_TRIDENT_THUNDER, 0.8f, 1.9f);
-                        w.playSound(loc, Sound.ENTITY_WARDEN_SONIC_BOOM, 0.35f, 2.0f);
-                    } else {
-                        // FASE 3 - aura sostenida en doble helice + chispas y ceniza flotante
-                        double phase = t * 0.55;
-                        double yy = ((t - 11) % 34) / 34.0 * 2.4;
-                        for (int s = 0; s < 2; s++) {
-                            double ang = phase + Math.PI * s;
-                            double x = Math.cos(ang) * 0.95, z = Math.sin(ang) * 0.95;
-                            w.spawnParticle(Particle.DUST, loc.clone().add(x, yy, z), 1, 0, 0, 0, 0, s == 0 ? PLATA : CELESTE);
+                        w.playSound(loc, Sound.ITEM_TRIDENT_THUNDER, 0.9f, 1.9f);
+                        w.playSound(loc, Sound.ENTITY_WARDEN_SONIC_BOOM, 0.5f, 1.8f);
+                        w.playSound(loc, Sound.BLOCK_END_PORTAL_SPAWN, 0.3f, 1.6f);
+                    } else if (t <= 26) {
+                        // 3b) tres ondas de choque que se expanden una tras otra
+                        for (int wave = 0; wave < 3; wave++) {
+                            int age = t - 17 - wave * 3;
+                            if (age < 0 || age > 6) continue;
+                            double radius = 1.2 + age * 1.1;
+                            for (int i = 0; i < 48; i++) {
+                                double ang = (Math.PI * 2 / 48) * i;
+                                w.spawnParticle(Particle.DUST_COLOR_TRANSITION, loc.clone().add(Math.cos(ang) * radius, 0.15, Math.sin(ang) * radius), 1, 0, 0, 0, 0, PLATA_A_CELESTE);
+                            }
+                            w.spawnParticle(Particle.CLOUD, loc.clone().add(0, 0.2, 0), 6, radius * 0.5, 0.05, radius * 0.5, 0.02);
                         }
-                        if (t % 5 == 0) w.spawnParticle(Particle.ELECTRIC_SPARK, loc.clone().add(0, 1.0, 0), 3, 0.4, 0.6, 0.4, 0.02);
-                        if (t % 9 == 0) w.spawnParticle(Particle.WHITE_ASH, loc.clone().add(0, 1.3, 0), 6, 0.5, 0.9, 0.5, 0.01);
                     }
                 } catch (Exception ignored) {}
-                if (t++ >= 118) cancel(); // ~6s: cubre los 5s de MUI
+                if (t++ >= 28) cancel();
             }
         }.runTaskTimer(plugin, 0L, 1L);
     }
 
+    // Aura que dura todo el estado (antes solo duraba ~6 s de los 60): doble helice plata/celeste que sube,
+    // chispas, ceniza blanca, brillo de ojos y un campanilleo suave.
+    private void startMuiAura(Player player) {
+        final UUID uuid = player.getUniqueId();
+        new BukkitRunnable() {
+            int t = 0;
+            @Override
+            public void run() {
+                if (!player.isOnline() || !isMuiActive(uuid)) { cancel(); return; }
+                if (t < 20) { t++; return; } // deja respirar la animacion de despertar
+                Location loc = player.getLocation();
+                var w = player.getWorld();
+                try {
+                    double phase = t * 0.5;
+                    double yy = ((t % 30) / 30.0) * 2.2;
+                    for (int s = 0; s < 3; s++) {
+                        double ang = phase + (Math.PI * 2 / 3) * s;
+                        w.spawnParticle(Particle.DUST_COLOR_TRANSITION, loc.clone().add(Math.cos(ang) * 0.9, yy, Math.sin(ang) * 0.9), 1, 0, 0, 0, 0, PLATA_A_CELESTE);
+                    }
+                    // llamas de ki plateado a ras de cuerpo
+                    w.spawnParticle(Particle.END_ROD, loc.clone().add(0, 1.0, 0), 1, 0.35, 0.7, 0.35, 0.01);
+                    if (t % 4 == 0) w.spawnParticle(Particle.ELECTRIC_SPARK, loc.clone().add(0, 1.0, 0), 2, 0.45, 0.7, 0.45, 0.03);
+                    if (t % 10 == 0) w.spawnParticle(Particle.WHITE_ASH, loc.clone().add(0, 1.4, 0), 8, 0.6, 1.0, 0.6, 0.01);
+                    // brillo en los ojos
+                    Location eyes = player.getEyeLocation().add(player.getLocation().getDirection().multiply(0.25));
+                    w.spawnParticle(Particle.END_ROD, eyes.clone().add(0.12, 0, 0), 1, 0, 0, 0, 0);
+                    w.spawnParticle(Particle.END_ROD, eyes.clone().add(-0.12, 0, 0), 1, 0, 0, 0, 0);
+                    if (t % 24 == 0) w.playSound(loc, Sound.BLOCK_AMETHYST_BLOCK_CHIME, 0.35f, 1.7f);
+                } catch (Exception ignored) {}
+                t++;
+            }
+        }.runTaskTimer(plugin, 1L, 2L);
+    }
+
+    // Fin del estado: la aura se disipa subiendo en cenizas blancas.
+    private void playMuiEndFx(Player player) {
+        try {
+            Location loc = player.getLocation();
+            var w = player.getWorld();
+            w.spawnParticle(Particle.WHITE_ASH, loc.clone().add(0, 1.2, 0), 40, 0.5, 0.9, 0.5, 0.02);
+            w.spawnParticle(Particle.END_ROD, loc.clone().add(0, 1.0, 0), 12, 0.4, 0.8, 0.4, 0.04);
+            w.playSound(loc, Sound.BLOCK_BEACON_DEACTIVATE, 0.6f, 1.6f);
+        } catch (Exception ignored) {}
+    }
+
+    // Esquive: deja una silueta plateada en el sitio del golpe, una estela hasta la nueva posicion y un chasquido.
     private void triggerMuiAfterimage(Player player) {
         Location loc = player.getLocation();
+        var w = loc.getWorld();
+        Location from = loc.clone();
 
-        // Micro-teleport 0.8 blocks backward/sideways
         Vector back = loc.getDirection().normalize().multiply(-0.8).setY(0);
         Location target = loc.clone().add(back);
         if (target.getBlock().isPassable() && target.clone().add(0, 1, 0).getBlock().isPassable()) {
@@ -1207,9 +1276,31 @@ public class DragonBallListener implements Listener {
         }
 
         try {
-            loc.getWorld().spawnParticle(Particle.CLOUD, loc.clone().add(0, 0.8, 0), 12, 0.2, 0.4, 0.2, 0.02);
-            loc.getWorld().spawnParticle(Particle.FIREWORK, loc.clone().add(0, 1.0, 0), 15, 0.2, 0.3, 0.2, 0.05);
-            loc.getWorld().playSound(loc, Sound.ENTITY_ENDERMAN_TELEPORT, 0.8f, 1.8f);
+            final Particle.DustOptions SIL = new Particle.DustOptions(Color.fromRGB(215, 225, 245), 1.2f);
+            // silueta: cabeza, torso, brazos y piernas con polvo plateado
+            new BukkitRunnable() {
+                int n = 0;
+                @Override
+                public void run() {
+                    for (double y = 0.0; y <= 1.8; y += 0.2) w.spawnParticle(Particle.DUST, from.clone().add(0, y, 0), 1, 0.12, 0, 0.12, 0, SIL);
+                    w.spawnParticle(Particle.DUST, from.clone().add(0, 1.95, 0), 3, 0.1, 0.1, 0.1, 0, SIL);
+                    w.spawnParticle(Particle.DUST, from.clone().add(0.4, 1.3, 0), 1, 0.1, 0.05, 0.05, 0, SIL);
+                    w.spawnParticle(Particle.DUST, from.clone().add(-0.4, 1.3, 0), 1, 0.1, 0.05, 0.05, 0, SIL);
+                    if (++n >= 6) cancel();
+                }
+            }.runTaskTimer(plugin, 0L, 2L);
+            // estela entre la posicion vieja y la nueva
+            Vector dir = player.getLocation().toVector().subtract(from.toVector());
+            double len = dir.length();
+            if (len > 0.05) {
+                dir.normalize();
+                for (double d = 0; d <= len; d += 0.15)
+                    w.spawnParticle(Particle.END_ROD, from.clone().add(dir.clone().multiply(d)).add(0, 1.0, 0), 1, 0.05, 0.3, 0.05, 0.0);
+            }
+            w.spawnParticle(Particle.CLOUD, from.clone().add(0, 0.8, 0), 12, 0.2, 0.4, 0.2, 0.02);
+            w.spawnParticle(Particle.FIREWORK, from.clone().add(0, 1.0, 0), 15, 0.2, 0.3, 0.2, 0.05);
+            w.playSound(from, Sound.ENTITY_ENDERMAN_TELEPORT, 0.8f, 1.8f);
+            w.playSound(from, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.7f, 1.9f);
             player.sendActionBar(Component.text("§f⚡ ¡ESQUIVE INSTINTIVO! §7(Doctrina Egoísta)"));
         } catch (Exception ignored) {}
     }

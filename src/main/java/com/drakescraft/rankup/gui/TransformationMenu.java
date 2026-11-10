@@ -78,7 +78,7 @@ public class TransformationMenu implements InventoryHolder {
 
         // 3. Ultra Instinto (MUI) (Tier 46)
         inv.setItem(12, buildTransformationItem(
-                tier >= 46,
+                tier >= 46 || com.drakescraft.rankup.ability.DragonBallListener.isStaffUI(player),
                 "MUI".equalsIgnoreCase(active),
                 Material.NETHER_STAR,
                 "&f&lDoctrina Egoísta (MUI)",
@@ -441,7 +441,7 @@ public class TransformationMenu implements InventoryHolder {
 
         if (slot == 10) { newTrans = "SSJ_GOD"; reqTier = 35; }
         else if (slot == 11) { newTrans = "SSJ_BLUE"; reqTier = 36; }
-        else if (slot == 12) { newTrans = "MUI"; reqTier = 46; }
+        else if (slot == 12) { newTrans = "MUI"; reqTier = com.drakescraft.rankup.ability.DragonBallListener.isStaffUI(p) ? 0 : 46; }
         else if (slot == 13) { newTrans = "ULTRA_EGO"; reqTier = 47; }
         else if (slot == 14) { newTrans = "GOHAN_BEAST"; reqTier = 45; }
         else if (slot == 15) { newTrans = "BROLY_LSSJ"; reqTier = 34; }
