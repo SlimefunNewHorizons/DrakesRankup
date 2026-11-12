@@ -32,6 +32,7 @@ import org.mockbukkit.mockbukkit.ServerMock;
 import org.mockbukkit.mockbukkit.block.BlockMock;
 import org.mockbukkit.mockbukkit.entity.PlayerMock;
 import org.mockbukkit.mockbukkit.entity.ArrowMock;
+import org.mockbukkit.mockbukkit.entity.ItemMock;
 import org.mockbukkit.mockbukkit.entity.ZombieMock;
 import org.mockbukkit.mockbukkit.entity.WitherSkeletonMock;
 import org.mockbukkit.mockbukkit.world.WorldMock;
@@ -51,6 +52,19 @@ class HerobrineBossTest {
     private WorldMock world;
     private PlayerMock player;
     private Zombie boss;
+
+    // MockBukkit does not implement item ownership or mob pickup flags.
+    private static final class RewardItemMock extends ItemMock {
+        private UUID owner;
+        private boolean mobPickup = true;
+
+        RewardItemMock(ServerMock server, ItemStack stack) { super(server, UUID.randomUUID(), stack); }
+
+        @Override public void setOwner(UUID owner) { this.owner = owner; }
+        @Override public UUID getOwner() { return owner; }
+        @Override public void setCanMobPickup(boolean pickup) { mobPickup = pickup; }
+        @Override public boolean canMobPickup() { return mobPickup; }
+    }
 
     // MockBukkit lacks despawn/pickup flags. Preserve their values without
     // replacing command dispatch, arena scheduling or reward handling.
@@ -103,6 +117,13 @@ class HerobrineBossTest {
             }
 
             @Override public LightningStrike strikeLightningEffect(Location location) { return null; }
+
+            @Override public Item dropItemNaturally(Location location, ItemStack stack) {
+                RewardItemMock reward = new RewardItemMock(server, stack);
+                server.registerEntity(reward);
+                reward.teleport(location);
+                return reward;
+            }
 
             @Override public Entity spawnEntity(Location location, EntityType type) {
                 if (type == EntityType.WITHER_SKELETON) {
@@ -475,6 +496,10 @@ class HerobrineBossTest {
         assertFalse(player.getInventory().contains(Material.NETHER_STAR));
         var drops = world.getEntitiesByClass(Item.class);
         assertEquals(2, drops.size());
+        for (Item drop : drops) {
+            assertEquals(player.getUniqueId(), drop.getOwner(), "Overflow rewards belong to their participant");
+            assertFalse(drop.canMobPickup(), "Nearby mobs must not collect participation rewards");
+        }
         assertEquals(5 - freeDiamondSpace, drops.stream().map(Item::getItemStack)
                 .filter(item -> item.getType() == Material.DIAMOND).mapToInt(ItemStack::getAmount).sum());
         assertEquals(1, drops.stream().map(Item::getItemStack)
@@ -622,6 +647,44 @@ class HerobrineBossTest {
         for (Mob mob : mobs) if (!mob.equals(boss) || shutdown) assertFalse(mob.isValid());
         assertTrue(unrelated.isValid());
         assertTrue(unrelated.getCanPickupItems());
+    }
+
+    @Test
+    void shadowsDropNeitherItemsNorExperienceAndDoNotQualifyForRewards() {
+        boss.setHealth(200);
+        server.getScheduler().performTicks(20);
+        var shadows = world.getEntitiesByClass(Mob.class).stream().filter(mob -> mob != boss).toList();
+        assertEquals(4, shadows.size());
+        for (Mob shadow : shadows) {
+            EntityDamageByEntityEvent hit = new EntityDamageByEntityEvent(player, shadow,
+                    EntityDamageEvent.DamageCause.ENTITY_ATTACK,
+                    DamageSource.builder(DamageType.PLAYER_ATTACK).withCausingEntity(player).build(), 20);
+            server.getPluginManager().callEvent(hit);
+            EntityDeathEvent death = new EntityDeathEvent(shadow,
+                    DamageSource.builder(DamageType.PLAYER_ATTACK).withCausingEntity(player).build(),
+                    new ArrayList<>(java.util.List.of(new ItemStack(Material.ROTTEN_FLESH))));
+            death.setDroppedExp(5);
+            server.getPluginManager().callEvent(death);
+            assertTrue(death.getDrops().isEmpty());
+            assertEquals(0, death.getDroppedExp());
+        }
+        defeat();
+        assertFalse(player.getInventory().contains(Material.DIAMOND));
+        assertFalse(player.getInventory().contains(Material.NETHER_STAR));
+        assertEquals(0, player.getTotalExperience());
+    }
+
+    @Test
+    void ordinaryMobDropsArePreservedDuringFight() {
+        Zombie ordinary = (Zombie) world.spawnEntity(player.getLocation(), EntityType.ZOMBIE);
+        ItemStack loot = new ItemStack(Material.ROTTEN_FLESH, 2);
+        EntityDeathEvent death = new EntityDeathEvent(ordinary,
+                DamageSource.builder(DamageType.PLAYER_ATTACK).withCausingEntity(player).build(),
+                new ArrayList<>(java.util.List.of(loot)));
+        death.setDroppedExp(5);
+        server.getPluginManager().callEvent(death);
+        assertEquals(java.util.List.of(loot), death.getDrops());
+        assertEquals(5, death.getDroppedExp());
     }
 
     @Test
