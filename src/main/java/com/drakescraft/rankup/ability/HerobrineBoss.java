@@ -293,7 +293,8 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         Fight f = fights.get(w.getUID());
         if (f == null || !f.boss.equals(e.getEntity())) return;
         e.getDrops().clear();
-        e.setDroppedExp(2000);
+        // La experiencia forma parte del botin de participacion, sin orbes para espectadores.
+        e.setDroppedExp(0);
         w.strikeLightningEffect(e.getEntity().getLocation());
         double minimum = Math.max(0, plugin.getConfig().getDouble("herobrine.minimum-reward-damage", 4));
         Map<UUID, Double> eligible = new HashMap<>();
@@ -304,14 +305,20 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         }
         UUID top = null; double best = 0;
         for (Map.Entry<UUID, Double> en : eligible.entrySet()) if (en.getValue() > best) { best = en.getValue(); top = en.getKey(); }
+        int experience = Math.max(0, plugin.getConfig().getInt("herobrine.reward-experience", 2000));
+        int share = eligible.isEmpty() ? 0 : experience / eligible.size();
+        int remainder = eligible.isEmpty() ? 0 : experience % eligible.size();
         for (UUID id : eligible.keySet()) {
             Player p = Bukkit.getPlayer(id);
             if (p == null) continue;
             int diamonds = Math.max(0, Math.min(64, plugin.getConfig().getInt("herobrine.reward-diamonds", 5)));
             if (diamonds > 0) giveOrDrop(p, new ItemStack(Material.DIAMOND, diamonds));
             if (id.equals(top)) giveOrDrop(p, essence());
+            int earnedExperience = share + (id.equals(top) ? remainder : 0);
+            if (earnedExperience > 0) p.giveExp(earnedExperience);
             p.sendMessage("§6[HEROBRINE] §eBotin: " + diamonds + " diamantes"
-                    + (id.equals(top) ? " y 1 esencia" : "") + ". Daño aportado: " + Math.round(eligible.get(id)) + ".");
+                    + (id.equals(top) ? " y 1 esencia" : "") + ", " + earnedExperience
+                    + " XP. Daño aportado: " + Math.round(eligible.get(id)) + ".");
         }
         for (Player p : w.getPlayers()) p.sendMessage("§6§l[HEROBRINE DERROTADO] §e" + (top == null ? "Sin participantes elegibles" : Bukkit.getOfflinePlayer(top).getName()) + " §7| Recompensas para " + eligible.size() + " participantes.");
         end(w, f, true);

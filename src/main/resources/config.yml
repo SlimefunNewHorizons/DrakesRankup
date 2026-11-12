@@ -146,6 +146,7 @@ herobrine:
   cooldown-seconds: 600
   lifetime-seconds: 900
   reward-diamonds: 5
+  reward-experience: 2000 # Total XP shared equally; the top contributor receives the remainder. 0 disables XP.
   arena-radius: 48 # Blocks from the summon point; no terrain or player teleportation.
   minimum-reward-damage: 4 # Effective, uncancelled damage; stay in the arena until victory.
 
