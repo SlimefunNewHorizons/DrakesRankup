@@ -9,6 +9,7 @@ import org.bukkit.damage.DamageSource;
 import org.bukkit.damage.DamageType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Zombie;
@@ -29,6 +30,7 @@ import org.mockbukkit.mockbukkit.MockBukkit;
 import org.mockbukkit.mockbukkit.ServerMock;
 import org.mockbukkit.mockbukkit.block.BlockMock;
 import org.mockbukkit.mockbukkit.entity.PlayerMock;
+import org.mockbukkit.mockbukkit.entity.ArrowMock;
 import org.mockbukkit.mockbukkit.entity.ZombieMock;
 import org.mockbukkit.mockbukkit.entity.WitherSkeletonMock;
 import org.mockbukkit.mockbukkit.world.WorldMock;
@@ -203,6 +205,60 @@ class HerobrineBossTest {
         assertTrue(second.getInventory().contains(Material.DIAMOND, 5));
         assertTrue(player.getInventory().contains(Material.NETHER_STAR));
         assertFalse(second.getInventory().contains(Material.NETHER_STAR));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    void fullInventoryDropsOnlyRewardsThatDoNotFit(int freeDiamondSpace) {
+        for (int slot = 0; slot < player.getInventory().getStorageContents().length; slot++) {
+            player.getInventory().setItem(slot, new ItemStack(Material.COBBLESTONE, 64));
+        }
+        // MockBukkit's addItem also scans equipment slots. Keep those occupied
+        // with real equipment while exercising the storage overflow path.
+        player.getInventory().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
+        player.getInventory().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+        player.getInventory().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+        player.getInventory().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+        player.getInventory().setItemInOffHand(new ItemStack(Material.COBBLESTONE, 64));
+        if (freeDiamondSpace > 0) {
+            player.getInventory().setItem(0, new ItemStack(Material.DIAMOND, 64 - freeDiamondSpace));
+        }
+        hit(player, 10, false);
+        defeat();
+        defeat();
+
+        int inventoryDiamonds = player.getInventory().all(Material.DIAMOND).values().stream()
+                .mapToInt(ItemStack::getAmount).sum();
+        assertEquals(freeDiamondSpace == 0 ? 0 : 64, inventoryDiamonds);
+        assertFalse(player.getInventory().contains(Material.NETHER_STAR));
+        var drops = world.getEntitiesByClass(Item.class);
+        assertEquals(2, drops.size());
+        assertEquals(5 - freeDiamondSpace, drops.stream().map(Item::getItemStack)
+                .filter(item -> item.getType() == Material.DIAMOND).mapToInt(ItemStack::getAmount).sum());
+        assertEquals(1, drops.stream().map(Item::getItemStack)
+                .filter(item -> item.getType() == Material.NETHER_STAR).mapToInt(ItemStack::getAmount).sum());
+        assertEquals(64, player.getInventory().getItem(1).getAmount());
+        assertEquals(Material.COBBLESTONE, player.getInventory().getItem(1).getType());
+        assertEquals(Material.DIAMOND_HELMET, player.getInventory().getHelmet().getType());
+        assertEquals(Material.COBBLESTONE, player.getInventory().getItemInOffHand().getType());
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void arrowRewardsBelongToShooterOnlyWhenInsideArena(boolean outside) {
+        ArrowMock arrow = new ArrowMock(server, UUID.randomUUID());
+        server.registerEntity(arrow);
+        arrow.teleport(boss.getLocation());
+        arrow.setShooter(player);
+        if (outside) player.teleport(boss.getLocation().add(100, 0, 0));
+        EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(
+                arrow, boss, EntityDamageEvent.DamageCause.PROJECTILE,
+                DamageSource.builder(DamageType.ARROW).withCausingEntity(player).withDirectEntity(arrow).build(), 10);
+        server.getPluginManager().callEvent(event);
+        player.teleport(boss.getLocation());
+        defeat();
+        assertEquals(!outside, player.getInventory().contains(Material.DIAMOND, 5));
+        assertEquals(!outside, player.getInventory().contains(Material.NETHER_STAR));
     }
 
     @Test
