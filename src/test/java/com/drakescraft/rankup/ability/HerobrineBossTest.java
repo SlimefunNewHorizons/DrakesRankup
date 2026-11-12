@@ -9,6 +9,7 @@ import org.bukkit.damage.DamageSource;
 import org.bukkit.damage.DamageType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Zombie;
@@ -29,12 +30,14 @@ import org.mockbukkit.mockbukkit.MockBukkit;
 import org.mockbukkit.mockbukkit.ServerMock;
 import org.mockbukkit.mockbukkit.block.BlockMock;
 import org.mockbukkit.mockbukkit.entity.PlayerMock;
+import org.mockbukkit.mockbukkit.entity.ArrowMock;
 import org.mockbukkit.mockbukkit.entity.ZombieMock;
 import org.mockbukkit.mockbukkit.entity.WitherSkeletonMock;
 import org.mockbukkit.mockbukkit.world.WorldMock;
 import org.mockbukkit.mockbukkit.world.Coordinate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -203,6 +206,64 @@ class HerobrineBossTest {
         assertTrue(second.getInventory().contains(Material.DIAMOND, 5));
         assertTrue(player.getInventory().contains(Material.NETHER_STAR));
         assertFalse(second.getInventory().contains(Material.NETHER_STAR));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    void fullInventoryDropsOnlyRewardsThatDoNotFit(int freeDiamondSpace) {
+        // Paper 26.2 declares 43 slots, but PlayerInventoryMock only maps
+        // storage/equipment through slot 40. Its addItem scans all 43 slots,
+        // including the two unmapped slots, so occupy the whole mock inventory.
+        for (int slot = 0; slot < player.getInventory().getSize(); slot++) {
+            player.getInventory().setItem(slot, new ItemStack(Material.COBBLESTONE, 64));
+        }
+        player.getInventory().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
+        player.getInventory().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+        player.getInventory().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+        player.getInventory().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+        player.getInventory().setItemInOffHand(new ItemStack(Material.COBBLESTONE, 64));
+        if (freeDiamondSpace > 0) {
+            player.getInventory().setItem(0, new ItemStack(Material.DIAMOND, 64 - freeDiamondSpace));
+        }
+        assertEquals(-1, player.getInventory().firstEmpty(), "The mock must have no spare slots");
+        // getContents returns live mirrors: clone before changing expectations.
+        ItemStack[] expectedInventory = Arrays.stream(player.getInventory().getContents())
+                .map(ItemStack::clone).toArray(ItemStack[]::new);
+        if (freeDiamondSpace > 0) expectedInventory[0].setAmount(64);
+        hit(player, 10, false);
+        defeat();
+        defeat();
+
+        int inventoryDiamonds = player.getInventory().all(Material.DIAMOND).values().stream()
+                .mapToInt(ItemStack::getAmount).sum();
+        assertEquals(freeDiamondSpace == 0 ? 0 : 64, inventoryDiamonds);
+        assertFalse(player.getInventory().contains(Material.NETHER_STAR));
+        var drops = world.getEntitiesByClass(Item.class);
+        assertEquals(2, drops.size());
+        assertEquals(5 - freeDiamondSpace, drops.stream().map(Item::getItemStack)
+                .filter(item -> item.getType() == Material.DIAMOND).mapToInt(ItemStack::getAmount).sum());
+        assertEquals(1, drops.stream().map(Item::getItemStack)
+                .filter(item -> item.getType() == Material.NETHER_STAR).mapToInt(ItemStack::getAmount).sum());
+        assertArrayEquals(expectedInventory, player.getInventory().getContents(),
+                "Only the existing diamond stack may change; preserve every other slot");
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void arrowRewardsBelongToShooterOnlyWhenInsideArena(boolean outside) {
+        ArrowMock arrow = new ArrowMock(server, UUID.randomUUID());
+        server.registerEntity(arrow);
+        arrow.teleport(boss.getLocation());
+        arrow.setShooter(player);
+        if (outside) player.teleport(boss.getLocation().add(100, 0, 0));
+        EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(
+                arrow, boss, EntityDamageEvent.DamageCause.PROJECTILE,
+                DamageSource.builder(DamageType.ARROW).withCausingEntity(player).withDirectEntity(arrow).build(), 10);
+        server.getPluginManager().callEvent(event);
+        player.teleport(boss.getLocation());
+        defeat();
+        assertEquals(!outside, player.getInventory().contains(Material.DIAMOND, 5));
+        assertEquals(!outside, player.getInventory().contains(Material.NETHER_STAR));
     }
 
     @Test
@@ -409,5 +470,77 @@ class HerobrineBossTest {
         defeat();
         assertFalse(player.getInventory().contains(Material.DIAMOND));
         assertFalse(player.getInventory().contains(Material.NETHER_STAR));
+    }
+
+    @Test
+    void pluginDisableCleansFightWithoutLootOrRemovingUnrelatedMob() {
+        hit(player, 10, false);
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.60);
+        server.getScheduler().performTicks(20);
+        var fightMobs = new ArrayList<>(world.getEntitiesByClass(Mob.class));
+        assertEquals(5, fightMobs.size());
+        Entity unrelated = world.spawnEntity(boss.getLocation(), EntityType.ZOMBIE);
+
+        server.getPluginManager().disablePlugin(plugin);
+        server.getScheduler().performTicks(40);
+
+        assertTrue(fightMobs.stream().noneMatch(Entity::isValid));
+        assertTrue(unrelated.isValid());
+        assertFalse(player.getInventory().contains(Material.DIAMOND));
+        assertFalse(player.getInventory().contains(Material.NETHER_STAR));
+        assertTrue(world.getEntitiesByClass(Item.class).isEmpty());
+    }
+
+    @Test
+    void removedBossCleansShadowsWithoutLootAndAllowsNewSummoner() {
+        hit(player, 10, false);
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.60);
+        server.getScheduler().performTicks(20);
+        var fightMobs = new ArrayList<>(world.getEntitiesByClass(Mob.class));
+        assertEquals(5, fightMobs.size());
+        boss.remove();
+
+        server.getScheduler().performTicks(20);
+
+        assertTrue(fightMobs.stream().noneMatch(Entity::isValid));
+        assertFalse(player.getInventory().contains(Material.DIAMOND));
+        assertFalse(player.getInventory().contains(Material.NETHER_STAR));
+        assertTrue(world.getEntitiesByClass(Item.class).isEmpty());
+        PlayerMock second = server.addPlayer("NewSummoner");
+        second.teleport(player.getLocation());
+        assertTrue(second.performCommand("herobrine"));
+        assertEquals(1, world.getEntitiesByClass(Zombie.class).size());
+    }
+
+    @Test
+    void oldFightCleanupDoesNotRemoveReplacementOrTransferDamageCredit() {
+        hit(player, 30, false);
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.60);
+        server.getScheduler().performTicks(20);
+        var oldMobs = new ArrayList<>(world.getEntitiesByClass(Mob.class));
+        assertEquals(5, oldMobs.size());
+        boss.remove();
+        PlayerMock second = server.addPlayer("ReplacementSummoner");
+        second.teleport(player.getLocation());
+        assertTrue(second.performCommand("herobrine"));
+        Zombie replacement = world.getEntitiesByClass(Zombie.class).stream()
+                .filter(zombie -> !oldMobs.contains(zombie)).findFirst().orElseThrow();
+
+        // Both fight timers run on this tick; the old one must not clear the new fight.
+        server.getScheduler().performTicks(20);
+        assertTrue(oldMobs.stream().noneMatch(Entity::isValid));
+        assertTrue(replacement.isValid());
+        boss = replacement;
+        second.teleport(boss.getLocation());
+        hit(second, 5, false);
+        defeat();
+        defeat();
+
+        assertFalse(player.getInventory().contains(Material.DIAMOND));
+        assertFalse(player.getInventory().contains(Material.NETHER_STAR));
+        assertEquals(5, second.getInventory().all(Material.DIAMOND).values().stream()
+                .mapToInt(ItemStack::getAmount).sum());
+        assertEquals(1, second.getInventory().all(Material.NETHER_STAR).values().stream()
+                .mapToInt(ItemStack::getAmount).sum());
     }
 }
