@@ -200,6 +200,13 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         return dx * dx + dz * dz <= f.radius * f.radius;
     }
 
+    private boolean canParticipate(Fight f, Player player) {
+        return !player.isDead()
+                && (player.getGameMode() == org.bukkit.GameMode.SURVIVAL
+                    || player.getGameMode() == org.bukkit.GameMode.ADVENTURE)
+                && inArena(f, player.getLocation());
+    }
+
     @EventHandler(ignoreCancelled = true)
     public void onTarget(EntityTargetLivingEntityEvent e) {
         Fight f = fights.get(e.getEntity().getWorld().getUID());
@@ -214,7 +221,7 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         if (d instanceof Projectile pr && pr.getShooter() instanceof Entity sh) d = sh;
         if (!(d instanceof Player p)) return;
         Fight f = fights.get(e.getEntity().getWorld().getUID());
-        if (f == null || !f.boss.equals(e.getEntity()) || !inArena(f, p.getLocation())) return;
+        if (f == null || !f.boss.equals(e.getEntity()) || !canParticipate(f, p)) return;
         double damage = Math.min(e.getFinalDamage(), f.boss.getHealth());
         if (Double.isFinite(damage) && damage > 0) f.damage.merge(p.getUniqueId(), damage, Double::sum);
     }
@@ -232,8 +239,8 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         Map<UUID, Double> eligible = new HashMap<>();
         for (Map.Entry<UUID, Double> entry : f.damage.entrySet()) {
             Player player = Bukkit.getPlayer(entry.getKey());
-            if (entry.getValue() >= minimum && player != null && !player.isDead()
-                    && inArena(f, player.getLocation())) eligible.put(entry.getKey(), entry.getValue());
+            if (entry.getValue() >= minimum && player != null
+                    && canParticipate(f, player)) eligible.put(entry.getKey(), entry.getValue());
         }
         UUID top = null; double best = 0;
         for (Map.Entry<UUID, Double> en : eligible.entrySet()) if (en.getValue() > best) { best = en.getValue(); top = en.getKey(); }

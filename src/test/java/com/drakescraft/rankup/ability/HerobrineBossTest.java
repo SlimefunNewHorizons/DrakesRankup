@@ -154,6 +154,41 @@ class HerobrineBossTest {
         assertFalse(player.getInventory().contains(Material.DIAMOND));
     }
 
+    @ParameterizedTest
+    @EnumSource(value = GameMode.class, names = {"CREATIVE", "SPECTATOR"})
+    void privilegedModeDamageDoesNotEarnLootAfterReturningToSurvival(GameMode mode) {
+        player.setGameMode(mode);
+        hit(player, 30, false);
+        player.setGameMode(GameMode.SURVIVAL);
+        defeat();
+        assertFalse(player.getInventory().contains(Material.DIAMOND));
+        assertFalse(player.getInventory().contains(Material.NETHER_STAR));
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = GameMode.class, names = {"CREATIVE", "SPECTATOR"})
+    void switchingToPrivilegedModeBeforeDeathAwardsEssenceToEligibleContributor(GameMode mode) {
+        PlayerMock second = server.addPlayer("Eligible");
+        second.teleport(boss.getLocation());
+        hit(player, 30, false);
+        hit(second, 5, false);
+        player.setGameMode(mode);
+        defeat();
+        assertFalse(player.getInventory().contains(Material.DIAMOND));
+        assertFalse(player.getInventory().contains(Material.NETHER_STAR));
+        assertTrue(second.getInventory().contains(Material.DIAMOND, 5));
+        assertTrue(second.getInventory().contains(Material.NETHER_STAR));
+    }
+
+    @Test
+    void adventureCombatStillEarnsLoot() {
+        player.setGameMode(GameMode.ADVENTURE);
+        hit(player, 10, false);
+        defeat();
+        assertTrue(player.getInventory().contains(Material.DIAMOND, 5));
+        assertTrue(player.getInventory().contains(Material.NETHER_STAR));
+    }
+
     @Test
     void qualifyingParticipantsReceiveLootOnce() {
         PlayerMock second = server.addPlayer("Second");
