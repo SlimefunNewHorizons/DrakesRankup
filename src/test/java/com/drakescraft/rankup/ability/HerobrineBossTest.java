@@ -19,6 +19,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -140,6 +141,168 @@ class HerobrineBossTest {
         server.getPluginManager().callEvent(new EntityDeathEvent(boss,
                 DamageSource.builder(DamageType.PLAYER_ATTACK).withCausingEntity(player).withDirectEntity(player).build(),
                 new ArrayList<ItemStack>()));
+    }
+
+    private String status(PlayerMock viewer) {
+        while (viewer.nextMessage() != null) { /* discard earlier fight announcements */ }
+        assertTrue(viewer.performCommand("herobrine estado"));
+        StringBuilder messages = new StringBuilder();
+        String message;
+        while ((message = viewer.nextMessage()) != null) messages.append(message).append('\n');
+        return messages.toString();
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3})
+    void statusReportsCurrentPhaseArenaAndEffectiveParticipation(int phase) {
+        hit(player, 10, false);
+        hit(player, 100, true);
+        boss.setHealth(phase == 1 ? 400 : phase == 2 ? 200 : 100);
+        server.getScheduler().performTicks(20);
+        String messages = status(player);
+        assertTrue(messages.contains("Fase " + phase + "/3"), messages);
+        assertTrue(messages.contains("Vida: " + (phase == 1 ? "400.0" : phase == 2 ? "200.0" : "100.0")), messages);
+        assertTrue(messages.contains("Tiempo restante:"), messages);
+        assertTrue(messages.contains("X=" + boss.getLocation().getBlockX()), messages);
+        assertTrue(messages.contains("Z=" + boss.getLocation().getBlockZ()), messages);
+        assertTrue(messages.contains("Radio: 48 | Dentro"), messages);
+        assertTrue(messages.contains("Tu daño efectivo: 10.0 / minimo 4.0"), messages);
+        assertTrue(messages.contains("Participacion suficiente"), messages);
+        assertEquals(1, world.getEntitiesByClass(Zombie.class).stream().filter(z -> z.equals(boss)).count());
+        assertFalse(player.getInventory().contains(Material.DIAMOND));
+        assertFalse(player.getInventory().contains(Material.NETHER_STAR));
+    }
+
+    @ParameterizedTest
+    @EnumSource(GameMode.class)
+    void statusRechecksCombatModeWithoutDiscardingContribution(GameMode mode) {
+        hit(player, 10, false);
+        player.setGameMode(mode);
+        String messages = status(player);
+        assertTrue(messages.contains("Tu daño efectivo: 10.0"), messages);
+        boolean eligible = mode == GameMode.SURVIVAL || mode == GameMode.ADVENTURE;
+        assertEquals(eligible, messages.contains("Participacion suficiente"), messages);
+    }
+
+    @Test
+    void statusExplainsMissingContributionAndLeavingArena() {
+        assertFalse(status(player).contains("Participacion suficiente"));
+        hit(player, 10, false);
+        player.teleport(player.getLocation().add(100, 0, 0));
+        String messages = status(player);
+        assertTrue(messages.contains("Radio: 48 | Fuera"), messages);
+        assertTrue(messages.contains("Tu daño efectivo: 10.0"), messages);
+        assertFalse(messages.contains("Participacion suficiente"), messages);
+    }
+
+    @Test
+    void statusAndInvalidArgumentsWithoutFightDoNotSummonOrConsumeCooldown() {
+        defeat();
+        boss.remove();
+        PlayerMock visitor = server.addPlayer("Visitor");
+        visitor.teleport(player.getLocation());
+        assertTrue(status(visitor).contains("No hay un combate"));
+        assertTrue(visitor.performCommand("herobrine desconocido"));
+        assertTrue(visitor.nextMessage().contains("Uso: /herobrine [estado]"));
+        assertTrue(visitor.performCommand("herobrine estado extra"));
+        assertTrue(visitor.nextMessage().contains("Uso: /herobrine [estado]"));
+        assertTrue(world.getEntitiesByClass(Zombie.class).isEmpty());
+        assertTrue(visitor.performCommand("herobrine"));
+        assertEquals(1, world.getEntitiesByClass(Zombie.class).size());
+    }
+
+    private EntityDamageByEntityEvent attack(Entity attacker, Entity victim, boolean projectile) {
+        Entity direct = attacker;
+        if (projectile) {
+            ArrowMock arrow = new ArrowMock(server, UUID.randomUUID());
+            server.registerEntity(arrow);
+            arrow.teleport(victim.getLocation());
+            arrow.setShooter((org.bukkit.projectiles.ProjectileSource) attacker);
+            direct = arrow;
+        }
+        EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(direct, victim,
+                projectile ? EntityDamageEvent.DamageCause.PROJECTILE : EntityDamageEvent.DamageCause.ENTITY_ATTACK,
+                DamageSource.builder(projectile ? DamageType.ARROW : DamageType.MOB_ATTACK)
+                        .withCausingEntity(attacker).withDirectEntity(direct).build(), 10);
+        server.getPluginManager().callEvent(event);
+        return event;
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void arenaBlocksMeleeAndArrowsInBothDirectionsAfterPlayerLeaves(boolean projectile) {
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.5);
+        server.getScheduler().performTicks(20);
+        var mobs = world.getEntitiesByClass(Mob.class);
+        assertEquals(5, mobs.size());
+        Location inside = player.getLocation();
+        player.teleport(inside.clone().add(100, 0, 0));
+        for (Mob mob : mobs) {
+            assertTrue(attack(player, mob, projectile).isCancelled());
+            assertTrue(attack(mob, player, projectile).isCancelled());
+        }
+        player.teleport(inside);
+        defeat();
+        assertFalse(player.getInventory().contains(Material.DIAMOND));
+        assertFalse(player.getInventory().contains(Material.NETHER_STAR));
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = GameMode.class, names = {"CREATIVE", "SPECTATOR"})
+    void privilegedPlayersCannotDamageBossOrShadows(GameMode mode) {
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.5);
+        server.getScheduler().performTicks(20);
+        player.setGameMode(mode);
+        for (Mob mob : world.getEntitiesByClass(Mob.class)) {
+            assertTrue(attack(player, mob, false).isCancelled());
+            assertTrue(attack(player, mob, true).isCancelled());
+        }
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = GameMode.class, names = {"SURVIVAL", "ADVENTURE"})
+    void eligiblePlayersCanFightBossAndShadowsInArena(GameMode mode) {
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.5);
+        server.getScheduler().performTicks(20);
+        player.setGameMode(mode);
+        for (Mob mob : world.getEntitiesByClass(Mob.class)) {
+            assertFalse(attack(player, mob, false).isCancelled());
+            assertFalse(attack(player, mob, true).isCancelled());
+            assertFalse(attack(mob, player, false).isCancelled());
+            assertFalse(attack(mob, player, true).isCancelled());
+        }
+        defeat();
+        assertTrue(player.getInventory().contains(Material.DIAMOND, 5));
+        assertTrue(player.getInventory().contains(Material.NETHER_STAR));
+    }
+
+    @Test
+    void displacedBossCannotDealOrReceivePlayerDamageUntilReturnedToArena() {
+        Location center = boss.getLocation();
+        boss.teleport(center.clone().add(100, 0, 0));
+        assertTrue(attack(player, boss, true).isCancelled());
+        assertTrue(attack(boss, player, true).isCancelled());
+        server.getScheduler().performTicks(20);
+        assertEquals(center, boss.getLocation());
+        assertFalse(attack(player, boss, false).isCancelled());
+    }
+
+    @Test
+    void arenaGuardDoesNotCancelUnrelatedCombatOutsideArena() {
+        player.teleport(boss.getLocation().add(100, 0, 0));
+        Entity unrelated = world.spawnEntity(player.getLocation(), EntityType.ZOMBIE);
+        assertFalse(attack(player, unrelated, false).isCancelled());
+        assertFalse(attack(unrelated, player, true).isCancelled());
+    }
+
+    @Test
+    void phasePowersLastUntilFightEndsInsteadOfExpiringAfterOneMinute() {
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.3);
+        server.getScheduler().performTicks(20);
+        assertEquals(PotionEffect.INFINITE_DURATION, boss.getPotionEffect(PotionEffectType.SPEED).getDuration());
+        assertEquals(PotionEffect.INFINITE_DURATION, boss.getPotionEffect(PotionEffectType.STRENGTH).getDuration());
+        assertEquals(1, boss.getPotionEffect(PotionEffectType.SPEED).getAmplifier());
+        assertEquals(1, boss.getPotionEffect(PotionEffectType.STRENGTH).getAmplifier());
     }
 
     @Test
@@ -403,9 +566,11 @@ class HerobrineBossTest {
         return target.clone().subtract(0, 0, 2);
     }
 
-    @Test
-    void finalPhaseBlinksBehindSurvivalPlayerWithoutMovingPlayerOrTerrain() {
+    @ParameterizedTest
+    @EnumSource(value = GameMode.class, names = {"SURVIVAL", "ADVENTURE"})
+    void finalPhaseBlinksBehindParticipantWithoutMovingPlayerOrTerrain(GameMode mode) {
         Location destination = prepareBlink();
+        player.setGameMode(mode);
         Location initial = boss.getLocation();
         Location playerLocation = player.getLocation();
         server.getScheduler().performTicks(100);
@@ -437,12 +602,14 @@ class HerobrineBossTest {
         assertEquals(initial, boss.getLocation());
     }
 
-    @Test
-    void deadNearestPlayerDoesNotPreventBlinkToLivingParticipant() {
+    @ParameterizedTest
+    @EnumSource(value = GameMode.class, names = {"SURVIVAL", "ADVENTURE"})
+    void deadNearestPlayerDoesNotPreventBlinkToLivingParticipant(GameMode mode) {
         prepareBlink();
         player.setHealth(0);
         assertTrue(player.isDead());
         PlayerMock survivor = server.addPlayer("Survivor");
+        survivor.setGameMode(mode);
         Location survivorLocation = boss.getLocation().add(15, 0, 0);
         survivorLocation.setYaw(0);
         survivorLocation.setPitch(0);
@@ -454,13 +621,33 @@ class HerobrineBossTest {
     }
 
     @ParameterizedTest
-    @EnumSource(value = GameMode.class, names = {"CREATIVE", "SPECTATOR", "ADVENTURE"})
-    void blinkIgnoresPlayersOutsideSurvival(GameMode mode) {
+    @EnumSource(value = GameMode.class, names = {"CREATIVE", "SPECTATOR"})
+    void blinkIgnoresPlayersOutsideCombatModes(GameMode mode) {
         prepareBlink();
         player.setGameMode(mode);
         Location initial = boss.getLocation();
         server.getScheduler().performTicks(120);
         assertEquals(initial, boss.getLocation());
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = GameMode.class, names = {"CREATIVE", "SPECTATOR"})
+    void blinkChoosesNearestParticipantAcrossSurvivalAndAdventure(GameMode observerMode) {
+        Location destination = prepareBlink();
+        player.setGameMode(GameMode.ADVENTURE);
+        PlayerMock observer = server.addPlayer("Observer");
+        observer.setGameMode(observerMode);
+        observer.teleport(boss.getLocation().add(5, 0, 0));
+        PlayerMock survivor = server.addPlayer("Survivor");
+        survivor.teleport(boss.getLocation().add(15, 0, 0));
+        Location observerLocation = observer.getLocation();
+        Location survivorLocation = survivor.getLocation();
+
+        server.getScheduler().performTicks(120);
+
+        assertEquals(destination, boss.getLocation());
+        assertEquals(observerLocation, observer.getLocation());
+        assertEquals(survivorLocation, survivor.getLocation());
     }
 
     @Test

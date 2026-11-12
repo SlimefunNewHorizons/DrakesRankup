@@ -68,6 +68,14 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         if (!plugin.isWorldAllowed(p.getWorld())) { p.sendMessage("§cHerobrine no habita este mundo."); return true; }
         World w = p.getWorld();
         Fight active = fights.get(w.getUID());
+        if (a.length == 1 && a[0].equalsIgnoreCase("estado")) {
+            showStatus(p, active);
+            return true;
+        }
+        if (a.length != 0) {
+            p.sendMessage("§eUso: /herobrine [estado]");
+            return true;
+        }
         if (active != null && active.boss.isValid()) { p.sendMessage("§cHerobrine ya esta entre nosotros. ¡Ve a combatirlo!"); return true; }
         long now = System.currentTimeMillis();
         long cd = plugin.getConfig().getLong("herobrine.cooldown-seconds", 600) * 1000L;
@@ -76,6 +84,24 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         cooldowns.put(p.getUniqueId(), now + cd);
         spawn(p);
         return true;
+    }
+
+    private void showStatus(Player player, Fight f) {
+        if (f == null || !f.boss.isValid() || f.boss.isDead() || System.currentTimeMillis() >= f.end) {
+            player.sendMessage("§7No hay un combate de Herobrine activo en este mundo.");
+            return;
+        }
+        double damage = f.damage.getOrDefault(player.getUniqueId(), 0.0);
+        double minimum = Math.max(0, plugin.getConfig().getDouble("herobrine.minimum-reward-damage", 4));
+        boolean qualified = damage > 0 && damage >= minimum && canParticipate(f, player);
+        player.sendMessage("§4[HEROBRINE] §eFase " + f.phase + "/3 | Vida: "
+                + Math.ceil(f.boss.getHealth()) + "/" + Math.ceil(f.boss.getAttribute(Attribute.MAX_HEALTH).getValue())
+                + " | Tiempo restante: " + Math.max(0, (f.end - System.currentTimeMillis() + 999) / 1000) + "s.");
+        player.sendMessage("§7Arena: X=" + f.center.getBlockX() + " Z=" + f.center.getBlockZ()
+                + " | Radio: " + (int) f.radius + " | " + (inArena(f, player.getLocation()) ? "Dentro" : "Fuera") + ".");
+        player.sendMessage("§7Tu daño efectivo: " + damage + " / minimo " + minimum + ". "
+                + (qualified ? "§aParticipacion suficiente; sigue vivo en la arena hasta la victoria."
+                             : "§ePara obtener botin, aporta daño suficiente y permanece vivo en Survival/Adventure dentro de la arena."));
     }
 
     private void spawn(Player summoner) {
@@ -110,9 +136,10 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         f.boss = z;
         f.center = loc.clone();
         f.radius = Math.max(8, Math.min(128, plugin.getConfig().getDouble("herobrine.arena-radius", 48)));
-        f.bar = Bukkit.createBossBar("§4§lHEROBRINE", BarColor.RED, BarStyle.SEGMENTED_6);
+        f.bar = Bukkit.createBossBar("§4§lHEROBRINE §7| Fase 1/3", BarColor.RED, BarStyle.SEGMENTED_6);
         f.end = System.currentTimeMillis() + plugin.getConfig().getLong("herobrine.lifetime-seconds", 900) * 1000L;
         fights.put(w.getUID(), f);
+        summoner.sendMessage("§7Arena: radio de " + (int) f.radius + " bloques. Combate en Survival/Adventure y permanece dentro hasta la victoria para recibir botin.");
         for (Player pl : w.getPlayers()) pl.sendMessage("§4§l[HEROBRINE] §c" + summoner.getName() + " ha perturbado mi descanso...");
 
         new BukkitRunnable() {
@@ -153,6 +180,7 @@ public class HerobrineBoss implements Listener, CommandExecutor {
 
     private void phase2(World w, Zombie z, Fight f) {
         f.phase = 2;
+        f.bar.setTitle("§4§lHEROBRINE §7| Fase 2/3: Sombras");
         f.bar.setColor(BarColor.PURPLE);
         w.strikeLightningEffect(z.getLocation());
         for (Player p : w.getPlayers()) if (p.getLocation().distanceSquared(z.getLocation()) < 3600) p.sendMessage("§4§l[HEROBRINE] §c¡Mis sombras os devoraran!");
@@ -163,23 +191,23 @@ public class HerobrineBoss implements Listener, CommandExecutor {
             m.setPersistent(false);
             f.minions.add(m);
         }
-        z.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 60, 1, false, false));
+        z.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, PotionEffect.INFINITE_DURATION, 1, false, false));
     }
 
     private void phase3(World w, Zombie z, Fight f) {
         f.phase = 3;
+        f.bar.setTitle("§4§lHEROBRINE §7| Fase 3/3: Furia");
         f.bar.setColor(BarColor.WHITE);
         w.playSound(z.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 2f, 0.6f);
         for (Player p : w.getPlayers()) if (p.getLocation().distanceSquared(z.getLocation()) < 3600) p.sendMessage("§4§l[HEROBRINE] §c¡Ya no hay escapatoria!");
-        z.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 20 * 60, 1, false, false));
+        z.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, PotionEffect.INFINITE_DURATION, 1, false, false));
     }
 
     private void blink(Zombie z, Fight f) {
         Player target = null; double best = 30 * 30;
         for (Player p : z.getWorld().getPlayers()) {
             double d = p.getLocation().distanceSquared(z.getLocation());
-            if (p.getGameMode() == org.bukkit.GameMode.SURVIVAL && !p.isDead()
-                    && inArena(f, p.getLocation()) && d < best) { best = d; target = p; }
+            if (canParticipate(f, p) && d < best) { best = d; target = p; }
         }
         if (target == null) return;
         Location behind = target.getLocation().subtract(target.getLocation().getDirection().setY(0).normalize().multiply(2));
@@ -240,6 +268,21 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         if (Double.isFinite(damage) && damage > 0) f.damage.merge(p.getUniqueId(), damage, Double::sum);
     }
 
+    /** La arena delimita el combate, incluidos proyectiles que ya estaban en vuelo. */
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onArenaDamage(EntityDamageByEntityEvent e) {
+        Fight f = fights.get(e.getEntity().getWorld().getUID());
+        if (f == null) return;
+        Entity attacker = e.getDamager();
+        if (attacker instanceof Projectile projectile && projectile.getShooter() instanceof Entity shooter) attacker = shooter;
+        boolean victimInFight = e.getEntity().equals(f.boss) || f.minions.contains(e.getEntity());
+        boolean attackerInFight = attacker.equals(f.boss) || f.minions.contains(attacker);
+        if (victimInFight && attacker instanceof Player player
+                && (!canParticipate(f, player) || !inArena(f, e.getEntity().getLocation()))) e.setCancelled(true);
+        if (attackerInFight && e.getEntity() instanceof Player player
+                && (!canParticipate(f, player) || !inArena(f, attacker.getLocation()))) e.setCancelled(true);
+    }
+
     @EventHandler
     public void onDeath(EntityDeathEvent e) {
         if (!e.getEntity().getPersistentDataContainer().has(bossKey, PersistentDataType.BYTE)) return;
@@ -264,8 +307,10 @@ public class HerobrineBoss implements Listener, CommandExecutor {
             int diamonds = Math.max(0, Math.min(64, plugin.getConfig().getInt("herobrine.reward-diamonds", 5)));
             if (diamonds > 0) giveOrDrop(p, new ItemStack(Material.DIAMOND, diamonds));
             if (id.equals(top)) giveOrDrop(p, essence());
+            p.sendMessage("§6[HEROBRINE] §eBotin: " + diamonds + " diamantes"
+                    + (id.equals(top) ? " y 1 esencia" : "") + ". Daño aportado: " + Math.round(eligible.get(id)) + ".");
         }
-        for (Player p : w.getPlayers()) p.sendMessage("§6§l[HEROBRINE DEFEATED] §e" + (top == null ? "?" : Bukkit.getOfflinePlayer(top).getName()) + " §7dealt the most damage. " + eligible.size() + " heroes earned rewards!");
+        for (Player p : w.getPlayers()) p.sendMessage("§6§l[HEROBRINE DERROTADO] §e" + (top == null ? "Sin participantes elegibles" : Bukkit.getOfflinePlayer(top).getName()) + " §7| Recompensas para " + eligible.size() + " participantes.");
         end(w, f, true);
     }
 
