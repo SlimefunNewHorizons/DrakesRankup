@@ -757,6 +757,71 @@ class HerobrineBossTest {
         assertFalse(player.getInventory().contains(Material.NETHER_STAR));
     }
 
+    private void expireFightBeforeNextTimerTick() throws ReflectiveOperationException {
+        var executor = plugin.getCommand("herobrine").getExecutor();
+        var fightsField = HerobrineBoss.class.getDeclaredField("fights");
+        fightsField.setAccessible(true);
+        var fight = ((Map<?, ?>) fightsField.get(executor)).get(world.getUID());
+        var endField = fight.getClass().getDeclaredField("end");
+        endField.setAccessible(true);
+        endField.setLong(fight, System.currentTimeMillis() - 1);
+    }
+
+    @Test
+    void deathAfterDeadlineBeforeTimerTickAwardsNothingAndCleansShadows() throws ReflectiveOperationException {
+        hit(player, 10, false);
+        boss.setHealth(200);
+        server.getScheduler().performTicks(20);
+        var shadows = world.getEntitiesByClass(Mob.class).stream().filter(mob -> mob != boss).toList();
+        assertEquals(4, shadows.size());
+        expireFightBeforeNextTimerTick();
+
+        EntityDeathEvent death = defeat();
+        defeat();
+
+        assertEquals(0, death.getDroppedExp());
+        assertTrue(death.getDrops().isEmpty());
+        assertTrue(player.getInventory().isEmpty());
+        assertEquals(0, player.getTotalExperience());
+        assertTrue(world.getEntitiesByClass(Item.class).isEmpty());
+        assertTrue(shadows.stream().noneMatch(Entity::isValid));
+        assertTrue(status(player).contains("No hay un combate"));
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void expiredFightBlocksMeleeAndProjectilesInBothDirections(boolean projectile) throws ReflectiveOperationException {
+        boss.setHealth(200);
+        server.getScheduler().performTicks(20);
+        var mobs = new ArrayList<>(world.getEntitiesByClass(Mob.class));
+        assertEquals(5, mobs.size());
+        expireFightBeforeNextTimerTick();
+
+        for (Mob mob : mobs) {
+            assertTrue(attack(player, mob, projectile).isCancelled());
+            assertTrue(attack(mob, player, projectile).isCancelled());
+        }
+    }
+
+    @Test
+    void timerExpiresFightWithoutLootAndAllowsAnotherSummoner() throws ReflectiveOperationException {
+        hit(player, 10, false);
+        boss.setHealth(200);
+        server.getScheduler().performTicks(20);
+        var mobs = new ArrayList<>(world.getEntitiesByClass(Mob.class));
+        expireFightBeforeNextTimerTick();
+
+        server.getScheduler().performTicks(20);
+
+        assertTrue(mobs.stream().noneMatch(Entity::isValid));
+        assertTrue(player.getInventory().isEmpty());
+        assertEquals(0, player.getTotalExperience());
+        PlayerMock second = server.addPlayer("AfterExpiry");
+        second.teleport(player.getLocation());
+        assertTrue(second.performCommand("herobrine"));
+        assertEquals(1, world.getEntitiesByClass(Zombie.class).size());
+    }
+
     @Test
     void pluginDisableCleansFightWithoutLootOrRemovingUnrelatedMob() {
         hit(player, 10, false);

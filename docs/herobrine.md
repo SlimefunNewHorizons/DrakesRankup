@@ -44,6 +44,9 @@ no se multiplica por el número de jugadores.
 
 El tiempo máximo predeterminado es de 900 segundos y la espera por invocador
 es de 600 segundos. Al expirar o apagar el plugin se limpian las entidades y
-la barra sin repartir botín. Los parámetros están en `config.yml`, sección
+la barra sin repartir botín. El plazo se valida también al impactar o morir:
+el intervalo hasta la siguiente limpieza no permite continuar el combate ni
+obtener objetos o experiencia de una derrota tardía.
+Los parámetros están en `config.yml`, sección
 `herobrine`. Esta rama usa Paper 26.2 y Java 25; requiere ensayo con cliente
 en staging antes de fusionar o desplegar.
