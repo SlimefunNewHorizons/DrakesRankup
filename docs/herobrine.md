@@ -34,6 +34,14 @@ elegible recibe además una esencia. Cada premiado ve su daño y botín en el ch
 Los objetos que no caben en el inventario caen a sus pies. Las sombras no
 aportan crédito; el reparto del jefe se realiza una sola vez por encuentro.
 
+La experiencia también se entrega directamente a los participantes elegibles,
+sin orbes que otros jugadores puedan recoger. `herobrine.reward-experience`
+establece el total del encuentro (2000 XP por defecto): se divide por igual y
+el resto entero lo recibe el mayor contribuyente elegible, junto a la esencia.
+El chat indica los XP recibidos. Un valor de 0 o negativo desactiva esta parte
+del botín. Sin participantes elegibles no se entrega experiencia; el presupuesto
+no se multiplica por el número de jugadores.
+
 El tiempo máximo predeterminado es de 900 segundos y la espera por invocador
 es de 600 segundos. Al expirar o apagar el plugin se limpian las entidades y
 la barra sin repartir botín. Los parámetros están en `config.yml`, sección

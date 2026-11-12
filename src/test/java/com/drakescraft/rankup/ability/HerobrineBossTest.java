@@ -143,10 +143,13 @@ class HerobrineBossTest {
         server.getPluginManager().callEvent(event);
     }
 
-    private void defeat() {
-        server.getPluginManager().callEvent(new EntityDeathEvent(boss,
+    private EntityDeathEvent defeat() {
+        EntityDeathEvent event = new EntityDeathEvent(boss,
                 DamageSource.builder(DamageType.PLAYER_ATTACK).withCausingEntity(player).withDirectEntity(player).build(),
-                new ArrayList<ItemStack>()));
+                new ArrayList<ItemStack>());
+        event.setDroppedExp(2000);
+        server.getPluginManager().callEvent(event);
+        return event;
     }
 
     private String status(PlayerMock viewer) {
@@ -375,6 +378,69 @@ class HerobrineBossTest {
         assertTrue(second.getInventory().contains(Material.DIAMOND, 5));
         assertTrue(player.getInventory().contains(Material.NETHER_STAR));
         assertFalse(second.getInventory().contains(Material.NETHER_STAR));
+    }
+
+    @Test
+    void experienceBudgetIsSharedOnceWithRemainderForTopContributorAndNoOrbs() {
+        PlayerMock second = server.addPlayer("Second");
+        PlayerMock third = server.addPlayer("Third");
+        PlayerMock observer = server.addPlayer("Observer");
+        second.teleport(boss.getLocation());
+        third.teleport(boss.getLocation());
+        observer.teleport(boss.getLocation());
+        hit(player, 5, false);
+        hit(second, 20, false);
+        hit(third, 10, false);
+
+        assertEquals(0, defeat().getDroppedExp());
+        defeat();
+
+        assertEquals(666, player.getTotalExperience());
+        assertEquals(668, second.getTotalExperience());
+        assertEquals(666, third.getTotalExperience());
+        assertEquals(0, observer.getTotalExperience());
+        assertTrue(second.getInventory().contains(Material.NETHER_STAR));
+        assertFalse(player.getInventory().contains(Material.NETHER_STAR));
+        StringBuilder messages = new StringBuilder();
+        String message;
+        while ((message = second.nextMessage()) != null) messages.append(message);
+        assertTrue(messages.toString().contains("668 XP"), messages.toString());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-20, 0, 1, 1234})
+    void configuredExperienceBudgetIsRespectedForSoloParticipant(int experience) {
+        plugin.getConfig().set("herobrine.reward-experience", experience);
+        hit(player, 10, false);
+        assertEquals(0, defeat().getDroppedExp());
+        assertEquals(Math.max(0, experience), player.getTotalExperience());
+        assertTrue(player.getInventory().contains(Material.DIAMOND, 5));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"outside", "creative", "spectator", "below-minimum"})
+    void experienceRechecksRewardEligibilityAtVictory(String exclusion) {
+        PlayerMock second = server.addPlayer("Eligible");
+        second.setGameMode(GameMode.ADVENTURE);
+        second.teleport(boss.getLocation());
+        hit(second, 5, false);
+        hit(player, exclusion.equals("below-minimum") ? 3 : 30, false);
+        switch (exclusion) {
+            case "outside" -> player.teleport(boss.getLocation().add(100, 0, 0));
+            case "creative" -> player.setGameMode(GameMode.CREATIVE);
+            case "spectator" -> player.setGameMode(GameMode.SPECTATOR);
+        }
+        assertEquals(0, defeat().getDroppedExp());
+        assertEquals(0, player.getTotalExperience());
+        assertEquals(2000, second.getTotalExperience());
+        assertTrue(second.getInventory().contains(Material.NETHER_STAR));
+    }
+
+    @Test
+    void victoryWithoutEligibleParticipantsDoesNotDropOrAwardExperience() {
+        hit(player, 3, false);
+        assertEquals(0, defeat().getDroppedExp());
+        assertEquals(0, player.getTotalExperience());
     }
 
     @ParameterizedTest
