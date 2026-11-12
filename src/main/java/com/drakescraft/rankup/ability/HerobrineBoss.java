@@ -68,6 +68,14 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         if (!plugin.isWorldAllowed(p.getWorld())) { p.sendMessage("§cHerobrine no habita este mundo."); return true; }
         World w = p.getWorld();
         Fight active = fights.get(w.getUID());
+        if (a.length == 1 && a[0].equalsIgnoreCase("estado")) {
+            showStatus(p, active);
+            return true;
+        }
+        if (a.length != 0) {
+            p.sendMessage("§eUso: /herobrine [estado]");
+            return true;
+        }
         if (active != null && active.boss.isValid()) { p.sendMessage("§cHerobrine ya esta entre nosotros. ¡Ve a combatirlo!"); return true; }
         long now = System.currentTimeMillis();
         long cd = plugin.getConfig().getLong("herobrine.cooldown-seconds", 600) * 1000L;
@@ -76,6 +84,24 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         cooldowns.put(p.getUniqueId(), now + cd);
         spawn(p);
         return true;
+    }
+
+    private void showStatus(Player player, Fight f) {
+        if (f == null || !f.boss.isValid() || f.boss.isDead() || System.currentTimeMillis() >= f.end) {
+            player.sendMessage("§7No hay un combate de Herobrine activo en este mundo.");
+            return;
+        }
+        double damage = f.damage.getOrDefault(player.getUniqueId(), 0.0);
+        double minimum = Math.max(0, plugin.getConfig().getDouble("herobrine.minimum-reward-damage", 4));
+        boolean qualified = damage > 0 && damage >= minimum && canParticipate(f, player);
+        player.sendMessage("§4[HEROBRINE] §eFase " + f.phase + "/3 | Vida: "
+                + Math.ceil(f.boss.getHealth()) + "/" + Math.ceil(f.boss.getAttribute(Attribute.MAX_HEALTH).getValue())
+                + " | Tiempo restante: " + Math.max(0, (f.end - System.currentTimeMillis() + 999) / 1000) + "s.");
+        player.sendMessage("§7Arena: X=" + f.center.getBlockX() + " Z=" + f.center.getBlockZ()
+                + " | Radio: " + (int) f.radius + " | " + (inArena(f, player.getLocation()) ? "Dentro" : "Fuera") + ".");
+        player.sendMessage("§7Tu daño efectivo: " + damage + " / minimo " + minimum + ". "
+                + (qualified ? "§aParticipacion suficiente; sigue vivo en la arena hasta la victoria."
+                             : "§ePara obtener botin, aporta daño suficiente y permanece vivo en Survival/Adventure dentro de la arena."));
     }
 
     private void spawn(Player summoner) {

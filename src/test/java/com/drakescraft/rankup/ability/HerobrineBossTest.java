@@ -143,6 +143,74 @@ class HerobrineBossTest {
                 new ArrayList<ItemStack>()));
     }
 
+    private String status(PlayerMock viewer) {
+        while (viewer.nextMessage() != null) { /* discard earlier fight announcements */ }
+        assertTrue(viewer.performCommand("herobrine estado"));
+        StringBuilder messages = new StringBuilder();
+        String message;
+        while ((message = viewer.nextMessage()) != null) messages.append(message).append('\n');
+        return messages.toString();
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3})
+    void statusReportsCurrentPhaseArenaAndEffectiveParticipation(int phase) {
+        hit(player, 10, false);
+        hit(player, 100, true);
+        boss.setHealth(phase == 1 ? 400 : phase == 2 ? 200 : 100);
+        server.getScheduler().performTicks(20);
+        String messages = status(player);
+        assertTrue(messages.contains("Fase " + phase + "/3"), messages);
+        assertTrue(messages.contains("Vida: " + (phase == 1 ? "400.0" : phase == 2 ? "200.0" : "100.0")), messages);
+        assertTrue(messages.contains("Tiempo restante:"), messages);
+        assertTrue(messages.contains("X=" + boss.getLocation().getBlockX()), messages);
+        assertTrue(messages.contains("Z=" + boss.getLocation().getBlockZ()), messages);
+        assertTrue(messages.contains("Radio: 48 | Dentro"), messages);
+        assertTrue(messages.contains("Tu daño efectivo: 10.0 / minimo 4.0"), messages);
+        assertTrue(messages.contains("Participacion suficiente"), messages);
+        assertEquals(1, world.getEntitiesByClass(Zombie.class).stream().filter(z -> z.equals(boss)).count());
+        assertFalse(player.getInventory().contains(Material.DIAMOND));
+        assertFalse(player.getInventory().contains(Material.NETHER_STAR));
+    }
+
+    @ParameterizedTest
+    @EnumSource(GameMode.class)
+    void statusRechecksCombatModeWithoutDiscardingContribution(GameMode mode) {
+        hit(player, 10, false);
+        player.setGameMode(mode);
+        String messages = status(player);
+        assertTrue(messages.contains("Tu daño efectivo: 10.0"), messages);
+        boolean eligible = mode == GameMode.SURVIVAL || mode == GameMode.ADVENTURE;
+        assertEquals(eligible, messages.contains("Participacion suficiente"), messages);
+    }
+
+    @Test
+    void statusExplainsMissingContributionAndLeavingArena() {
+        assertFalse(status(player).contains("Participacion suficiente"));
+        hit(player, 10, false);
+        player.teleport(player.getLocation().add(100, 0, 0));
+        String messages = status(player);
+        assertTrue(messages.contains("Radio: 48 | Fuera"), messages);
+        assertTrue(messages.contains("Tu daño efectivo: 10.0"), messages);
+        assertFalse(messages.contains("Participacion suficiente"), messages);
+    }
+
+    @Test
+    void statusAndInvalidArgumentsWithoutFightDoNotSummonOrConsumeCooldown() {
+        defeat();
+        boss.remove();
+        PlayerMock visitor = server.addPlayer("Visitor");
+        visitor.teleport(player.getLocation());
+        assertTrue(status(visitor).contains("No hay un combate"));
+        assertTrue(visitor.performCommand("herobrine desconocido"));
+        assertTrue(visitor.nextMessage().contains("Uso: /herobrine [estado]"));
+        assertTrue(visitor.performCommand("herobrine estado extra"));
+        assertTrue(visitor.nextMessage().contains("Uso: /herobrine [estado]"));
+        assertTrue(world.getEntitiesByClass(Zombie.class).isEmpty());
+        assertTrue(visitor.performCommand("herobrine"));
+        assertEquals(1, world.getEntitiesByClass(Zombie.class).size());
+    }
+
     private EntityDamageByEntityEvent attack(Entity attacker, Entity victim, boolean projectile) {
         Entity direct = attacker;
         if (projectile) {

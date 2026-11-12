@@ -5,6 +5,13 @@ punto de aparición; el radio predeterminado es de 48 bloques horizontales.
 El encuentro no modifica terreno ni teletransporta jugadores. El jefe y sus
 sombras regresan al centro si salen del radio.
 
+`/herobrine estado` consulta el combate del mundo actual sin invocar otro jefe
+ni consumir la espera. Muestra fase, vida, tiempo restante, centro y radio de
+arena, si estás dentro y tu daño efectivo frente al mínimo de participación.
+La participación suficiente se revisa de nuevo al morir el jefe: debes seguir
+vivo, dentro de la arena y en Survival/Adventure. Sin combate activo lo indica;
+los argumentos desconocidos muestran el uso sin invocar nada.
+
 - Fase 1: combate inicial; la barra muestra la fase actual.
 - Fase 2, al 66% de vida: una única oleada de cuatro sombras y velocidad II.
 - Fase 3, al 33%: fuerza II y un intento de blink cada seis segundos hacia un
