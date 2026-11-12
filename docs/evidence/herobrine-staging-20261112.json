@@ -1,0 +1,41 @@
+{
+  "base": "PR #2 / 803cf1e",
+  "fixture": "/tmp/herobrine-staging-Lk9JpV",
+  "client": "Mineflayer 1.21.11 / ViaBackwards",
+  "jarSha256": "4e39e9abfafe2c3b7d442bc44a9ff4c899d4757d1cf6a7e2382d3fa12003a0e1",
+  "assertions": [
+    "Fase 1: jefe y barra recibidos por cliente real",
+    "Fase 2 al 65%: mensaje y cuatro sombras visibles",
+    "Oleada única: no duplica sombras en ticks siguientes",
+    "Fase 3 al 30%: blink real detrás de Survival sobre suelo libre",
+    "Blink bloqueado cuando el destino está ocupado",
+    "Recompensas por inventario recibido: 5 diamantes por participante, esencia solo al mayor; espectador sin premios",
+    "Muerte: desaparecen barra, jefe y cuatro sombras del cliente"
+  ],
+  "rewards": {
+    "EnsayoHeroeA": {
+      "diamonds": 5,
+      "essence": 1
+    },
+    "EnsayoHeroeB": {
+      "diamonds": 5,
+      "essence": 0
+    },
+    "EnsayoObserva": {
+      "diamonds": 0,
+      "essence": 0
+    }
+  },
+  "ok": true,
+  "persistedXp": {
+    "EnsayoHeroeA": 763,
+    "EnsayoHeroeB": 1237,
+    "EnsayoObserva": 0
+  },
+  "scriptCommit": "ec4f474a3fa92899f276f1c7ac88afe1dd42e890",
+  "server": "Purpur 26.2-138 / Java 25",
+  "mineflayer": "4.37.1",
+  "unitTests": 40,
+  "serverErrors": 0,
+  "savedAndStopped": true
+}
