@@ -17,6 +17,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Zombie;
@@ -123,11 +124,13 @@ public class HerobrineBoss implements Listener, CommandExecutor {
                     z.remove(); end(w, f, false); cancel(); return;
                 }
                 tick++;
+                clearIneligibleTarget(f, z);
                 if (!inArena(f, z.getLocation())) {
                     z.setTarget(null);
                     z.teleport(f.center);
                 }
                 for (Entity minion : f.minions) {
+                    if (minion.isValid() && minion instanceof Mob mob) clearIneligibleTarget(f, mob);
                     if (minion.isValid() && !inArena(f, minion.getLocation())) {
                         if (minion instanceof org.bukkit.entity.Mob mob) mob.setTarget(null);
                         minion.teleport(f.center);
@@ -207,11 +210,21 @@ public class HerobrineBoss implements Listener, CommandExecutor {
                 && inArena(f, player.getLocation());
     }
 
+    private boolean canTarget(Fight f, LivingEntity target) {
+        return target instanceof Player player
+                ? canParticipate(f, player) : inArena(f, target.getLocation());
+    }
+
+    private void clearIneligibleTarget(Fight f, Mob mob) {
+        LivingEntity target = mob.getTarget();
+        if (target != null && !canTarget(f, target)) mob.setTarget(null);
+    }
+
     @EventHandler(ignoreCancelled = true)
     public void onTarget(EntityTargetLivingEntityEvent e) {
         Fight f = fights.get(e.getEntity().getWorld().getUID());
         if (f == null || (e.getEntity() != f.boss && !f.minions.contains(e.getEntity()))) return;
-        if (e.getTarget() != null && !inArena(f, e.getTarget().getLocation())) e.setCancelled(true);
+        if (e.getTarget() != null && !canTarget(f, e.getTarget())) e.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

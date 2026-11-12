@@ -10,6 +10,7 @@ import org.bukkit.damage.DamageType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LightningStrike;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -232,6 +233,62 @@ class HerobrineBossTest {
                 boss, player, EntityTargetEvent.TargetReason.CLOSEST_PLAYER);
         server.getPluginManager().callEvent(event);
         assertTrue(event.isCancelled());
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = GameMode.class, names = {"CREATIVE", "SPECTATOR"})
+    void bossAndMinionCannotAcquirePrivilegedPlayer(GameMode mode) {
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.5);
+        server.getScheduler().performTicks(20);
+        player.setGameMode(mode);
+        for (Mob mob : world.getEntitiesByClass(Mob.class)) {
+            EntityTargetLivingEntityEvent event = new EntityTargetLivingEntityEvent(
+                    mob, player, EntityTargetEvent.TargetReason.CLOSEST_PLAYER);
+            server.getPluginManager().callEvent(event);
+            assertTrue(event.isCancelled());
+        }
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = GameMode.class, names = {"CREATIVE", "SPECTATOR"})
+    void bossAndMinionsReleaseExistingTargetAfterModeChange(GameMode mode) {
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.5);
+        server.getScheduler().performTicks(20);
+        var mobs = world.getEntitiesByClass(Mob.class);
+        assertEquals(5, mobs.size());
+        for (Mob mob : mobs) {
+            mob.setTarget(player);
+            assertEquals(player, mob.getTarget());
+        }
+        player.setGameMode(mode);
+        server.getScheduler().performTicks(20);
+        for (Mob mob : mobs) assertNull(mob.getTarget());
+    }
+
+    @Test
+    void bossAndMinionsReleaseExistingTargetWhenPlayerLeavesArena() {
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.5);
+        server.getScheduler().performTicks(20);
+        var mobs = world.getEntitiesByClass(Mob.class);
+        assertEquals(5, mobs.size());
+        for (Mob mob : mobs) mob.setTarget(player);
+        player.teleport(boss.getLocation().add(100, 0, 0));
+        Location outside = player.getLocation();
+        server.getScheduler().performTicks(20);
+        for (Mob mob : mobs) assertNull(mob.getTarget());
+        assertEquals(outside, player.getLocation());
+    }
+
+    @Test
+    void adventureTargetInsideArenaRemainsValid() {
+        player.setGameMode(GameMode.ADVENTURE);
+        EntityTargetLivingEntityEvent event = new EntityTargetLivingEntityEvent(
+                boss, player, EntityTargetEvent.TargetReason.CLOSEST_PLAYER);
+        server.getPluginManager().callEvent(event);
+        assertFalse(event.isCancelled());
+        boss.setTarget(player);
+        server.getScheduler().performTicks(20);
+        assertEquals(player, boss.getTarget());
     }
 
     @Test
