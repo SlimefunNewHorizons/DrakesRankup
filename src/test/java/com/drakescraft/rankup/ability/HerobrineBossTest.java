@@ -5,6 +5,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.damage.DamageType;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -19,9 +21,11 @@ import org.junit.jupiter.api.Test;
 import org.mockbukkit.mockbukkit.MockBukkit;
 import org.mockbukkit.mockbukkit.ServerMock;
 import org.mockbukkit.mockbukkit.entity.PlayerMock;
+import org.mockbukkit.mockbukkit.entity.ZombieMock;
 import org.mockbukkit.mockbukkit.world.WorldMock;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,12 +36,30 @@ class HerobrineBossTest {
     private PlayerMock player;
     private Zombie boss;
 
+    // MockBukkit lacks the despawn flag. Preserve its value without replacing
+    // command dispatch, damage events, arena scheduling or reward handling.
+    private static final class ArenaZombieMock extends ZombieMock {
+        private boolean removeWhenFarAway = true;
+
+        ArenaZombieMock(ServerMock server) { super(server, UUID.randomUUID()); }
+
+        @Override public void setRemoveWhenFarAway(boolean remove) { removeWhenFarAway = remove; }
+        @Override public boolean getRemoveWhenFarAway() { return removeWhenFarAway; }
+    }
+
     @BeforeEach
     void setUp() {
         server = MockBukkit.mock();
         // MockBukkit does not implement cosmetic lightning; gameplay stays real.
         world = new WorldMock(Material.GRASS_BLOCK, 64) {
             @Override public LightningStrike strikeLightningEffect(Location location) { return null; }
+
+            @Override public Entity spawnEntity(Location location, EntityType type) {
+                if (type != EntityType.ZOMBIE) return super.spawnEntity(location, type);
+                ArenaZombieMock zombie = new ArenaZombieMock(server);
+                zombie.teleport(location);
+                return addEntity(zombie);
+            }
         };
         world.setName("herobrine_arena_test");
         server.addWorld(world);
@@ -46,6 +68,7 @@ class HerobrineBossTest {
         player.teleport(new Location(world, 0, 65, 0));
         assertTrue(player.performCommand("herobrine"));
         boss = world.getEntitiesByClass(Zombie.class).iterator().next();
+        assertFalse(boss.getRemoveWhenFarAway());
         player.teleport(boss.getLocation());
     }
 
