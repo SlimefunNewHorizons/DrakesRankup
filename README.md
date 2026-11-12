@@ -9,8 +9,8 @@
 <p>
   <a href="https://github.com/SlimefunNewHorizons/DrakesRankup"><img src="https://img.shields.io/badge/GitHub-DrakesRankup-181717?style=for-the-badge&logo=github" alt="GitHub"/></a>
   <img src="https://img.shields.io/badge/Slimefun4-Drake_Edition-22C55E?style=for-the-badge&logo=curseforge&logoColor=white" alt="Slimefun4"/>
-  <img src="https://img.shields.io/badge/Paper-1.21.11-38BDF8?style=for-the-badge&logo=minecraft&logoColor=white" alt="Paper 1.21.11"/>
-  <img src="https://img.shields.io/badge/Java-21-F89820?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 21"/>
+  <img src="https://img.shields.io/badge/Built%20against-Paper%201.21.11-38BDF8?style=for-the-badge&logo=minecraft&logoColor=white" alt="Built against Paper 1.21.11"/>
+  <img src="https://img.shields.io/badge/Java%20build-21-F89820?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 21 build"/>
 </p>
 
 [🇬🇧 **English**](README.md) · [🇪🇸 **Español**](README_ES.md)
@@ -19,11 +19,11 @@
 
 > ### 🏰 Join the Official DrakesCraft Community!
 > 
-> * 🎮 **Server IP**: `mc.drakescraft.cl` *(Java 1.21.11 & Bedrock Port 25565 / 19132)*
+> * 🎮 **Server IP**: `mc.drakescraft.cl` *(Java 1.21+ · Bedrock on the same address and port 25565; direct link on the website)*
 > * 💬 **Official Discord**: [discord.gg/drakescraft](https://discord.gg/rv3vtXZTk7) — *Check out `#general-english`!*
 > * 🌐 **Website & Guides**: [web.drakescraft.cl](https://web.drakescraft.cl) — 🛒 **Store**: [web.drakescraft.cl/store](https://web.drakescraft.cl/store.html)
 > 
-> *Play with this addon alongside 80+ optimized expansions live on our technical survival network!*
+> *Play with this addon alongside the large Slimefun add-on network (see the website for the current list) live on our technical survival network!*
 
 ---
 
@@ -45,8 +45,9 @@ DrakesRankup drives player progression with customizable rank requirements (Drac
 
 | Parameter | Requirement |
 |---|---|
-| **Server Software** | Paper / Purpur / Folia **1.21.11** |
-| **Java Runtime** | **Java 21** LTS |
+| **Built against** | Paper API **1.21.11** (`pom.xml`), `api-version: '1.21'`, Java **21** bytecode (`java.version`, CI) |
+| **Runs on (verified)** | DrakesCraft production: Purpur **26.2**, Java **25** (the Java 21 jar loads there). Other 26.x builds: not tested by CI |
+| **Server Software** | Paper / Purpur / Folia 1.21.x; 26.2 verified on DrakesCraft |
 | **Required Core** | [Slimefun4-Drake](https://github.com/SlimefunNewHorizons/Slimefun4-Drake) |
 | **Architecture** | 100% Server-Side (Vanilla Minecraft clients can join without installing client mods) |
 
@@ -86,5 +87,5 @@ Licensed under **MIT**.
 This project is a sovereign fork maintained by [**JackStar6677-1**](https://github.com/JackStar6677-1) under [**DrakesCraft Labs**](https://github.com/SlimefunNewHorizons).
 
 - **Original Project:** Created by the upstream authors and the open-source community ([Upstream Repository](https://github.com/Slimefun)).
-- **DrakesCraft Optimizations:** Modernized for Paper/Purpur 1.21.11+, Java 21 LTS, high concurrency, asynchronous safety, and exploit/duplication prevention.
+- **DrakesCraft Optimizations:** Built for Paper/Purpur 1.21.11 (Java 21 bytecode; running on Purpur 26.2 / Java 25 in production), high concurrency, asynchronous safety, and exploit/duplication prevention.
 - **License:** Distributed under the original **MIT** license terms. See the [LICENSE](LICENSE) file for complete details.
