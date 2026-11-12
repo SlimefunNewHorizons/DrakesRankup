@@ -57,8 +57,9 @@ class HerobrineBossTest {
             @Override public Entity spawnEntity(Location location, EntityType type) {
                 if (type != EntityType.ZOMBIE) return super.spawnEntity(location, type);
                 ArenaZombieMock zombie = new ArenaZombieMock(server);
+                server.registerEntity(zombie);
                 zombie.teleport(location);
-                return addEntity(zombie);
+                return zombie;
             }
         };
         world.setName("herobrine_arena_test");
