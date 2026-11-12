@@ -292,9 +292,15 @@ public class HerobrineBoss implements Listener, CommandExecutor {
 
     @EventHandler
     public void onDeath(EntityDeathEvent e) {
-        if (!e.getEntity().getPersistentDataContainer().has(bossKey, PersistentDataType.BYTE)) return;
         World w = e.getEntity().getWorld();
         Fight f = fights.get(w.getUID());
+        // Las sombras son parte de la fase, no una fuente de botin publico.
+        if (f != null && f.minions.contains(e.getEntity())) {
+            e.getDrops().clear();
+            e.setDroppedExp(0);
+            return;
+        }
+        if (!e.getEntity().getPersistentDataContainer().has(bossKey, PersistentDataType.BYTE)) return;
         if (f == null || !f.boss.equals(e.getEntity())) return;
         e.getDrops().clear();
         // La experiencia forma parte del botin de participacion, sin orbes para espectadores.
@@ -343,7 +349,11 @@ public class HerobrineBoss implements Listener, CommandExecutor {
     }
 
     private void giveOrDrop(Player p, ItemStack it) {
-        p.getInventory().addItem(it).values().forEach(r -> p.getWorld().dropItemNaturally(p.getLocation(), r));
+        p.getInventory().addItem(it).values().forEach(r -> {
+            org.bukkit.entity.Item reward = p.getWorld().dropItemNaturally(p.getLocation(), r);
+            reward.setOwner(p.getUniqueId());
+            reward.setCanMobPickup(false);
+        });
     }
 
     /** Limpieza al apagar: no deja jefes ni barras colgadas. */

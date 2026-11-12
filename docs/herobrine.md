@@ -31,8 +31,10 @@ jefe. Al morir, cada jugador vivo, conectado y dentro de la arena que alcance
 `herobrine.minimum-reward-damage` (4 por defecto) recibe
 `herobrine.reward-diamonds` (5 por defecto, entre 0 y 64). El mayor contribuyente
 elegible recibe además una esencia. Cada premiado ve su daño y botín en el chat.
-Los objetos que no caben en el inventario caen a sus pies. Las sombras no
-aportan crédito; el reparto del jefe se realiza una sola vez por encuentro.
+Los objetos que no caben en el inventario caen a sus pies con el participante
+como propietario y recogida por mobs desactivada. Conservan el vencimiento
+normal de los objetos caídos. Las sombras no sueltan objetos ni experiencia y
+no aportan crédito; el reparto del jefe se realiza una sola vez por encuentro.
 
 La experiencia también se entrega directamente a los participantes elegibles,
 sin orbes que otros jugadores puedan recoger. `herobrine.reward-experience`
