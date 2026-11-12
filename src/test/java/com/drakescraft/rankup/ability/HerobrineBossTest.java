@@ -37,6 +37,7 @@ import org.mockbukkit.mockbukkit.world.WorldMock;
 import org.mockbukkit.mockbukkit.world.Coordinate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -210,11 +211,12 @@ class HerobrineBossTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 1})
     void fullInventoryDropsOnlyRewardsThatDoNotFit(int freeDiamondSpace) {
-        for (int slot = 0; slot < player.getInventory().getStorageContents().length; slot++) {
+        // Paper 26.2 declares 43 slots, but PlayerInventoryMock only maps
+        // storage/equipment through slot 40. Its addItem scans all 43 slots,
+        // including the two unmapped slots, so occupy the whole mock inventory.
+        for (int slot = 0; slot < player.getInventory().getSize(); slot++) {
             player.getInventory().setItem(slot, new ItemStack(Material.COBBLESTONE, 64));
         }
-        // MockBukkit's addItem also scans equipment slots. Keep those occupied
-        // with real equipment while exercising the storage overflow path.
         player.getInventory().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
         player.getInventory().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
         player.getInventory().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
@@ -223,6 +225,11 @@ class HerobrineBossTest {
         if (freeDiamondSpace > 0) {
             player.getInventory().setItem(0, new ItemStack(Material.DIAMOND, 64 - freeDiamondSpace));
         }
+        assertEquals(-1, player.getInventory().firstEmpty(), "The mock must have no spare slots");
+        // getContents returns live mirrors: clone before changing expectations.
+        ItemStack[] expectedInventory = Arrays.stream(player.getInventory().getContents())
+                .map(ItemStack::clone).toArray(ItemStack[]::new);
+        if (freeDiamondSpace > 0) expectedInventory[0].setAmount(64);
         hit(player, 10, false);
         defeat();
         defeat();
@@ -237,10 +244,8 @@ class HerobrineBossTest {
                 .filter(item -> item.getType() == Material.DIAMOND).mapToInt(ItemStack::getAmount).sum());
         assertEquals(1, drops.stream().map(Item::getItemStack)
                 .filter(item -> item.getType() == Material.NETHER_STAR).mapToInt(ItemStack::getAmount).sum());
-        assertEquals(64, player.getInventory().getItem(1).getAmount());
-        assertEquals(Material.COBBLESTONE, player.getInventory().getItem(1).getType());
-        assertEquals(Material.DIAMOND_HELMET, player.getInventory().getHelmet().getType());
-        assertEquals(Material.COBBLESTONE, player.getInventory().getItemInOffHand().getType());
+        assertArrayEquals(expectedInventory, player.getInventory().getContents(),
+                "Only the existing diamond stack may change; preserve every other slot");
     }
 
     @ParameterizedTest
