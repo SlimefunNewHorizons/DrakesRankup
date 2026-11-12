@@ -19,6 +19,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -140,6 +141,100 @@ class HerobrineBossTest {
         server.getPluginManager().callEvent(new EntityDeathEvent(boss,
                 DamageSource.builder(DamageType.PLAYER_ATTACK).withCausingEntity(player).withDirectEntity(player).build(),
                 new ArrayList<ItemStack>()));
+    }
+
+    private EntityDamageByEntityEvent attack(Entity attacker, Entity victim, boolean projectile) {
+        Entity direct = attacker;
+        if (projectile) {
+            ArrowMock arrow = new ArrowMock(server, UUID.randomUUID());
+            server.registerEntity(arrow);
+            arrow.teleport(victim.getLocation());
+            arrow.setShooter((org.bukkit.projectiles.ProjectileSource) attacker);
+            direct = arrow;
+        }
+        EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(direct, victim,
+                projectile ? EntityDamageEvent.DamageCause.PROJECTILE : EntityDamageEvent.DamageCause.ENTITY_ATTACK,
+                DamageSource.builder(projectile ? DamageType.ARROW : DamageType.MOB_ATTACK)
+                        .withCausingEntity(attacker).withDirectEntity(direct).build(), 10);
+        server.getPluginManager().callEvent(event);
+        return event;
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void arenaBlocksMeleeAndArrowsInBothDirectionsAfterPlayerLeaves(boolean projectile) {
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.5);
+        server.getScheduler().performTicks(20);
+        var mobs = world.getEntitiesByClass(Mob.class);
+        assertEquals(5, mobs.size());
+        Location inside = player.getLocation();
+        player.teleport(inside.clone().add(100, 0, 0));
+        for (Mob mob : mobs) {
+            assertTrue(attack(player, mob, projectile).isCancelled());
+            assertTrue(attack(mob, player, projectile).isCancelled());
+        }
+        player.teleport(inside);
+        defeat();
+        assertFalse(player.getInventory().contains(Material.DIAMOND));
+        assertFalse(player.getInventory().contains(Material.NETHER_STAR));
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = GameMode.class, names = {"CREATIVE", "SPECTATOR"})
+    void privilegedPlayersCannotDamageBossOrShadows(GameMode mode) {
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.5);
+        server.getScheduler().performTicks(20);
+        player.setGameMode(mode);
+        for (Mob mob : world.getEntitiesByClass(Mob.class)) {
+            assertTrue(attack(player, mob, false).isCancelled());
+            assertTrue(attack(player, mob, true).isCancelled());
+        }
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = GameMode.class, names = {"SURVIVAL", "ADVENTURE"})
+    void eligiblePlayersCanFightBossAndShadowsInArena(GameMode mode) {
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.5);
+        server.getScheduler().performTicks(20);
+        player.setGameMode(mode);
+        for (Mob mob : world.getEntitiesByClass(Mob.class)) {
+            assertFalse(attack(player, mob, false).isCancelled());
+            assertFalse(attack(player, mob, true).isCancelled());
+            assertFalse(attack(mob, player, false).isCancelled());
+            assertFalse(attack(mob, player, true).isCancelled());
+        }
+        defeat();
+        assertTrue(player.getInventory().contains(Material.DIAMOND, 5));
+        assertTrue(player.getInventory().contains(Material.NETHER_STAR));
+    }
+
+    @Test
+    void displacedBossCannotDealOrReceivePlayerDamageUntilReturnedToArena() {
+        Location center = boss.getLocation();
+        boss.teleport(center.clone().add(100, 0, 0));
+        assertTrue(attack(player, boss, true).isCancelled());
+        assertTrue(attack(boss, player, true).isCancelled());
+        server.getScheduler().performTicks(20);
+        assertEquals(center, boss.getLocation());
+        assertFalse(attack(player, boss, false).isCancelled());
+    }
+
+    @Test
+    void arenaGuardDoesNotCancelUnrelatedCombatOutsideArena() {
+        player.teleport(boss.getLocation().add(100, 0, 0));
+        Entity unrelated = world.spawnEntity(player.getLocation(), EntityType.ZOMBIE);
+        assertFalse(attack(player, unrelated, false).isCancelled());
+        assertFalse(attack(unrelated, player, true).isCancelled());
+    }
+
+    @Test
+    void phasePowersLastUntilFightEndsInsteadOfExpiringAfterOneMinute() {
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.3);
+        server.getScheduler().performTicks(20);
+        assertEquals(PotionEffect.INFINITE_DURATION, boss.getPotionEffect(PotionEffectType.SPEED).getDuration());
+        assertEquals(PotionEffect.INFINITE_DURATION, boss.getPotionEffect(PotionEffectType.STRENGTH).getDuration());
+        assertEquals(1, boss.getPotionEffect(PotionEffectType.SPEED).getAmplifier());
+        assertEquals(1, boss.getPotionEffect(PotionEffectType.STRENGTH).getAmplifier());
     }
 
     @Test
