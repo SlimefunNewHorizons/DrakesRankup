@@ -3,6 +3,7 @@ package com.drakescraft.rankup.ability;
 import com.drakescraft.rankup.DrakesRankupPlugin;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.damage.DamageType;
 import org.bukkit.entity.Entity;
@@ -41,7 +42,13 @@ class HerobrineBossTest {
     private static final class ArenaZombieMock extends ZombieMock {
         private boolean removeWhenFarAway = true;
 
-        ArenaZombieMock(ServerMock server) { super(server, UUID.randomUUID()); }
+        ArenaZombieMock(ServerMock server) {
+            super(server, UUID.randomUUID());
+            // ZombieMock only initializes health and movement speed.
+            registerAttribute(Attribute.ATTACK_DAMAGE);
+            registerAttribute(Attribute.FOLLOW_RANGE);
+            registerAttribute(Attribute.KNOCKBACK_RESISTANCE);
+        }
 
         @Override public void setRemoveWhenFarAway(boolean remove) { removeWhenFarAway = remove; }
         @Override public boolean getRemoveWhenFarAway() { return removeWhenFarAway; }
@@ -70,6 +77,9 @@ class HerobrineBossTest {
         assertTrue(player.performCommand("herobrine"));
         boss = world.getEntitiesByClass(Zombie.class).iterator().next();
         assertFalse(boss.getRemoveWhenFarAway());
+        assertEquals(plugin.getConfig().getDouble("herobrine.health"), boss.getHealth());
+        assertEquals(plugin.getConfig().getDouble("herobrine.damage"),
+                boss.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue());
         player.teleport(boss.getLocation());
     }
 
