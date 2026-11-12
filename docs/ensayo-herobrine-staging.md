@@ -35,3 +35,15 @@ Es una prueba de integración con servidor y clientes de protocolo reales.
 No comprueba render gráfico, texturas, una sesión humana ni la paridad con
 los demás plugins de Dallas. Solo prueba la revisión de PR #2; las PR
 incrementales #3–#8 necesitan su propio ensayo antes de desplegarse.
+
+## Resultado del 12 de noviembre de 2026
+
+Sobre `803cf1e`, el build seguro aprobó 40 pruebas. El script publicado en
+`ec4f474` completó sus siete comprobaciones con Mineflayer 4.37.1 y Purpur
+26.2-138. Una lectura adicional del NBT guardado confirmó los objetos y los
+2000 XP: A recibió 763 XP, B 1237 y el espectador 0. El log del ensayo final
+contiene cero errores y confirma el guardado y el apagado.
+
+[Evidencia estructurada](evidence/herobrine-staging-20261112.json).
+La primera pasada no alcanzó el mínimo de participación con golpes sin arma;
+el ensayo final equipa espadas de netherita sin cambiar ese mínimo ni el jefe.
