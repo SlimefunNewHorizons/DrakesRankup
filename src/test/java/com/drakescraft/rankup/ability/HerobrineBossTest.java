@@ -52,10 +52,11 @@ class HerobrineBossTest {
     private PlayerMock player;
     private Zombie boss;
 
-    // MockBukkit lacks the despawn flag. Preserve its value without replacing
-    // command dispatch, damage events, arena scheduling or reward handling.
+    // MockBukkit lacks despawn/pickup flags. Preserve their values without
+    // replacing command dispatch, arena scheduling or reward handling.
     private static final class ArenaZombieMock extends ZombieMock {
         private boolean removeWhenFarAway = true;
+        private boolean canPickupItems = true;
 
         ArenaZombieMock(ServerMock server) {
             super(server, UUID.randomUUID());
@@ -67,15 +68,20 @@ class HerobrineBossTest {
 
         @Override public void setRemoveWhenFarAway(boolean remove) { removeWhenFarAway = remove; }
         @Override public boolean getRemoveWhenFarAway() { return removeWhenFarAway; }
+        @Override public void setCanPickupItems(boolean pickup) { canPickupItems = pickup; }
+        @Override public boolean getCanPickupItems() { return canPickupItems; }
     }
 
     private static final class ArenaSkeletonMock extends WitherSkeletonMock {
         private boolean removeWhenFarAway = true;
+        private boolean canPickupItems = true;
 
         ArenaSkeletonMock(ServerMock server) { super(server, UUID.randomUUID()); }
 
         @Override public void setRemoveWhenFarAway(boolean remove) { removeWhenFarAway = remove; }
         @Override public boolean getRemoveWhenFarAway() { return removeWhenFarAway; }
+        @Override public void setCanPickupItems(boolean pickup) { canPickupItems = pickup; }
+        @Override public boolean getCanPickupItems() { return canPickupItems; }
     }
 
     @BeforeEach
@@ -524,6 +530,32 @@ class HerobrineBossTest {
         assertEquals(center, boss.getLocation());
         assertEquals(playerLocation, player.getLocation());
         assertEquals(Material.GRASS_BLOCK, center.clone().subtract(0, 1, 0).getBlock().getType());
+    }
+
+    @Test
+    void bossCannotCollectPlayerItemsBeforeCleanup() {
+        assertFalse(boss.getCanPickupItems());
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void shadowsCannotCollectPlayerItemsBeforeDeathOrShutdown(boolean shutdown) {
+        ItemStack belongings = new ItemStack(Material.DIAMOND_SWORD);
+        Item dropped = world.dropItem(player.getLocation(), belongings);
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.5);
+        server.getScheduler().performTicks(20);
+        var mobs = new ArrayList<>(world.getEntitiesByClass(Mob.class));
+        assertEquals(5, mobs.size());
+        for (Mob mob : mobs) assertFalse(mob.getCanPickupItems(), mob.getType().name());
+        Mob unrelated = (Mob) world.spawnEntity(player.getLocation(), EntityType.ZOMBIE);
+
+        if (shutdown) server.getPluginManager().disablePlugin(plugin); else defeat();
+
+        assertTrue(dropped.isValid());
+        assertEquals(belongings, dropped.getItemStack());
+        for (Mob mob : mobs) if (!mob.equals(boss) || shutdown) assertFalse(mob.isValid());
+        assertTrue(unrelated.isValid());
+        assertTrue(unrelated.getCanPickupItems());
     }
 
     @Test

@@ -4,6 +4,8 @@
 punto de aparición; el radio predeterminado es de 48 bloques horizontales.
 El encuentro no modifica terreno ni teletransporta jugadores. El jefe y sus
 sombras regresan al centro si salen del radio.
+El jefe y las sombras tienen desactivada la recogida de objetos para evitar
+que la limpieza del encuentro elimine pertenencias caídas de los jugadores.
 
 `/herobrine estado` consulta el combate del mundo actual sin invocar otro jefe
 ni consumir la espera. Muestra fase, vida, tiempo restante, centro y radio de

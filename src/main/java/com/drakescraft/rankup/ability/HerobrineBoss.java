@@ -117,6 +117,8 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         z.setCustomNameVisible(true);
         z.setRemoveWhenFarAway(false);
         z.setPersistent(false);
+        // La limpieza del encuentro no debe llevarse objetos de los jugadores.
+        z.setCanPickupItems(false);
         z.getAttribute(Attribute.MAX_HEALTH).setBaseValue(hp);
         z.setHealth(hp);
         z.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(plugin.getConfig().getDouble("herobrine.damage", 10));
@@ -189,6 +191,7 @@ public class HerobrineBoss implements Listener, CommandExecutor {
             LivingEntity m = (LivingEntity) w.spawnEntity(l, i % 2 == 0 ? EntityType.WITHER_SKELETON : EntityType.ZOMBIE);
             m.setRemoveWhenFarAway(true);
             m.setPersistent(false);
+            m.setCanPickupItems(false);
             f.minions.add(m);
         }
         z.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, PotionEffect.INFINITE_DURATION, 1, false, false));
