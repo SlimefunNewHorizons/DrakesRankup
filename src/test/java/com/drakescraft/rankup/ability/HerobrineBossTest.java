@@ -471,4 +471,76 @@ class HerobrineBossTest {
         assertFalse(player.getInventory().contains(Material.DIAMOND));
         assertFalse(player.getInventory().contains(Material.NETHER_STAR));
     }
+
+    @Test
+    void pluginDisableCleansFightWithoutLootOrRemovingUnrelatedMob() {
+        hit(player, 10, false);
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.60);
+        server.getScheduler().performTicks(20);
+        var fightMobs = new ArrayList<>(world.getEntitiesByClass(Mob.class));
+        assertEquals(5, fightMobs.size());
+        Entity unrelated = world.spawnEntity(boss.getLocation(), EntityType.ZOMBIE);
+
+        server.getPluginManager().disablePlugin(plugin);
+        server.getScheduler().performTicks(40);
+
+        assertTrue(fightMobs.stream().noneMatch(Entity::isValid));
+        assertTrue(unrelated.isValid());
+        assertFalse(player.getInventory().contains(Material.DIAMOND));
+        assertFalse(player.getInventory().contains(Material.NETHER_STAR));
+        assertTrue(world.getEntitiesByClass(Item.class).isEmpty());
+    }
+
+    @Test
+    void removedBossCleansShadowsWithoutLootAndAllowsNewSummoner() {
+        hit(player, 10, false);
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.60);
+        server.getScheduler().performTicks(20);
+        var fightMobs = new ArrayList<>(world.getEntitiesByClass(Mob.class));
+        assertEquals(5, fightMobs.size());
+        boss.remove();
+
+        server.getScheduler().performTicks(20);
+
+        assertTrue(fightMobs.stream().noneMatch(Entity::isValid));
+        assertFalse(player.getInventory().contains(Material.DIAMOND));
+        assertFalse(player.getInventory().contains(Material.NETHER_STAR));
+        assertTrue(world.getEntitiesByClass(Item.class).isEmpty());
+        PlayerMock second = server.addPlayer("NewSummoner");
+        second.teleport(player.getLocation());
+        assertTrue(second.performCommand("herobrine"));
+        assertEquals(1, world.getEntitiesByClass(Zombie.class).size());
+    }
+
+    @Test
+    void oldFightCleanupDoesNotRemoveReplacementOrTransferDamageCredit() {
+        hit(player, 30, false);
+        boss.setHealth(boss.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.60);
+        server.getScheduler().performTicks(20);
+        var oldMobs = new ArrayList<>(world.getEntitiesByClass(Mob.class));
+        assertEquals(5, oldMobs.size());
+        boss.remove();
+        PlayerMock second = server.addPlayer("ReplacementSummoner");
+        second.teleport(player.getLocation());
+        assertTrue(second.performCommand("herobrine"));
+        Zombie replacement = world.getEntitiesByClass(Zombie.class).stream()
+                .filter(zombie -> !oldMobs.contains(zombie)).findFirst().orElseThrow();
+
+        // Both fight timers run on this tick; the old one must not clear the new fight.
+        server.getScheduler().performTicks(20);
+        assertTrue(oldMobs.stream().noneMatch(Entity::isValid));
+        assertTrue(replacement.isValid());
+        boss = replacement;
+        second.teleport(boss.getLocation());
+        hit(second, 5, false);
+        defeat();
+        defeat();
+
+        assertFalse(player.getInventory().contains(Material.DIAMOND));
+        assertFalse(player.getInventory().contains(Material.NETHER_STAR));
+        assertEquals(5, second.getInventory().all(Material.DIAMOND).values().stream()
+                .mapToInt(ItemStack::getAmount).sum());
+        assertEquals(1, second.getInventory().all(Material.NETHER_STAR).values().stream()
+                .mapToInt(ItemStack::getAmount).sum());
+    }
 }
