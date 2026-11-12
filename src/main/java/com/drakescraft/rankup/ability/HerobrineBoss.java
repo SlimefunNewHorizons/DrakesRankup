@@ -148,7 +148,7 @@ public class HerobrineBoss implements Listener, CommandExecutor {
             int tick = 0;
             @Override public void run() {
                 if (!z.isValid() || fights.get(w.getUID()) != f) { end(w, f, false); cancel(); return; }
-                if (System.currentTimeMillis() > f.end) {
+                if (System.currentTimeMillis() >= f.end) {
                     for (Player pl : w.getPlayers()) pl.sendMessage("§8La sombra de Herobrine se desvanece en la niebla...");
                     z.remove(); end(w, f, false); cancel(); return;
                 }
@@ -280,6 +280,10 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         if (attacker instanceof Projectile projectile && projectile.getShooter() instanceof Entity shooter) attacker = shooter;
         boolean victimInFight = e.getEntity().equals(f.boss) || f.minions.contains(e.getEntity());
         boolean attackerInFight = attacker.equals(f.boss) || f.minions.contains(attacker);
+        if ((victimInFight || attackerInFight) && System.currentTimeMillis() >= f.end) {
+            e.setCancelled(true);
+            return;
+        }
         if (victimInFight && attacker instanceof Player player
                 && (!canParticipate(f, player) || !inArena(f, e.getEntity().getLocation()))) e.setCancelled(true);
         if (attackerInFight && e.getEntity() instanceof Player player
@@ -295,6 +299,11 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         e.getDrops().clear();
         // La experiencia forma parte del botin de participacion, sin orbes para espectadores.
         e.setDroppedExp(0);
+        // El temporizador limpia cada segundo; morir en ese intervalo no amplía el plazo.
+        if (System.currentTimeMillis() >= f.end) {
+            end(w, f, false);
+            return;
+        }
         w.strikeLightningEffect(e.getEntity().getLocation());
         double minimum = Math.max(0, plugin.getConfig().getDouble("herobrine.minimum-reward-damage", 4));
         Map<UUID, Double> eligible = new HashMap<>();
