@@ -178,7 +178,8 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         Player target = null; double best = 30 * 30;
         for (Player p : z.getWorld().getPlayers()) {
             double d = p.getLocation().distanceSquared(z.getLocation());
-            if (p.getGameMode() == org.bukkit.GameMode.SURVIVAL && inArena(f, p.getLocation()) && d < best) { best = d; target = p; }
+            if (p.getGameMode() == org.bukkit.GameMode.SURVIVAL && !p.isDead()
+                    && inArena(f, p.getLocation()) && d < best) { best = d; target = p; }
         }
         if (target == null) return;
         Location behind = target.getLocation().subtract(target.getLocation().getDirection().setY(0).normalize().multiply(2));

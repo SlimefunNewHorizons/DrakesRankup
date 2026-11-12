@@ -365,6 +365,33 @@ class HerobrineBossTest {
         assertEquals(initial, boss.getLocation());
     }
 
+    @Test
+    void blinkIgnoresDeadPlayerAwaitingRespawn() {
+        prepareBlink();
+        player.setHealth(0);
+        assertTrue(player.isDead());
+        assertTrue(world.getPlayers().contains(player));
+        Location initial = boss.getLocation();
+        server.getScheduler().performTicks(120);
+        assertEquals(initial, boss.getLocation());
+    }
+
+    @Test
+    void deadNearestPlayerDoesNotPreventBlinkToLivingParticipant() {
+        prepareBlink();
+        player.setHealth(0);
+        assertTrue(player.isDead());
+        PlayerMock survivor = server.addPlayer("Survivor");
+        Location survivorLocation = boss.getLocation().add(15, 0, 0);
+        survivorLocation.setYaw(0);
+        survivorLocation.setPitch(0);
+        survivor.teleport(survivorLocation);
+        Location destination = survivorLocation.clone().subtract(0, 0, 2);
+        server.getScheduler().performTicks(120);
+        assertEquals(destination, boss.getLocation());
+        assertEquals(survivorLocation, survivor.getLocation());
+    }
+
     @ParameterizedTest
     @EnumSource(value = GameMode.class, names = {"CREATIVE", "SPECTATOR", "ADVENTURE"})
     void blinkIgnoresPlayersOutsideSurvival(GameMode mode) {
