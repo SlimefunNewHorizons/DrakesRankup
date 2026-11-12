@@ -21,8 +21,8 @@ public class AuraTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        angle += Math.PI / 8;
-        if (angle >= Math.PI * 2) angle = 0;
+        angle += Math.PI / 10;
+        if (angle >= Math.PI * 2 - 1e-9) angle = 0;
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (!plugin.isWorldAllowed(player.getWorld())) {
@@ -51,7 +51,7 @@ public class AuraTask extends BukkitRunnable {
 
             PlayerSettings settings = plugin.getRankManager().getPlayerSettings(player.getUniqueId());
             if (!settings.isParticlesEnabled() || settings.getParticleLevel() <= 0) continue;
-            if (settings.getParticleLevel() == 1 && ((int) Math.round(angle / (Math.PI / 8)) % 2 != 0)) continue;
+            if (settings.getParticleLevel() == 1 && ((int) Math.round(angle / (Math.PI / 10)) % 2 != 0)) continue;
 
             int tier = rank.getTier();
             String activeTrans = settings.getActiveTransformation();
@@ -150,67 +150,102 @@ public class AuraTask extends BukkitRunnable {
                 }
 
                 // Auras pasivas por rango continuo (Tiers 1 a 100)
-                spawnPassiveAura(loc, tier);
+                spawnPassiveAura(loc, tier, rank.getParticleType());
             } catch (Exception ignored) {}
         }
     }
 
+    /** Paleta (principal, secundario) segun el nombre de particula del rango en ranks.yml. */
+    private static Color[] paleta(String clave) {
+        String k = clave == null ? "" : clave.toUpperCase(java.util.Locale.ROOT);
+        if (k.contains("GOLD") || k.contains("SOLAR") || k.contains("YELLOW") || k.contains("KI")) {
+            return new Color[] {Color.fromRGB(255, 205, 60), Color.fromRGB(255, 120, 30)};
+        } else if (k.contains("PURPLE") || k.contains("HAKAI") || k.contains("ARISE") || k.contains("ILLUSION") || k.contains("POISON") || k.contains("VORTEX")) {
+            return new Color[] {Color.fromRGB(170, 80, 255), Color.fromRGB(70, 20, 140)};
+        } else if (k.contains("BLUE") || k.contains("CYAN") || k.contains("FROST") || k.contains("FOX")) {
+            return new Color[] {Color.fromRGB(80, 220, 255), Color.fromRGB(40, 90, 230)};
+        } else if (k.contains("RED") || k.contains("BLOOD") || k.contains("CRIMSON") || k.contains("SNAKE") || k.contains("CURSED")) {
+            return new Color[] {Color.fromRGB(255, 60, 60), Color.fromRGB(120, 10, 20)};
+        } else if (k.contains("GREEN") || k.contains("EMERALD") || k.contains("CERO")) {
+            return new Color[] {Color.fromRGB(90, 255, 140), Color.fromRGB(20, 120, 70)};
+        } else if (k.contains("ORANGE") || k.contains("FLAME") || k.contains("HEAT") || k.contains("TAILS")) {
+            return new Color[] {Color.fromRGB(255, 150, 40), Color.fromRGB(200, 40, 10)};
+        } else if (k.contains("SHADOW") || k.contains("BLACK") || k.contains("DARK") || k.contains("THREAD")) {
+            return new Color[] {Color.fromRGB(150, 110, 200), Color.fromRGB(15, 10, 25)};
+        } else if (k.contains("WHITE") || k.contains("SILVER") || k.contains("SMOKE") || k.contains("GOD") || k.contains("DIVINE")) {
+            return new Color[] {Color.fromRGB(245, 245, 255), Color.fromRGB(150, 170, 220)};
+        }
+        return new Color[] {Color.fromRGB(190, 150, 255), Color.fromRGB(255, 220, 120)};
+    }
+
+    private static void punto(Location l, Color a, Color b, float tam) {
+        l.getWorld().spawnParticle(Particle.DUST_COLOR_TRANSITION, l, 1, 0, 0, 0, 0, new Particle.DustTransition(a, b, tam));
+    }
+
     /**
-     * Aura pasiva continua para los 100 tiers de DrakesRankup.
+     * Aura pasiva de los 100 tiers: la FORMA depende de la division (tier) y el COLOR del rango (ranks.yml `particle`).
+     * Mas tier = mas forma: anillo en el suelo, motas orbitando, helice, halo, espiral, pilar, alas.
      */
-    private void spawnPassiveAura(Location loc, int tier) {
+    private void spawnPassiveAura(Location loc, int tier, String claveRango) {
         if (tier < 1) return;
-        Location base = loc.clone().add(0, 0.2, 0);
-        Location head = loc.clone().add(0, 1.0, 0);
+        Color[] c = paleta(claveRango);
+        Color a = c[0], b = c[1];
+        var w = loc.getWorld();
+        double yawRad = Math.toRadians(loc.getYaw());
         try {
-            if (tier <= 10) {                 // División I: Ciencia & Nen
-                loc.getWorld().spawnParticle(Particle.CRIT, base, 1 + tier / 5, 0.2, 0.2, 0.2, 0.01);
-            } else if (tier <= 20) {          // División II: Shinobi & Hechicería
-                int n = 1 + (tier - 10) / 4;
-                loc.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, base, n, 0.2, 0.25, 0.2, 0.01);
-                if (tier >= 16) loc.getWorld().spawnParticle(Particle.END_ROD, head, 1, 0.2, 0.4, 0.2, 0.01);
-            } else if (tier <= 30) {          // División III: Piratas & Segadores
-                int n = 1 + (tier - 20) / 4;
-                loc.getWorld().spawnParticle(Particle.CLOUD, base, n, 0.2, 0.15, 0.2, 0.01);
-                if (tier >= 26) loc.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, head, 1, 0.3, 0.4, 0.3, 0.03);
-            } else if (tier <= 40) {          // División IV: Guerreros Z & Monarca
-                int n = 2 + (tier - 30) / 3;
-                loc.getWorld().spawnParticle(Particle.FLAME, base, n, 0.25, 0.3, 0.25, 0.02);
-                if (tier >= 33) loc.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, head, 1 + (tier - 33) / 3, 0.3, 0.5, 0.3, 0.05);
-                if (tier >= 37) loc.getWorld().spawnParticle(Particle.SQUID_INK, base, 1, 0.2, 0.1, 0.2, 0.01);
-            } else if (tier <= 50) {          // División V: Trascendencia Suprema
-                int n = 2 + (tier - 40) / 2;
-                loc.getWorld().spawnParticle(Particle.WITCH, base, n, 0.25, 0.4, 0.25, 0.02);
-                if (tier >= 44) loc.getWorld().spawnParticle(Particle.FIREWORK, base, 1 + (tier - 44) / 2, 0.3, 0.5, 0.3, 0.02);
-                double x = 0.45 * Math.cos(angle);
-                double z = 0.45 * Math.sin(angle);
-                loc.getWorld().spawnParticle(Particle.TOTEM_OF_UNDYING, loc.clone().add(x, 2.15, z), 1, 0, 0, 0, 0);
-            } else if (tier <= 60) {          // División VI: Maldiciones Supremas
-                int n = 2 + (tier - 50) / 3;
-                loc.getWorld().spawnParticle(Particle.SQUID_INK, base, n, 0.3, 0.3, 0.3, 0.02);
-                loc.getWorld().spawnParticle(Particle.DRAGON_BREATH, head, 1, 0.2, 0.3, 0.2, 0.02);
-            } else if (tier <= 70) {          // División VII: Shinigami Reiatsu
-                int n = 2 + (tier - 60) / 3;
-                loc.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, base, n, 0.3, 0.3, 0.3, 0.03);
-                loc.getWorld().spawnParticle(Particle.END_ROD, head, 1 + (tier - 60) / 4, 0.2, 0.4, 0.2, 0.01);
-            } else if (tier <= 80) {          // División VIII: Monarcas & Demonios
-                int n = 3 + (tier - 70) / 3;
-                loc.getWorld().spawnParticle(Particle.LARGE_SMOKE, base, n, 0.35, 0.4, 0.35, 0.02);
-                loc.getWorld().spawnParticle(Particle.PORTAL, head, 2, 0.2, 0.3, 0.2, 0.1);
-            } else if (tier <= 90) {          // División IX: Leyendas Cósmicas
-                int n = 3 + (tier - 80) / 2;
-                loc.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, base, n, 0.4, 0.5, 0.4, 0.05);
-                loc.getWorld().spawnParticle(Particle.FLAME, head, 2, 0.3, 0.3, 0.3, 0.02);
-            } else {                          // División X: Dioses Multiversales (91-100)
-                int n = 4 + (tier - 90) / 2;
-                loc.getWorld().spawnParticle(Particle.FLASH, base, 1);
-                loc.getWorld().spawnParticle(Particle.END_ROD, base, n, 0.4, 0.6, 0.4, 0.05);
-                double x1 = 0.50 * Math.cos(angle);
-                double z1 = 0.50 * Math.sin(angle);
-                double x2 = 0.50 * Math.cos(angle + Math.PI);
-                double z2 = 0.50 * Math.sin(angle + Math.PI);
-                loc.getWorld().spawnParticle(Particle.TOTEM_OF_UNDYING, loc.clone().add(x1, 2.25, z1), 1, 0, 0, 0, 0);
-                loc.getWorld().spawnParticle(Particle.FIREWORK, loc.clone().add(x2, 2.25, z2), 1, 0, 0, 0, 0);
+            int banda = Math.min(9, (tier - 1) / 10);
+            // 1) anillo en el suelo (todas las divisiones; mas grueso con el tier)
+            int puntos = 4 + banda;
+            for (int i = 0; i < puntos; i++) {
+                double t = angle + i * (2 * Math.PI / puntos);
+                punto(loc.clone().add(0.7 * Math.cos(t), 0.08, 0.7 * Math.sin(t)), a, b, 0.9f);
+            }
+            // 2) motas orbitando a la cintura (desde tier 11)
+            if (banda >= 1) {
+                int n = Math.min(4, 1 + banda / 2);
+                for (int i = 0; i < n; i++) {
+                    double t = -angle * 1.3 + i * (2 * Math.PI / n);
+                    punto(loc.clone().add(0.55 * Math.cos(t), 1.0 + 0.15 * Math.sin(t * 2), 0.55 * Math.sin(t)), b, a, 0.8f);
+                }
+            }
+            // 3) helice alrededor del cuerpo (tier 21+)
+            if (banda >= 2) {
+                int hebras = banda >= 3 ? 2 : 1;
+                for (int h = 0; h < hebras; h++) {
+                    double t = angle * 2 + h * Math.PI;
+                    double y = 0.2 + ((angle / (2 * Math.PI)) + h * 0.5) % 1.0 * 1.8;
+                    punto(loc.clone().add(0.45 * Math.cos(t), y, 0.45 * Math.sin(t)), a, b, 1.0f);
+                }
+            }
+            // 4) halo sobre la cabeza (tier 41+)
+            if (banda >= 4) {
+                for (int i = 0; i < 6; i++) {
+                    double t = angle + i * (Math.PI / 3);
+                    punto(loc.clone().add(0.3 * Math.cos(t), 2.3, 0.3 * Math.sin(t)), Color.fromRGB(255, 235, 150), a, 0.7f);
+                }
+            }
+            // 5) pilar de energia (tier 61+): columnas de particulas ascendentes
+            if (banda >= 6) {
+                w.spawnParticle(banda >= 8 ? Particle.END_ROD : Particle.SOUL_FIRE_FLAME,
+                        loc.clone().add(0, 0.2, 0), 1, 0.15, 0.1, 0.15, 0.04 + banda * 0.005);
+            }
+            // 6) alas de particulas detras del jugador (tier 81+)
+            if (banda >= 8) {
+                double fx = Math.sin(yawRad), fz = -Math.cos(yawRad); // frente
+                double rx = Math.cos(yawRad), rz = Math.sin(yawRad);  // derecha
+                double aleteo = 0.12 * Math.sin(angle * 2);
+                for (int lado = -1; lado <= 1; lado += 2) {
+                    for (int k = 1; k <= 4; k++) {
+                        double lateral = lado * (0.25 + 0.28 * k);
+                        double alto = 1.35 + 0.22 * k - 0.07 * k * k + aleteo * k;
+                        double atras = -0.28 - 0.05 * k;
+                        punto(loc.clone().add(rx * lateral + fx * atras, alto, rz * lateral + fz * atras), a, b, 1.1f);
+                    }
+                }
+            }
+            // 7) destello cosmico ocasional (tier 91+)
+            if (banda >= 9 && Math.random() < 0.08) {
+                w.spawnParticle(Particle.FLASH, loc.clone().add(0, 1.0, 0), 1, Color.WHITE);
             }
         } catch (Exception ignored) {}
     }
