@@ -498,9 +498,11 @@ class HerobrineBossTest {
         return target.clone().subtract(0, 0, 2);
     }
 
-    @Test
-    void finalPhaseBlinksBehindSurvivalPlayerWithoutMovingPlayerOrTerrain() {
+    @ParameterizedTest
+    @EnumSource(value = GameMode.class, names = {"SURVIVAL", "ADVENTURE"})
+    void finalPhaseBlinksBehindParticipantWithoutMovingPlayerOrTerrain(GameMode mode) {
         Location destination = prepareBlink();
+        player.setGameMode(mode);
         Location initial = boss.getLocation();
         Location playerLocation = player.getLocation();
         server.getScheduler().performTicks(100);
@@ -532,12 +534,14 @@ class HerobrineBossTest {
         assertEquals(initial, boss.getLocation());
     }
 
-    @Test
-    void deadNearestPlayerDoesNotPreventBlinkToLivingParticipant() {
+    @ParameterizedTest
+    @EnumSource(value = GameMode.class, names = {"SURVIVAL", "ADVENTURE"})
+    void deadNearestPlayerDoesNotPreventBlinkToLivingParticipant(GameMode mode) {
         prepareBlink();
         player.setHealth(0);
         assertTrue(player.isDead());
         PlayerMock survivor = server.addPlayer("Survivor");
+        survivor.setGameMode(mode);
         Location survivorLocation = boss.getLocation().add(15, 0, 0);
         survivorLocation.setYaw(0);
         survivorLocation.setPitch(0);
@@ -549,13 +553,33 @@ class HerobrineBossTest {
     }
 
     @ParameterizedTest
-    @EnumSource(value = GameMode.class, names = {"CREATIVE", "SPECTATOR", "ADVENTURE"})
-    void blinkIgnoresPlayersOutsideSurvival(GameMode mode) {
+    @EnumSource(value = GameMode.class, names = {"CREATIVE", "SPECTATOR"})
+    void blinkIgnoresPlayersOutsideCombatModes(GameMode mode) {
         prepareBlink();
         player.setGameMode(mode);
         Location initial = boss.getLocation();
         server.getScheduler().performTicks(120);
         assertEquals(initial, boss.getLocation());
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = GameMode.class, names = {"CREATIVE", "SPECTATOR"})
+    void blinkChoosesNearestParticipantAcrossSurvivalAndAdventure(GameMode observerMode) {
+        Location destination = prepareBlink();
+        player.setGameMode(GameMode.ADVENTURE);
+        PlayerMock observer = server.addPlayer("Observer");
+        observer.setGameMode(observerMode);
+        observer.teleport(boss.getLocation().add(5, 0, 0));
+        PlayerMock survivor = server.addPlayer("Survivor");
+        survivor.teleport(boss.getLocation().add(15, 0, 0));
+        Location observerLocation = observer.getLocation();
+        Location survivorLocation = survivor.getLocation();
+
+        server.getScheduler().performTicks(120);
+
+        assertEquals(destination, boss.getLocation());
+        assertEquals(observerLocation, observer.getLocation());
+        assertEquals(survivorLocation, survivor.getLocation());
     }
 
     @Test

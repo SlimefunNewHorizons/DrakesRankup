@@ -8,7 +8,7 @@ sombras regresan al centro si salen del radio.
 - Fase 1: combate inicial; la barra muestra la fase actual.
 - Fase 2, al 66% de vida: una única oleada de cuatro sombras y velocidad II.
 - Fase 3, al 33%: fuerza II y un intento de blink cada seis segundos hacia un
-  jugador vivo en Survival. El destino exige suelo sólido, espacio libre y
+  jugador vivo en Survival o Adventure. El destino exige suelo sólido, espacio libre y
   estar dentro de la arena y del borde del mundo.
 
 Los poderes de fase duran hasta terminar el combate. Survival y Adventure
