@@ -7,14 +7,25 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
+import java.util.Locale;
 import java.util.Set;
 
 /** En mundos donde el rankup esta deshabilitado (Clasico) bloquea los comandos de comodidad que el rango otorga. */
 public class ClasicoCommandGate implements Listener {
+    public static final String MENSAJE_BLOQUEADO =
+            "§c[DrakesCraft] Ese comando no esta disponible en Clasico: aqui se juega vanilla.";
+
     private static final Set<String> BLOQUEADOS = Set.of(
-            "hat", "ehat", "workbench", "eworkbench", "wb", "ewb", "craft", "ecraft",
-            "near", "enear", "nearby", "back", "eback", "return", "ereturn",
-            "anvil", "eanvil", "grindstone", "egrindstone", "cartographytable", "loom", "smithingtable", "stonecutter");
+            "hat", "ehat", "head", "ehead",
+            "workbench", "eworkbench", "wb", "ewb", "wbench", "ewbench", "craft", "ecraft",
+            "near", "enear", "nearby", "enearby",
+            "back", "eback", "return", "ereturn",
+            "anvil", "eanvil",
+            "grindstone", "egrindstone",
+            "cartographytable", "ecartographytable", "carttable", "ecarttable",
+            "loom", "eloom",
+            "smithingtable", "esmithingtable", "smithtable", "esmithtable",
+            "stonecutter", "estonecutter");
     private final DrakesRankupPlugin plugin;
 
     public ClasicoCommandGate(DrakesRankupPlugin plugin) { this.plugin = plugin; }
@@ -24,13 +35,17 @@ public class ClasicoCommandGate implements Listener {
         Player p = e.getPlayer();
         if (plugin.isWorldAllowed(p.getWorld()) || p.hasPermission("drakesrankup.admin")) return;
         String msg = e.getMessage();
-        if (msg.length() < 2) return;
-        String cmd = msg.substring(1).split(" ", 2)[0].toLowerCase();
-        int i = cmd.indexOf(':');
+        if (msg == null) return;
+        String trimmed = msg.stripLeading();
+        if (!trimmed.startsWith("/") || trimmed.length() < 2) return;
+        String body = trimmed.substring(1).stripLeading();
+        if (body.isEmpty()) return;
+        String cmd = body.split("\\s+", 2)[0].toLowerCase(Locale.ROOT);
+        int i = cmd.lastIndexOf(':');
         if (i >= 0) cmd = cmd.substring(i + 1);
         if (BLOQUEADOS.contains(cmd)) {
             e.setCancelled(true);
-            p.sendMessage("§c[DrakesCraft] Ese comando no esta disponible en Clasico: aqui se juega vanilla.");
+            p.sendMessage(MENSAJE_BLOQUEADO);
         }
     }
 }
