@@ -44,7 +44,8 @@ public class TransformationMenu implements InventoryHolder {
         }
 
         Rank rank = plugin.getRankManager().getPlayerRank(player.getUniqueId());
-        int tier = (rank != null) ? rank.getTier() : 0;
+        boolean isStaff = player.hasPermission("drakesrankup.staff") || player.isOp() || (plugin.getStaffManager() != null && plugin.getStaffManager().isAngel(player.getUniqueId()));
+        int tier = (rank != null) ? (isStaff ? 100 : rank.getTier()) : (isStaff ? 100 : 0);
         PlayerSettings settings = plugin.getRankManager().getPlayerSettings(player.getUniqueId());
         String active = settings.getActiveTransformation();
 
@@ -350,7 +351,8 @@ public class TransformationMenu implements InventoryHolder {
     public void handleClick(InventoryClickEvent e, Player p) {
         int slot = e.getRawSlot();
         Rank rank = plugin.getRankManager().getPlayerRank(p.getUniqueId());
-        int tier = (rank != null) ? rank.getTier() : 0;
+        boolean isStaff = p.hasPermission("drakesrankup.staff") || p.isOp() || (plugin.getStaffManager() != null && plugin.getStaffManager().isAngel(p.getUniqueId()));
+        int tier = (rank != null) ? (isStaff ? 100 : rank.getTier()) : (isStaff ? 100 : 0);
         PlayerSettings settings = plugin.getRankManager().getPlayerSettings(p.getUniqueId());
 
         // Back to /rankup (Slot 49)

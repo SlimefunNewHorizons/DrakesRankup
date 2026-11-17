@@ -176,81 +176,42 @@ public class DragonBallListener implements Listener {
         boolean isKami = (tier >= 50);
         boolean hasKaioken = (tier >= 92 || ability == AbilityType.KAIOKEN);
 
-        if (!hasGod && !hasBlue && !hasMUI && !hasEgo && !hasGohan && !hasBroly && !isKami && !hasKaioken && (equipped == null || equipped.isEmpty())) {
+        // Carga de Ki/Transformación con Shift: SOLO activa si el jugador la equipó explícitamente en el GUI (/rankup).
+        // Por defecto viene deshabilitado para que agacharse/shift normal no moleste ni active cargas no deseadas.
+        if (equipped == null || equipped.trim().isEmpty() || equipped.equalsIgnoreCase("NINGUNA")) {
             return;
         }
 
-        // Determine transformation type based on equipped setting or highest unlocked
-        String transName;
+        String transName = equipped.toUpperCase();
         long cdSeconds;
         Particle kiParticle;
 
-        if (equipped != null && !equipped.equalsIgnoreCase("NINGUNA")) {
-            transName = equipped.toUpperCase();
-            if (transName.equals("GOHAN_BEAST")) {
-                cdSeconds = 40;
-                kiParticle = Particle.CRIMSON_SPORE;
-            } else if (transName.equals("BROLY_LSSJ")) {
-                cdSeconds = 45;
-                kiParticle = Particle.HAPPY_VILLAGER;
-            } else if (transName.equals("MUI")) {
-                cdSeconds = 40;
-                kiParticle = Particle.END_ROD;
-            } else if (transName.equals("ULTRA_EGO")) {
-                cdSeconds = 50;
-                kiParticle = Particle.WITCH;
-            } else if (transName.equals("SSJ_BLUE")) {
-                cdSeconds = 45;
-                kiParticle = Particle.SOUL_FIRE_FLAME;
-            } else if (transName.equals("KAIOKEN")) {
-                cdSeconds = 35;
-                kiParticle = Particle.DUST;
-            } else if (transName.equals("SSJ_GOD")) {
-                cdSeconds = 35;
-                kiParticle = Particle.FLAME;
-            } else if (transName.equals("SSJ_2")) {
-                cdSeconds = 35;
-                kiParticle = Particle.ELECTRIC_SPARK;
-            } else {
-                return; // Handled by other listeners (e.g. OnePiece)
-            }
+        if (transName.equals("GOHAN_BEAST")) {
+            cdSeconds = 40;
+            kiParticle = Particle.CRIMSON_SPORE;
+        } else if (transName.equals("BROLY_LSSJ")) {
+            cdSeconds = 45;
+            kiParticle = Particle.HAPPY_VILLAGER;
+        } else if (transName.equals("MUI")) {
+            cdSeconds = 40;
+            kiParticle = Particle.END_ROD;
+        } else if (transName.equals("ULTRA_EGO")) {
+            cdSeconds = 50;
+            kiParticle = Particle.WITCH;
+        } else if (transName.equals("SSJ_BLUE")) {
+            cdSeconds = 45;
+            kiParticle = Particle.SOUL_FIRE_FLAME;
+        } else if (transName.equals("KAIOKEN")) {
+            cdSeconds = 35;
+            kiParticle = Particle.DUST;
+        } else if (transName.equals("SSJ_GOD")) {
+            cdSeconds = 35;
+            kiParticle = Particle.FLAME;
+        } else if (transName.equals("SSJ_2")) {
+            cdSeconds = 35;
+            kiParticle = Particle.ELECTRIC_SPARK;
         } else {
-            // Default based on rank
-            if (hasMUI) {
-                transName = "MUI";
-                cdSeconds = 40;
-                kiParticle = Particle.END_ROD;
-            } else if (hasEgo) {
-                transName = "ULTRA_EGO";
-                cdSeconds = 50;
-                kiParticle = Particle.WITCH;
-            } else if (hasGohan) {
-                transName = "GOHAN_BEAST";
-                cdSeconds = 40;
-                kiParticle = Particle.CRIMSON_SPORE;
-            } else if (hasBlue) {
-                transName = "SSJ_BLUE";
-                cdSeconds = 45;
-                kiParticle = Particle.SOUL_FIRE_FLAME;
-            } else if (hasGod) {
-                transName = "SSJ_GOD";
-                cdSeconds = 35;
-                kiParticle = Particle.FLAME;
-            } else if (hasKaioken) {
-                transName = "KAIOKEN";
-                cdSeconds = 35;
-                kiParticle = Particle.DUST;
-            } else if (tier == 33 || (rank != null && rank.getAbilityType() == AbilityType.SSJ_2)) {
-                transName = "SSJ_2";
-                cdSeconds = 35;
-                kiParticle = Particle.ELECTRIC_SPARK;
-            } else if (hasBroly) {
-                transName = "BROLY_LSSJ";
-                cdSeconds = 45;
-                kiParticle = Particle.HAPPY_VILLAGER;
-            } else {
-                return;
-            }
+            return; // Handled by other listeners (e.g. OnePiece)
         }
 
         long now = System.currentTimeMillis();
