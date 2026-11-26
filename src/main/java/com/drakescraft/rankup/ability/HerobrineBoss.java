@@ -34,9 +34,11 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -53,7 +55,7 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         Zombie boss; BossBar bar; int phase = 1; long end;
         Location center;
         double radius;
-        final Map<UUID, Double> damage = new HashMap<>();
+        final Map<UUID, Double> damage = new LinkedHashMap<>();
         final List<Entity> minions = new ArrayList<>();
     }
 
@@ -76,7 +78,11 @@ public class HerobrineBoss implements Listener, CommandExecutor {
             p.sendMessage("§eUso: /herobrine [estado]");
             return true;
         }
-        if (active != null && active.boss.isValid()) { p.sendMessage("§cHerobrine ya esta entre nosotros. ¡Ve a combatirlo!"); return true; }
+        if (active != null && !isFightActive(active)) {
+            end(w, active, false);
+            active = null;
+        }
+        if (active != null) { p.sendMessage("§cHerobrine ya esta entre nosotros. ¡Ve a combatirlo!"); return true; }
         long now = System.currentTimeMillis();
         long cd = plugin.getConfig().getLong("herobrine.cooldown-seconds", 600) * 1000L;
         Long until = cooldowns.get(p.getUniqueId());
@@ -86,8 +92,12 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         return true;
     }
 
+    private boolean isFightActive(Fight f) {
+        return f != null && f.boss.isValid() && !f.boss.isDead() && System.currentTimeMillis() < f.end;
+    }
+
     private void showStatus(Player player, Fight f) {
-        if (f == null || !f.boss.isValid() || f.boss.isDead() || System.currentTimeMillis() >= f.end) {
+        if (!isFightActive(f)) {
             player.sendMessage("§7No hay un combate de Herobrine activo en este mundo.");
             return;
         }
@@ -106,7 +116,7 @@ public class HerobrineBoss implements Listener, CommandExecutor {
 
     private void spawn(Player summoner) {
         World w = summoner.getWorld();
-        Location loc = summoner.getLocation().add(summoner.getLocation().getDirection().setY(0).normalize().multiply(8));
+        Location loc = summoner.getLocation().add(horizontalDirection(summoner.getLocation()).multiply(8));
         loc.setY(w.getHighestBlockYAt(loc) + 1);
         w.strikeLightningEffect(loc);
         w.playSound(loc, Sound.ENTITY_WITHER_SPAWN, 1.5f, 0.5f);
@@ -139,8 +149,10 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         f.center = loc.clone();
         f.radius = Math.max(8, Math.min(128, plugin.getConfig().getDouble("herobrine.arena-radius", 48)));
         f.bar = Bukkit.createBossBar("§4§lHEROBRINE §7| Fase 1/3", BarColor.RED, BarStyle.SEGMENTED_6);
+        f.bar.setProgress(1.0);
         f.end = System.currentTimeMillis() + plugin.getConfig().getLong("herobrine.lifetime-seconds", 900) * 1000L;
         fights.put(w.getUID(), f);
+        updateBossBarViewers(w, f);
         summoner.sendMessage("§7Arena: radio de " + (int) f.radius + " bloques. Combate en Survival/Adventure y permanece dentro hasta la victoria para recibir botin.");
         for (Player pl : w.getPlayers()) pl.sendMessage("§4§l[HEROBRINE] §c" + summoner.getName() + " ha perturbado mi descanso...");
 
@@ -166,12 +178,7 @@ public class HerobrineBoss implements Listener, CommandExecutor {
                     }
                 }
                 f.bar.setProgress(Math.max(0, Math.min(1, z.getHealth() / z.getAttribute(Attribute.MAX_HEALTH).getValue())));
-                for (Player viewer : new ArrayList<>(f.bar.getPlayers())) {
-                    if (!inArena(f, viewer.getLocation())) f.bar.removePlayer(viewer);
-                }
-                for (Player pl : w.getPlayers()) {
-                    if (inArena(f, pl.getLocation())) f.bar.addPlayer(pl); else f.bar.removePlayer(pl);
-                }
+                updateBossBarViewers(w, f);
                 double frac = z.getHealth() / z.getAttribute(Attribute.MAX_HEALTH).getValue();
                 if (f.phase == 1 && frac <= 0.66) phase2(w, z, f);
                 if (f.phase == 2 && frac <= 0.33) phase3(w, z, f);
@@ -188,6 +195,7 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         for (Player p : w.getPlayers()) if (p.getLocation().distanceSquared(z.getLocation()) < 3600) p.sendMessage("§4§l[HEROBRINE] §c¡Mis sombras os devoraran!");
         for (int i = 0; i < 4; i++) {
             Location l = z.getLocation().add(Math.cos(i * Math.PI / 2) * 3, 0, Math.sin(i * Math.PI / 2) * 3);
+            if (!inArena(f, l)) l = inArena(f, z.getLocation()) ? z.getLocation() : f.center;
             LivingEntity m = (LivingEntity) w.spawnEntity(l, i % 2 == 0 ? EntityType.WITHER_SKELETON : EntityType.ZOMBIE);
             m.setRemoveWhenFarAway(true);
             m.setPersistent(false);
@@ -207,23 +215,45 @@ public class HerobrineBoss implements Listener, CommandExecutor {
     }
 
     private void blink(Zombie z, Fight f) {
-        Player target = null; double best = 30 * 30;
+        Location destination = null; double best = 30 * 30;
         for (Player p : z.getWorld().getPlayers()) {
             double d = p.getLocation().distanceSquared(z.getLocation());
-            if (canParticipate(f, p) && d < best) { best = d; target = p; }
+            if (!canParticipate(f, p) || d >= best) continue;
+            Location behind = p.getLocation().subtract(horizontalDirection(p.getLocation()).multiply(2));
+            if (canBlinkTo(f, behind)) { best = d; destination = behind; }
         }
-        if (target == null) return;
-        Location behind = target.getLocation().subtract(target.getLocation().getDirection().setY(0).normalize().multiply(2));
-        if (!inArena(f, behind) || !behind.getWorld().getWorldBorder().isInside(behind)
-                || !behind.getBlock().isPassable() || !behind.clone().add(0, 1, 0).getBlock().isPassable()
-                || !behind.clone().subtract(0, 1, 0).getBlock().getType().isSolid()) return;
+        if (destination == null) return;
         z.getWorld().strikeLightningEffect(z.getLocation());
-        z.teleport(behind);
-        z.getWorld().playSound(behind, Sound.ENTITY_ENDERMAN_TELEPORT, 1.5f, 0.5f);
+        z.teleport(destination);
+        z.getWorld().playSound(destination, Sound.ENTITY_ENDERMAN_TELEPORT, 1.5f, 0.5f);
+    }
+
+    private boolean canBlinkTo(Fight f, Location behind) {
+        return inArena(f, behind) && behind.getWorld().getWorldBorder().isInside(behind)
+                && behind.getBlock().isPassable() && behind.clone().add(0, 1, 0).getBlock().isPassable()
+                && behind.clone().subtract(0, 1, 0).getBlock().getType().isSolid();
+    }
+
+    private Vector horizontalDirection(Location location) {
+        Vector dir = location.getDirection().setY(0);
+        if (dir.lengthSquared() >= 1.0e-9) return dir.normalize();
+        double yawRadians = Math.toRadians(location.getYaw());
+        Vector fallback = new Vector(-Math.sin(yawRadians), 0, Math.cos(yawRadians));
+        return fallback.lengthSquared() >= 1.0e-9 ? fallback.normalize() : new Vector(0, 0, 1);
+    }
+
+    private void updateBossBarViewers(World w, Fight f) {
+        for (Player viewer : new ArrayList<>(f.bar.getPlayers())) {
+            if (!inArena(f, viewer.getLocation())) f.bar.removePlayer(viewer);
+        }
+        for (Player pl : w.getPlayers()) {
+            if (inArena(f, pl.getLocation())) f.bar.addPlayer(pl); else f.bar.removePlayer(pl);
+        }
     }
 
     private void end(World w, Fight f, boolean killed) {
         f.bar.removeAll();
+        if (!killed && f.boss.isValid()) f.boss.remove();
         for (Entity m : f.minions) if (m.isValid()) m.remove();
         fights.remove(w.getUID(), f);
     }
@@ -256,7 +286,7 @@ public class HerobrineBoss implements Listener, CommandExecutor {
     public void onTarget(EntityTargetLivingEntityEvent e) {
         Fight f = fights.get(e.getEntity().getWorld().getUID());
         if (f == null || (e.getEntity() != f.boss && !f.minions.contains(e.getEntity()))) return;
-        if (e.getTarget() != null && !canTarget(f, e.getTarget())) e.setCancelled(true);
+        if (!isFightActive(f) || (e.getTarget() != null && !canTarget(f, e.getTarget()))) e.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -266,7 +296,7 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         if (d instanceof Projectile pr && pr.getShooter() instanceof Entity sh) d = sh;
         if (!(d instanceof Player p)) return;
         Fight f = fights.get(e.getEntity().getWorld().getUID());
-        if (f == null || !f.boss.equals(e.getEntity()) || !canParticipate(f, p)) return;
+        if (!isFightActive(f) || !f.boss.equals(e.getEntity()) || !inArena(f, f.boss.getLocation()) || !canParticipate(f, p)) return;
         double damage = Math.min(e.getFinalDamage(), f.boss.getHealth());
         if (Double.isFinite(damage) && damage > 0) f.damage.merge(p.getUniqueId(), damage, Double::sum);
     }
@@ -292,9 +322,15 @@ public class HerobrineBoss implements Listener, CommandExecutor {
 
     @EventHandler
     public void onDeath(EntityDeathEvent e) {
-        if (!e.getEntity().getPersistentDataContainer().has(bossKey, PersistentDataType.BYTE)) return;
         World w = e.getEntity().getWorld();
         Fight f = fights.get(w.getUID());
+        // Las sombras son parte de la fase, no una fuente de botin publico.
+        if (f != null && f.minions.contains(e.getEntity())) {
+            e.getDrops().clear();
+            e.setDroppedExp(0);
+            return;
+        }
+        if (!e.getEntity().getPersistentDataContainer().has(bossKey, PersistentDataType.BYTE)) return;
         if (f == null || !f.boss.equals(e.getEntity())) return;
         e.getDrops().clear();
         // La experiencia forma parte del botin de participacion, sin orbes para espectadores.
@@ -306,10 +342,10 @@ public class HerobrineBoss implements Listener, CommandExecutor {
         }
         w.strikeLightningEffect(e.getEntity().getLocation());
         double minimum = Math.max(0, plugin.getConfig().getDouble("herobrine.minimum-reward-damage", 4));
-        Map<UUID, Double> eligible = new HashMap<>();
+        Map<UUID, Double> eligible = new LinkedHashMap<>();
         for (Map.Entry<UUID, Double> entry : f.damage.entrySet()) {
             Player player = Bukkit.getPlayer(entry.getKey());
-            if (entry.getValue() >= minimum && player != null
+            if (entry.getValue() > 0 && entry.getValue() >= minimum && player != null
                     && canParticipate(f, player)) eligible.put(entry.getKey(), entry.getValue());
         }
         UUID top = null; double best = 0;
@@ -343,7 +379,11 @@ public class HerobrineBoss implements Listener, CommandExecutor {
     }
 
     private void giveOrDrop(Player p, ItemStack it) {
-        p.getInventory().addItem(it).values().forEach(r -> p.getWorld().dropItemNaturally(p.getLocation(), r));
+        p.getInventory().addItem(it).values().forEach(r -> {
+            org.bukkit.entity.Item reward = p.getWorld().dropItemNaturally(p.getLocation(), r);
+            reward.setOwner(p.getUniqueId());
+            reward.setCanMobPickup(false);
+        });
     }
 
     /** Limpieza al apagar: no deja jefes ni barras colgadas. */

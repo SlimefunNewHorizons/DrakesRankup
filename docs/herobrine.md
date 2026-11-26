@@ -14,11 +14,14 @@ La participación suficiente se revisa de nuevo al morir el jefe: debes seguir
 vivo, dentro de la arena y en Survival/Adventure. Sin combate activo lo indica;
 los argumentos desconocidos muestran el uso sin invocar nada.
 
-- Fase 1: combate inicial; la barra muestra la fase actual.
-- Fase 2, al 66% de vida: una única oleada de cuatro sombras y velocidad II.
-- Fase 3, al 33%: fuerza II y un intento de blink cada seis segundos hacia un
-  jugador vivo en Survival o Adventure. El destino exige suelo sólido, espacio libre y
-  estar dentro de la arena y del borde del mundo.
+- Fase 1: combate inicial; la barra muestra la fase actual desde la invocación
+  a los jugadores dentro de la arena.
+- Fase 2, al 66% de vida: una única oleada de cuatro sombras (ajustadas dentro
+  del radio si el jefe está junto al borde) y velocidad II.
+- Fase 3, al 33%: fuerza II y un intento de blink cada seis segundos hacia el
+  jugador elegible más cercano en Survival o Adventure cuyo destino trasero tenga
+  suelo sólido, espacio libre y esté dentro de la arena y del borde del mundo
+  (conservando la orientación horizontal del `yaw` incluso con mirada vertical).
 
 Los poderes de fase duran hasta terminar el combate. Survival y Adventure
 permiten combatir y obtener botín; creativo y espectador quedan excluidos.
@@ -31,8 +34,10 @@ jefe. Al morir, cada jugador vivo, conectado y dentro de la arena que alcance
 `herobrine.minimum-reward-damage` (4 por defecto) recibe
 `herobrine.reward-diamonds` (5 por defecto, entre 0 y 64). El mayor contribuyente
 elegible recibe además una esencia. Cada premiado ve su daño y botín en el chat.
-Los objetos que no caben en el inventario caen a sus pies. Las sombras no
-aportan crédito; el reparto del jefe se realiza una sola vez por encuentro.
+Los objetos que no caben en el inventario caen a sus pies con el participante
+como propietario y recogida por mobs desactivada. Conservan el vencimiento
+normal de los objetos caídos. Las sombras no sueltan objetos ni experiencia y
+no aportan crédito; el reparto del jefe se realiza una sola vez por encuentro.
 
 La experiencia también se entrega directamente a los participantes elegibles,
 sin orbes que otros jugadores puedan recoger. `herobrine.reward-experience`
