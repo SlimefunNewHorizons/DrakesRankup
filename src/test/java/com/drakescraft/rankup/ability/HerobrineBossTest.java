@@ -956,4 +956,118 @@ class HerobrineBossTest {
         assertEquals(1, second.getInventory().all(Material.NETHER_STAR).values().stream()
                 .mapToInt(ItemStack::getAmount).sum());
     }
+
+    private org.bukkit.boss.BossBar currentBossBar() throws ReflectiveOperationException {
+        var executor = plugin.getCommand("herobrine").getExecutor();
+        var fightsField = HerobrineBoss.class.getDeclaredField("fights");
+        fightsField.setAccessible(true);
+        var fight = ((Map<?, ?>) fightsField.get(executor)).get(world.getUID());
+        var barField = fight.getClass().getDeclaredField("bar");
+        barField.setAccessible(true);
+        return (org.bukkit.boss.BossBar) barField.get(fight);
+    }
+
+    @Test
+    void bossBarReflectsPhasesArenaViewersAndCleanup() throws ReflectiveOperationException {
+        org.bukkit.boss.BossBar bar = currentBossBar();
+        assertTrue(bar.getPlayers().contains(player), "BossBar must include arena viewers immediately on spawn");
+        assertEquals(org.bukkit.boss.BarColor.RED, bar.getColor());
+        assertEquals(1.0, bar.getProgress(), 1.0e-6);
+        assertTrue(bar.getTitle().contains("Fase 1/3"));
+
+        PlayerMock outside = server.addPlayer("OutsideViewer");
+        outside.teleport(boss.getLocation().add(100, 0, 0));
+        boss.setHealth(260);
+        server.getScheduler().performTicks(20);
+        assertEquals(org.bukkit.boss.BarColor.PURPLE, bar.getColor());
+        assertEquals(0.65, bar.getProgress(), 1.0e-6);
+        assertTrue(bar.getTitle().contains("Fase 2/3"));
+        assertFalse(bar.getPlayers().contains(outside));
+
+        boss.setHealth(120);
+        server.getScheduler().performTicks(20);
+        assertEquals(org.bukkit.boss.BarColor.WHITE, bar.getColor());
+        assertEquals(0.30, bar.getProgress(), 1.0e-6);
+        assertTrue(bar.getTitle().contains("Fase 3/3"));
+
+        defeat();
+        assertTrue(bar.getPlayers().isEmpty());
+    }
+
+    @Test
+    void phaseTwoClampsShadowsInsideArenaWhenBossIsAtBoundary() {
+        Location center = boss.getLocation().clone();
+        boss.teleport(center.clone().add(47, 0, 0));
+        boss.setHealth(260);
+        server.getScheduler().performTicks(20);
+        var shadows = world.getEntitiesByClass(Mob.class).stream().filter(mob -> mob != boss).toList();
+        assertEquals(4, shadows.size());
+        for (Mob shadow : shadows) {
+            double dx = shadow.getLocation().getX() - center.getX();
+            double dz = shadow.getLocation().getZ() - center.getZ();
+            assertTrue(dx * dx + dz * dz <= 48 * 48, "Shadow spawned outside arena: " + shadow.getLocation());
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(floats = {-90f, 90f})
+    void blinkFallsBackToSecondValidParticipantAndHandlesVerticalPitch(float verticalPitch) {
+        Location firstBlocked = prepareBlink();
+        firstBlocked.getBlock().setType(Material.STONE);
+        PlayerMock second = server.addPlayer("SecondBlinkTarget");
+        second.setGameMode(GameMode.SURVIVAL);
+        Location secondLocation = boss.getLocation().add(15, 0, 0);
+        secondLocation.setYaw(0);
+        secondLocation.setPitch(verticalPitch);
+        second.teleport(secondLocation);
+        Location expectedDestination = secondLocation.clone().subtract(0, 0, 2);
+
+        server.getScheduler().performTicks(120);
+
+        assertEquals(expectedDestination, boss.getLocation());
+        assertEquals(secondLocation, second.getLocation());
+    }
+
+    @Test
+    void tiedTopDamageDeterministicallyAwardsEssenceAndExperienceRemainderToFirstContributor() {
+        PlayerMock second = server.addPlayer("SecondTied");
+        PlayerMock third = server.addPlayer("ThirdLower");
+        second.teleport(boss.getLocation());
+        third.teleport(boss.getLocation());
+        hit(player, 20, false);
+        hit(second, 20, false);
+        hit(third, 10, false);
+
+        defeat();
+
+        assertTrue(player.getInventory().contains(Material.NETHER_STAR));
+        assertFalse(second.getInventory().contains(Material.NETHER_STAR));
+        assertFalse(third.getInventory().contains(Material.NETHER_STAR));
+        assertEquals(668, player.getTotalExperience());
+        assertEquals(666, second.getTotalExperience());
+        assertEquals(666, third.getTotalExperience());
+    }
+
+    @Test
+    void expiredFightBeforeTimerTickBlocksTargetingAndAllowsImmediateResummon() throws ReflectiveOperationException {
+        boss.setHealth(200);
+        server.getScheduler().performTicks(20);
+        var oldMobs = new ArrayList<>(world.getEntitiesByClass(Mob.class));
+        assertEquals(5, oldMobs.size());
+        expireFightBeforeNextTimerTick();
+
+        for (Mob mob : oldMobs) {
+            EntityTargetLivingEntityEvent targetEvent = new EntityTargetLivingEntityEvent(
+                    mob, player, EntityTargetEvent.TargetReason.CLOSEST_PLAYER);
+            server.getPluginManager().callEvent(targetEvent);
+            assertTrue(targetEvent.isCancelled());
+        }
+
+        PlayerMock second = server.addPlayer("ImmediateSummoner");
+        second.teleport(player.getLocation());
+        assertTrue(second.performCommand("herobrine"));
+        assertTrue(oldMobs.stream().noneMatch(Entity::isValid));
+        assertEquals(1, world.getEntitiesByClass(Zombie.class).size());
+        assertFalse(status(second).contains("No hay un combate"));
+    }
 }
